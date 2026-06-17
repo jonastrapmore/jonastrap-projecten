@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Lokale omgevingsvariabelen (API-sleutels)
+.env
+.env.local
+.env.*.local
+
+# Vite cache
+.vite/
+
+# OS bestanden
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.suo
+*.user
