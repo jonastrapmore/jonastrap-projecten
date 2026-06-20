@@ -4,222 +4,192 @@
    ============================================================ */
 
 :root {
-  --primary-color: #2c3e50;
-  --primary-hover: #e67e22;
-  --accent-color: #e67e22;
-  --background-color: #e6eef5;
+    --primary-color: #2c3e50;
+    --primary-hover: #e67e22;
+    --accent-color: #e67e22;
+    --background-color: #e6eef5;
 }
 
-[data-bs-theme="dark"] {
-  --background-color: #1a1d24;
-  --primary-color: #34465c;
+[data-bs-theme='dark'] {
+    --background-color: #1a1d24;
+    --primary-color: #34465c;
 }
 
 /* ---- Algemene layout ---- */
 
 body {
-  background-color: var(--background-color);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 #app > div {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 main {
-  flex: 1;
+    flex: 1;
 }
 
 /* ---- Accentkleur ---- */
 
 .dashboard-accent {
-  color: var(--accent-color);
+    color: var(--accent-color);
 }
 
 /* ---- Widget custom elements: display als blok met volledige hoogte ---- */
 
 widget-weather,
 widget-recipe,
-widget-calendar,
 widget-notes {
-  display: block;
-  height: 100%;
+    display: block;
+    height: 100%;
 }
 
 /* ---- Weerlabels ---- */
 
 .weather-label {
-  font-size: 0.7rem;
+    font-size: 0.7rem;
 }
 
 .weather-main-icon {
-  line-height: 1;
+    line-height: 1;
 }
 
 /* ---- Opgeslagen locaties als chips ---- */
 
 .location-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 2px 10px;
-  border-radius: 20px;
-  border: 1px solid var(--bs-border-color);
-  background-color: var(--bs-body-bg);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition:
-    border-color 0.15s,
-    color 0.15s;
-  user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-body-bg);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition:
+        border-color 0.15s,
+        color 0.15s;
+    user-select: none;
 }
 
 .location-chip:hover,
 .location-chip.active {
-  border-color: var(--accent-color);
-  color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
 }
 
 .location-chip .chip-delete {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: 0.7rem;
-  color: inherit;
-  opacity: 0.5;
-  cursor: pointer;
-  line-height: 1;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.7rem;
+    color: inherit;
+    opacity: 0.5;
+    cursor: pointer;
+    line-height: 1;
 }
 
 .location-chip .chip-delete:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
 /* ---- Receptthumbnail ---- */
 
 .recipe-thumb {
-  max-height: 180px;
-  object-fit: cover;
-  width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    width: 100%;
 }
 
 .recipe-ingredients {
-  column-count: 2;
-  column-gap: 1rem;
+    column-count: 2;
+    column-gap: 1rem;
 }
 
 @media (max-width: 576px) {
-  .recipe-ingredients {
-    column-count: 1;
-  }
-}
-
-/* ---- Kalender weekraster ---- */
-
-.calendar-week-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-}
-
-.calendar-day-header {
-  text-align: center;
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 4px 2px;
-  border-radius: 6px;
-}
-
-.calendar-day-header.today {
-  background-color: var(--accent-color);
-  color: #fff;
-}
-
-.calendar-day-col {
-  min-height: 120px;
-  padding: 4px;
-  border-radius: 6px;
-  border: 1px solid var(--bs-border-color);
-  font-size: 0.72rem;
-  overflow: hidden;
-}
-
-.calendar-day-col.today {
-  border-color: var(--accent-color);
-  background-color: rgba(230, 126, 34, 0.06);
-}
-
-.calendar-event {
-  background-color: rgba(44, 62, 80, 0.12);
-  border-left: 3px solid var(--primary-color);
-  border-radius: 3px;
-  padding: 2px 5px;
-  margin-bottom: 3px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-  transition: background-color 0.15s;
-}
-
-.calendar-event:hover {
-  background-color: rgba(44, 62, 80, 0.22);
-}
-
-[data-bs-theme="dark"] .calendar-event {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-left-color: var(--accent-color);
-}
-
-[data-bs-theme="dark"] .calendar-event:hover {
-  background-color: rgba(255, 255, 255, 0.14);
+    .recipe-ingredients {
+        column-count: 1;
+    }
 }
 
 /* ---- Takenlijst ---- */
 
 .tasks-scroll {
-  max-height: 340px;
+    max-height: 340px;
 }
 
 .task-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 0;
-  border-bottom: 1px solid var(--bs-border-color-translucent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--bs-border-color-translucent);
 }
 
 .task-item:last-child {
-  border-bottom: none;
+    border-bottom: none;
 }
 
 .task-item.done .task-label {
-  text-decoration: line-through;
-  opacity: 0.5;
+    text-decoration: line-through;
+    opacity: 0.5;
 }
 
 .task-label {
-  flex: 1;
-  font-size: 0.9rem;
-  word-break: break-word;
+    flex: 1;
+    font-size: 0.9rem;
+    word-break: break-word;
 }
 
 .task-delete {
-  background: none;
-  border: none;
-  padding: 0 4px;
-  font-size: 0.8rem;
-  color: var(--bs-danger);
-  opacity: 0;
-  cursor: pointer;
-  transition: opacity 0.15s;
-  flex-shrink: 0;
+    background: none;
+    border: none;
+    padding: 0 4px;
+    font-size: 0.8rem;
+    color: var(--bs-danger);
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
 }
 
 .task-item:hover .task-delete {
-  opacity: 1;
+    opacity: 1;
+}
+
+/* ---- NASA widget ---- */
+
+.nasa-thumb {
+    max-height: 260px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.nasa-explanation {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ---- Weer: 5-daagse voorspelling ---- */
+
+.forecast-day {
+    flex: 1;
+    text-align: center;
+    font-size: 0.72rem;
+}
+
+.forecast-day .forecast-temp {
+    font-weight: 600;
+}
+
+widget-nasa {
+    display: block;
+    height: 100%;
 }

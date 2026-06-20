@@ -1,7 +1,7 @@
 import { CustomElement } from '../../router/customElement.ts'
-import HTML from './calendarWidget.html?raw'
+import HTML from './nasaWidget.html?raw'
 
-export class CalendarWidget extends CustomElement {
+export class NasaWidget extends CustomElement {
 
     constructor() {
         super(HTML)

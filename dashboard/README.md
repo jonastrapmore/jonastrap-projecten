@@ -6,9 +6,19 @@
 
 ---
 
+## Voortgang
+
+| Datum      | Onderdeel    | Status    | Omschrijving                                                                                                                  |
+| ---------- | ------------ | --------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| 17/06/2026 | Projectopzet | Afgewerkt | Vite + TypeScript + Bootstrap opgezet, mapstructuur aangemaakt, router en providers overgezet, gitignore en README toegevoegd |
+| 17/06/2026 | Navbar       | Afgewerkt | Klok (tikt elke seconde), datum in het Nederlands, begroeting op basis van het uur, theme toggle licht/donker                 |
+| 18/06/2026 & 20/06/2026 | Takenwidget | Afgewerkt | Taken toevoegen (Enter of knop), afvinken, verwijderen, voltooide in één keer wissen, filteren (alle/open/klaar), teller van openstaande taken en lege toestand. Werkt via de LocalStorage-provider met observer-patroon |
+
+---
+
 ## Doelstelling
 
-Het doel van dit project is het bouwen van een persoonlijk dashboard als webapplicatie. Dit dashboard brengt vier dagelijkse noden samen op een centrale pagina: het actuele weerbericht voor opgeslagen locaties, een dagelijks budget-vriendelijk avondmaalrecept, een weekoverzicht van de Outlook-agenda, en een eenvoudig takenbeheer voor schoolgerelateerde notities.
+Het doel van dit project is het bouwen van een persoonlijk dashboard als webapplicatie. Dit dashboard brengt vier dagelijkse noden samen op een centrale pagina: het actuele weerbericht voor opgeslagen locaties, een dagelijks budget-vriendelijk avondmaalrecept, de NASA-foto van de dag met uitleg, en een eenvoudig takenbeheer voor schoolgerelateerde notities.
 
 Het project sluit de eerste fase van de opleiding af en dient als demonstratiestuk van de verworven vaardigheden in webontwikkeling en API-integratie. De nadruk ligt op een nette, professionele uitwerking die de geleerde concepten concreet toepast in een realistisch gebruik.
 
@@ -101,29 +111,26 @@ src/
 
 ---
 
-### Widget 3: Outlook Agenda
+### Widget 3: NASA Foto van de Dag
 
 **Positie in raster:** linksonder (breed)
 
-**API:** Microsoft Graph API (https://graph.microsoft.com)
+**API:** NASA APOD - Astronomy Picture of the Day (https://api.nasa.gov)
 
-**Authenticatie:** MSAL.js via OAuth2
-
-**Vereiste toestemming:** `Calendars.Read` (gedelegeerd recht)
+**Gratis tier:** DEMO_KEY (beperkt aantal aanvragen) of een gratis eigen sleutel met hoger limiet
 
 **Functionaliteit:**
 
-- Weekoverzicht van maandag tot en met zondag
-- Navigeren naar de vorige of volgende week
-- Knop om terug te keren naar de huidige week
-- Aanmeldknop die de Microsoft OAuth-flow start
+- Toont de dagelijkse astronomische foto bij het laden van de pagina
+- Ondersteunt zowel afbeeldingen als ingesloten video's
+- Titel, datum en een korte uitleg bij de opname
+- Vermelding van de auteursrechten wanneer beschikbaar
 
 **Technische aanpak:**
 
-- Azure AD-applicatieregistratie vereist (is aangevraagd bij de beheerder)
-- MSAL.js bibliotheek voor authenticatie
-- Kalendergebeurtenissen via Graph `calendarView` endpoint
-- Client ID via Vite omgevingsvariabele `VITE_MSAL_CLIENT_ID`
+- Data via het APOD-endpoint `https://api.nasa.gov/planetary/apod`
+- Onderscheid tussen `media_type` "image" en "video"
+- API-sleutel via Vite omgevingsvariabele `VITE_NASA_API_KEY` (valt terug op `DEMO_KEY`)
 
 ---
 
@@ -151,12 +158,12 @@ src/
 
 ## Gebruikte API-overzicht
 
-| Widget | API             | Gratis         | Registratie                        |
-| ------ | --------------- | -------------- | ---------------------------------- |
-| Weer   | OpenWeatherMap  | Ja (1.000/dag) | API-sleutel via openweathermap.org |
-| Recept | TheMealDB       | Ja (onbeperkt) | Geen                               |
-| Agenda | Microsoft Graph | Ja             | Azure AD-applicatieregistratie     |
-| Taken  | localStorage    | n.v.t.         | Geen                               |
+| Widget | API            | Gratis         | Registratie                        |
+| ------ | -------------- | -------------- | ---------------------------------- |
+| Weer   | OpenWeatherMap | Ja (1.000/dag) | API-sleutel via openweathermap.org |
+| Recept | TheMealDB      | Ja (onbeperkt) | Geen                               |
+| NASA   | NASA APOD      | Ja             | DEMO_KEY of gratis sleutel         |
+| Taken  | localStorage   | n.v.t.         | Geen                               |
 
 ---
 
@@ -208,15 +215,14 @@ src/
 
 ---
 
-### Fase 5: Widget Agenda
+### Fase 5: Widget NASA Foto van de Dag
 
-**Geschatte duur:** 3 tot 4 sessies
+**Geschatte duur:** 1 sessie
 
-- Azure AD-applicatie registreren op portal.azure.com
-- MSAL.js integreren als npm-pakket
-- OAuth2-authenticatiestroom implementeren
-- Microsoft Graph API aanroepen voor kalendergebeurtenissen
-- Weekraster renderen met dag-kolommen en evenementen
+- NASA APOD-endpoint aanroepen via de browser `fetch` API
+- Afbeelding of ingesloten video tonen afhankelijk van `media_type`
+- Titel, datum, uitleg en auteursrechten weergeven
+- Foutafhandeling en laad-indicator voorzien
 
 ---
 
@@ -235,7 +241,7 @@ src/
 
 - API-sleutels worden nooit hardgecodeerd in de broncode of meegeleverd in versiebeheer
 - Sleutels worden bewaard in een `.env`-bestand dat is opgenomen in `.gitignore`
-- De Microsoft Graph-authenticatie verloopt via OAuth2 met MSAL.js, zonder dat tokens lokaal worden opgeslagen
+- De NASA-sleutel valt terug op `DEMO_KEY` zodat de widget ook zonder eigen sleutel werkt
 - Alle externe links in de receptwidget krijgen `rel="noopener noreferrer"` om tab-nabbing te voorkomen
 
 ---
@@ -248,7 +254,7 @@ src/
 
 ```
 VITE_OPENWEATHER_API_KEY=jouw_sleutel_hier
-VITE_MSAL_CLIENT_ID=jouw_azure_client_id_hier
+VITE_NASA_API_KEY=jouw_nasa_sleutel_hier
 ```
 
 4. Start de ontwikkelserver: `npm run dev`

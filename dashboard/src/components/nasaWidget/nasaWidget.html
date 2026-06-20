@@ -1,0 +1,37 @@
+<div class="card h-100 shadow-sm d-flex flex-column">
+    <div class="card-header d-flex align-items-center gap-2 py-2">
+        <i class="bi bi-stars text-warning fs-5"></i>
+        <span class="fw-semibold">NASA: Foto van de dag</span>
+        <span class="text-muted small ms-auto" id="nasa-date"></span>
+    </div>
+
+    <div class="card-body d-flex flex-column gap-3 p-3 overflow-auto">
+
+        <!-- Laad-indicator -->
+        <div id="nasa-loading" class="text-center text-muted py-4">
+            <div class="spinner-border spinner-border-sm me-2 text-warning" role="status" aria-hidden="true"></div>
+            Foto laden...
+        </div>
+
+        <!-- Inhoud (verborgen tot geladen) -->
+        <div id="nasa-content" class="d-none d-flex flex-column gap-3 flex-grow-1">
+
+            <!-- Afbeelding of video -->
+            <div id="nasa-media-container">
+                <img id="nasa-image" src="" alt="" class="img-fluid rounded w-100 nasa-thumb d-none">
+                <div id="nasa-video-container" class="ratio ratio-16x9 d-none">
+                    <iframe id="nasa-video" src="" title="NASA video" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Titel en uitleg -->
+            <h6 class="fw-semibold mb-1" id="nasa-title"></h6>
+            <p class="small text-muted mb-0 nasa-explanation" id="nasa-explanation"></p>
+
+            <!-- Auteursregel -->
+            <p class="text-muted" style="font-size: 0.7rem;" id="nasa-copyright"></p>
+
+        </div>
+
+    </div>
+</div>
