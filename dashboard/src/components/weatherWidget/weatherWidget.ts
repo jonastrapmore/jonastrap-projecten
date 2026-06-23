@@ -49,6 +49,8 @@ export class WeatherWidget extends CustomElement {
     #weatherSavedLocations = this.componentBody.querySelector<HTMLDivElement>(
         '#weather-saved-locations',
     )!;
+    #weatherError = this.componentBody.querySelector<HTMLDivElement>('#weather-error')!;
+    #weatherErrorText = this.componentBody.querySelector<HTMLSpanElement>('#weather-error-text')!;
 
     // Lokale kopie van de opgeslagen locaties (wordt door de observer bijgewerkt)
     #locations: SavedLocation[] = [];
@@ -80,7 +82,9 @@ export class WeatherWidget extends CustomElement {
         // Vernieuwknop: de actieve locatie opnieuw ophalen
         this.#weatherRefreshBtn.addEventListener('click', () => {
             if (this.#activeQuery) {
-                this.#getWeather(this.#activeQuery).catch((error) => console.error(error));
+                this.#getWeather(this.#activeQuery).catch(() =>
+                    this.#showError('Kon het weer niet vernieuwen. Probeer het later opnieuw.'),
+                );
             }
         });
     }
@@ -110,13 +114,17 @@ export class WeatherWidget extends CustomElement {
 
             this.#weatherInput.value = '';
         } catch (error) {
-            // Onbekende plaats of netwerkfout
+            // Onbekende plaats of netwerkfout: toon een melding aan de gebruiker
             console.error(error);
+            this.#showError('Locatie niet gevonden. Controleer de plaatsnaam of postcode.');
         }
     }
 
     // Haalt het huidige weer op, toont het en start ook de voorspelling
     async #getWeather(query: string) {
+        // Eventuele oude foutmelding verbergen bij een nieuwe poging
+        this.#weatherError.classList.add('d-none');
+
         const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
         const response = await fetch(
             `https://api.openweathermap.org/data/2.5/weather?q=${query}&appid=${apiKey}&units=metric&lang=nl`,
@@ -189,8 +197,12 @@ export class WeatherWidget extends CustomElement {
             locationSpan.classList.add('active');
         }
 
-        // Klik op de chip toont het weer van die locatie
-        locationSpan.addEventListener('click', () => this.#getWeather(location.query));
+        // Klik op de chip toont het weer van die locatie (met foutmelding als het mislukt)
+        locationSpan.addEventListener('click', () => {
+            this.#getWeather(location.query).catch(() =>
+                this.#showError('Kon het weer voor deze locatie niet laden.'),
+            );
+        });
 
         const locationNameSpan = document.createElement('span');
         locationNameSpan.className = 'chip-name';
@@ -272,6 +284,12 @@ export class WeatherWidget extends CustomElement {
         this.#weatherLastUpdate.textContent = '--';
         this.#weatherIcon.textContent = '🌤️';
         this.#weatherForecast.classList.add('d-none');
+    }
+
+    // Toont een foutmelding aan de gebruiker (bv. ongeldige locatie of storing)
+    #showError(bericht: string) {
+        this.#weatherErrorText.textContent = bericht;
+        this.#weatherError.classList.remove('d-none');
     }
 
     // Zet een OpenWeatherMap-icooncode om naar een passende emoji (met dag/nacht voor helder weer)

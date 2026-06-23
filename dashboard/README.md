@@ -83,6 +83,7 @@ src/
 - Weericoon als emoji (met onderscheid tussen dag en nacht)
 - 5-daagse voorspelling onderaan de kaart
 - Vernieuwknop om de gegevens handmatig te verversen
+- Foutmelding bij een ongeldige locatie of een storing
 
 **Technische aanpak:**
 
@@ -256,6 +257,8 @@ src/
 - Donker- en lichtthema finetunen per widget
 - Foutafhandeling toevoegen voor API-aanvragen (netwerk, ongeldige sleutel, geen resultaat)
 - Code opschonen, commentaar aanvullen
+
+**Status:** Afgerond
 
 ---
 
