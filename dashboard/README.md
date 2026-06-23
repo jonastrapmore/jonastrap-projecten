@@ -76,14 +76,16 @@ src/
 **Functionaliteit:**
 
 - Invoerveld voor plaatsnaam of Belgische postcode
-- Opgeslagen locaties worden weergegeven als klikbare chips
+- Opgeslagen locaties worden weergegeven als klikbare chips, met verwijderknop en markering van de actieve locatie
 - Huidige temperatuur, omschrijving, luchtvochtigheid, windsnelheid en gevoelstemperatuur
-- Automatisch vernieuwen elke 60 minuten
+- Weericoon als emoji (met onderscheid tussen dag en nacht)
+- 5-daagse voorspelling onderaan de kaart
+- Vernieuwknop om de gegevens handmatig te verversen
 
 **Technische aanpak:**
 
-- Locaties worden opgeslagen via `LocalStoragePersistenceProvider`
-- API-aanvraag via de browser `fetch` API
+- Locaties worden opgeslagen via `LocalStoragePersistenceProvider` met het `SavedLocation` model en het observer-patroon
+- Huidig weer via het `weather`-endpoint en de voorspelling via het `forecast`-endpoint, opgehaald met de browser `fetch` API
 - API-sleutel via Vite omgevingsvariabele `VITE_OPENWEATHER_API_KEY`
 
 ---
@@ -191,7 +193,9 @@ src/
 - Weerdata ophalen op basis van plaatsnaam en Belgische postcode
 - Opgeslagen locaties beheren via LocalStoragePersistenceProvider
 - UI invullen met temperatuur, icoon en detailgegevens
-- Automatische vernieuwing implementeren
+- Vernieuwknop en 5-daagse voorspelling toevoegen
+
+**Status:** Afgerond
 
 ---
 
@@ -213,6 +217,8 @@ src/
 - Taken aanmaken, afvinken en verwijderen
 - Filterweergave (alle, open, voltooid) implementeren
 - Observer-koppeling met de persistence provider voltooien
+
+**Status:** Afgerond
 
 ---
 
