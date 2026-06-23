@@ -117,6 +117,10 @@ widget-notes {
     }
 }
 
+.recipe-credit {
+    font-size: 0.7rem;
+}
+
 /* ---- Takenlijst ---- */
 
 .tasks-scroll {

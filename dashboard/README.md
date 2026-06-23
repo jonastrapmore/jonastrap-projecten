@@ -14,12 +14,13 @@
 | 17/06/2026 | Navbar       | Afgewerkt | Klok (tikt elke seconde), datum in het Nederlands, begroeting op basis van het uur, theme toggle licht/donker                 |
 | 18/06/2026 & 20/06/2026 | Takenwidget | Afgewerkt | Taken toevoegen (Enter of knop), afvinken, verwijderen, voltooide in één keer wissen, filteren (alle/open/klaar), teller van openstaande taken en lege toestand. Werkt via de LocalStorage-provider met observer-patroon |
 | 21/06/2026, 22/06/2026 & 23/06/2026 | Weerwidget | Afgewerkt | Huidig weer ophalen via OpenWeatherMap (plaatsnaam of postcode), opgeslagen locaties als klikbare chips met dubbele-check en actieve markering, weericoon als emoji (dag/nacht), vernieuwknop, leegmaken bij verwijderen en een 5-daagse voorspelling. Locaties bewaard via de LocalStorage-provider met observer-patroon |
+| 23/06/2026 | Receptwidget | Afgewerkt | Willekeurig recept via Spoonacular met filters voor Keto, Low Calorie en Snel klaar, vertaalde naam en ingredienten (Google met MyMemory-fallback), badges voor categorie, keuken, calorieën, koolhydraten en prijs, een laadscherm en een link naar het volledige recept. Geen opslag nodig |
 
 ---
 
 ## Doelstelling
 
-Het doel van dit project is het bouwen van een persoonlijk dashboard als webapplicatie. Dit dashboard brengt vier dagelijkse noden samen op een centrale pagina: het actuele weerbericht voor opgeslagen locaties, een dagelijks budget-vriendelijk avondmaalrecept, de NASA-foto van de dag met uitleg, en een eenvoudig takenbeheer voor schoolgerelateerde notities.
+Het doel van dit project is het bouwen van een persoonlijk dashboard als webapplicatie. Dit dashboard brengt vier dagelijkse noden samen op een centrale pagina: het actuele weerbericht voor opgeslagen locaties, een dagelijks avondmaalrecept met filters voor dieet en bereidingstijd, de NASA-foto van de dag met uitleg, en een eenvoudig takenbeheer voor schoolgerelateerde notities.
 
 Het project sluit de eerste fase van de opleiding af en dient als demonstratiestuk van de verworven vaardigheden in webontwikkeling en API-integratie. De nadruk ligt op een nette, professionele uitwerking die de geleerde concepten concreet toepast in een realistisch gebruik.
 
@@ -49,7 +50,7 @@ De applicatie volgt dezelfde patroonstructuur als het eerder gemaakte portfoliop
 src/
   components/        Herbruikbare webcomponenten (widgets, navbar)
   data/              Persistence providers (abstract, localStorage, memory)
-  effects/           Neveneffecten zoals thema-beheer
+  effects/           Neveneffecten zoals thema-beheer en de gedeelde vertaalhulp
   models/            TypeScript interfaces voor datamodellen
   pages/             Paginaklassen (dashboard)
   router/            Router, Page en CustomElement basisklassen
@@ -94,22 +95,27 @@ src/
 
 **Positie in raster:** rechtsboven
 
-**API:** TheMealDB (https://www.themealdb.com)
+**API:** Spoonacular (https://spoonacular.com/food-api)
 
-**Gratis:** geen API-sleutel vereist
+**Gratis tier:** ja, met een dagelijkse puntenlimiet (gratis API-sleutel vereist)
 
 **Functionaliteit:**
 
-- Toont een willekeurig avondmaalrecept bij het laden van de pagina
-- Filteropties: Keto, Low Calorie, Budget
-- Afbeelding van het gerecht, naam, categorie en ingredientenlijst
-- Link naar het volledige recept en een video van de bereiding
+- Toont een willekeurig recept bij het laden van de pagina
+- Filteropties: Keto, Low Calorie en Snel klaar (binnen 30 minuten)
+- Afbeelding van het gerecht, naam, categorie en herkomst (keuken)
+- Ingredientenlijst, vertaald naar het Nederlands
+- Badges met calorieën, koolhydraten en de prijs per portie
+- Link naar het volledige recept
 - Knop om een ander recept te laden
 
 **Technische aanpak:**
 
-- Willekeurig recept via `https://www.themealdb.com/api/json/v1/1/random.php`
-- Gefilterde recepten via categorie-endpoint
+- Recepten via het `complexSearch`-endpoint, opgehaald met de browser `fetch` API
+- Filters als parameters: `diet=ketogenic` (keto), `maxCalories` (low calorie) en `maxReadyTime` (snel klaar), gecombineerd met een willekeurige `cuisine` voor de herkomst
+- Voedingswaarde en prijs via `addRecipeNutrition`
+- Inhoud wordt naar het Nederlands vertaald via de gedeelde vertaalhulp (`effects/translate.ts`), die eerst Google probeert en terugvalt op MyMemory
+- API-sleutel via Vite omgevingsvariabele `VITE_SPOONACULAR_API_KEY`
 - Geen opslag vereist
 
 ---
@@ -164,7 +170,7 @@ src/
 | Widget | API            | Gratis         | Registratie                        |
 | ------ | -------------- | -------------- | ---------------------------------- |
 | Weer   | OpenWeatherMap | Ja (1.000/dag) | API-sleutel via openweathermap.org |
-| Recept | TheMealDB      | Ja (onbeperkt) | Geen                               |
+| Recept | Spoonacular    | Ja (daglimiet) | API-sleutel via spoonacular.com    |
 | NASA   | NASA APOD      | Ja             | DEMO_KEY of gratis sleutel         |
 | Taken  | localStorage   | n.v.t.         | Geen                               |
 
@@ -203,10 +209,12 @@ src/
 
 **Geschatte duur:** 2 sessies
 
-- Integratie met TheMealDB
+- Integratie met Spoonacular
 - Willekeurig recept ophalen en weergeven
-- Filterlogica implementeren voor Keto, Low Calorie en Budget
-- Ingredientenlijst en externe links verwerken
+- Filterlogica implementeren voor Keto, Low Calorie en Snel klaar
+- Ingredientenlijst, voedingswaarde-badges en de gedeelde vertaalhulp verwerken
+
+**Status:** Afgerond
 
 ---
 
@@ -261,6 +269,7 @@ src/
 
 ```
 VITE_OPENWEATHER_API_KEY=jouw_sleutel_hier
+VITE_SPOONACULAR_API_KEY=jouw_spoonacular_sleutel_hier
 VITE_NASA_API_KEY=jouw_nasa_sleutel_hier
 ```
 

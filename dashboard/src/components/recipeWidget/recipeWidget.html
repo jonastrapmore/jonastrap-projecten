@@ -18,9 +18,9 @@
         <label class="btn btn-sm btn-outline-warning" for="filter-lowcal">
             <i class="bi bi-fire me-1"></i>Low Calorie
         </label>
-        <input type="checkbox" class="btn-check" id="filter-budget" autocomplete="off">
-        <label class="btn btn-sm btn-outline-primary" for="filter-budget">
-            <i class="bi bi-piggy-bank-fill me-1"></i>Budget
+        <input type="checkbox" class="btn-check" id="filter-quick" autocomplete="off">
+        <label class="btn btn-sm btn-outline-primary" for="filter-quick">
+            <i class="bi bi-clock me-1"></i>Snel klaar
         </label>
     </div>
 
@@ -40,6 +40,9 @@
                 <div class="d-flex gap-2 flex-wrap">
                     <span class="badge text-bg-secondary" id="recipe-category"></span>
                     <span class="badge text-bg-secondary bg-opacity-50" id="recipe-area"></span>
+                    <span class="badge text-bg-warning d-none" id="recipe-calories"></span>
+                    <span class="badge text-bg-info d-none" id="recipe-carbs"></span>
+                    <span class="badge text-bg-success d-none" id="recipe-price"></span>
                 </div>
             </div>
             <div>
@@ -51,11 +54,10 @@
                     rel="noopener noreferrer">
                     <i class="bi bi-box-arrow-up-right me-1"></i>Volledig recept
                 </a>
-                <a href="#" class="btn btn-sm btn-outline-danger" id="recipe-youtube-link" target="_blank"
-                    rel="noopener noreferrer">
-                    <i class="bi bi-youtube me-1"></i>Bereiding
-                </a>
             </div>
+
+            <!-- Vertaalbron -->
+            <div class="text-end text-muted recipe-credit" id="recipe-credit"></div>
         </div>
 
     </div>
