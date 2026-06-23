@@ -108,6 +108,7 @@ src/
 - Badges met calorieën, koolhydraten en de prijs per portie
 - Link naar het volledige recept
 - Knop om een ander recept te laden
+- Nette foutmelding wanneer het dagelijkse aanvraaglimiet bereikt is of er geen recept past bij de filters
 
 **Technische aanpak:**
 

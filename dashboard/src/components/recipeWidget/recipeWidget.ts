@@ -59,6 +59,8 @@ export class RecipeWidget extends CustomElement {
     #recipeCalories = this.componentBody.querySelector<HTMLSpanElement>('#recipe-calories')!;
     #recipeCarbs = this.componentBody.querySelector<HTMLSpanElement>('#recipe-carbs')!;
     #recipePrice = this.componentBody.querySelector<HTMLSpanElement>('#recipe-price')!;
+    #recipeError = this.componentBody.querySelector<HTMLDivElement>('#recipe-error')!;
+    #recipeErrorText = this.componentBody.querySelector<HTMLSpanElement>('#recipe-error-text')!;
 
     constructor() {
         super(HTML);
@@ -80,6 +82,7 @@ export class RecipeWidget extends CustomElement {
         // Laadscherm tonen, inhoud verbergen tot alles binnen is
         this.#recipeLoading.classList.remove('d-none');
         this.#recipeContent.classList.add('d-none');
+        this.#recipeError.classList.add('d-none');
 
         // Willekeurige keuken zodat het recept altijd een herkomst heeft
         const keuken = KEUKENS[Math.floor(Math.random() * KEUKENS.length)];
@@ -112,21 +115,32 @@ export class RecipeWidget extends CustomElement {
             }
 
             const res = await fetch(`https://api.spoonacular.com/recipes/complexSearch?${params}`);
-            if (!res.ok) {
-                throw new Error(`Geen recept gevonden (status ${res.status})`);
+            if (res.status === 402) {
+                this.#showError(
+                    'De dagelijkse recept-aanvragen zijn op. Probeer het morgen opnieuw.',
+                );
+                return;
             }
+            if (!res.ok) {
+                this.#showError('Er ging iets mis bij het laden van het recept.');
+                return;
+            }
+
             const data: { results: Recipe[] } = await res.json();
 
             // Geen resultaten (bv. te strenge filtercombinatie)
             if (!data.results || data.results.length === 0) {
-                throw new Error('Geen recept gevonden voor deze filters');
+                this.#showError('Geen recept gevonden voor deze filtercombinatie.');
+                return;
             }
 
             // Willekeurig recept uit de resultaten kiezen
             const gekozen = data.results[Math.floor(Math.random() * data.results.length)];
             await this.#showMeal(gekozen);
         } catch (error) {
+            // netwerkfout of iets onverwachts
             console.error(error);
+            this.#showError('Er ging iets mis bij het laden van het recept.');
         }
     }
 
@@ -189,5 +203,13 @@ export class RecipeWidget extends CustomElement {
 
             this.#recipeIngredientsList.appendChild(li);
         });
+    }
+
+    // Toont een foutmelding in plaats van het recept (bv. punten op, geen resultaat of netwerkfout)
+    #showError(bericht: string) {
+        this.#recipeLoading.classList.add('d-none');
+        this.#recipeContent.classList.add('d-none');
+        this.#recipeErrorText.textContent = bericht;
+        this.#recipeError.classList.remove('d-none');
     }
 }
