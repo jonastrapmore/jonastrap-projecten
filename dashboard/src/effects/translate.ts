@@ -1,3 +1,8 @@
+// vervangt em- en en-dashes door een komma (Jonas wil geen lange streepjes)
+function zonderLangeStreepjes(text: string): string {
+    return text.replace(/\s*[—–]\s*/g, ', ');
+}
+
 // Resultaat van een vertaling: de tekst plus welke engine ze leverde (voor het "vertaald door"-label)
 export interface VertaalResultaat {
     text: string;
@@ -9,7 +14,7 @@ export interface VertaalResultaat {
 export async function translate(text: string, from = 'en', to = 'nl'): Promise<VertaalResultaat> {
     // Lege tekst niet vertalen
     if (!text || text.trim() === '') {
-        return { text, engine: 'Origineel (Engels)' };
+        return { text: zonderLangeStreepjes(text), engine: 'Origineel (Engels)' };
     }
 
     // 1. Google (onofficieel endpoint, maar werkt vanuit de browser)
@@ -21,7 +26,7 @@ export async function translate(text: string, from = 'en', to = 'nl'): Promise<V
             const data = await res.json();
             // data[0] is een lijst segmenten; segment[0] bevat de vertaalde tekst
             const vertaald = data[0].map((segment: [string]) => segment[0]).join('');
-            return { text: vertaald, engine: 'Google' };
+            return { text: zonderLangeStreepjes(vertaald), engine: 'Google' };
         }
     } catch {
         // val door naar MyMemory
@@ -34,7 +39,7 @@ export async function translate(text: string, from = 'en', to = 'nl'): Promise<V
         );
         if (res.ok) {
             const data: { responseData: { translatedText: string } } = await res.json();
-            return { text: data.responseData.translatedText, engine: 'MyMemory' };
+            return { text: zonderLangeStreepjes(data.responseData.translatedText), engine: 'MyMemory' };
         }
     } catch {
         // beide mislukt

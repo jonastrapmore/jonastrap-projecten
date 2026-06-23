@@ -15,6 +15,7 @@
 | 18/06/2026 & 20/06/2026 | Takenwidget | Afgewerkt | Taken toevoegen (Enter of knop), afvinken, verwijderen, voltooide in één keer wissen, filteren (alle/open/klaar), teller van openstaande taken en lege toestand. Werkt via de LocalStorage-provider met observer-patroon |
 | 21/06/2026, 22/06/2026 & 23/06/2026 | Weerwidget | Afgewerkt | Huidig weer ophalen via OpenWeatherMap (plaatsnaam of postcode), opgeslagen locaties als klikbare chips met dubbele-check en actieve markering, weericoon als emoji (dag/nacht), vernieuwknop, leegmaken bij verwijderen en een 5-daagse voorspelling. Locaties bewaard via de LocalStorage-provider met observer-patroon |
 | 23/06/2026 | Receptwidget | Afgewerkt | Willekeurig recept via Spoonacular met filters voor Keto, Low Calorie en Snel klaar, vertaalde naam en ingredienten (Google met MyMemory-fallback), badges voor categorie, keuken, calorieën, koolhydraten en prijs, een laadscherm en een link naar het volledige recept. Geen opslag nodig |
+| 23/06/2026 | NASA-widget | Afgewerkt | Foto of video van de dag via NASA APOD, titel en uitleg vertaald naar het Nederlands, afbeelding/YouTube/Vimeo/direct videobestand met thumbnail-terugval, automatische herhaling bij een tijdelijke NASA-storing en een foutmelding. Gebruikt de gedeelde vertaalhulp |
 
 ---
 
@@ -131,15 +132,18 @@ src/
 
 **Functionaliteit:**
 
-- Toont de dagelijkse astronomische foto bij het laden van de pagina
-- Ondersteunt zowel afbeeldingen als ingesloten video's
-- Titel, datum en een korte uitleg bij de opname
-- Vermelding van de auteursrechten wanneer beschikbaar
+- Toont de astronomische foto of video van de dag bij het laden van de pagina
+- Titel en uitleg vertaald naar het Nederlands
+- Datum van de opname en de auteursrechten (indien beschikbaar)
+- Ondersteunt afbeeldingen, ingesloten YouTube/Vimeo-video's en directe videobestanden (.mp4)
+- Automatische herhaling bij een tijdelijke NASA-storing, en een nette foutmelding wanneer het echt niet lukt
 
 **Technische aanpak:**
 
-- Data via het APOD-endpoint `https://api.nasa.gov/planetary/apod`
-- Onderscheid tussen `media_type` "image" en "video"
+- Data via het APOD-endpoint `https://api.nasa.gov/planetary/apod` (met `thumbs=true` voor een poster bij video's)
+- Mediakeuze op basis van `media_type` en het url-type: een iframe voor YouTube/Vimeo, een HTML5 `<video>`-element voor directe bestanden, anders de thumbnail
+- Titel en uitleg vertaald via de gedeelde vertaalhulp (`effects/translate.ts`)
+- Automatische herhaling bij een tijdelijke serverfout (5xx)
 - API-sleutel via Vite omgevingsvariabele `VITE_NASA_API_KEY` (valt terug op `DEMO_KEY`)
 
 ---
@@ -236,9 +240,11 @@ src/
 **Geschatte duur:** 1 sessie
 
 - NASA APOD-endpoint aanroepen via de browser `fetch` API
-- Afbeelding of ingesloten video tonen afhankelijk van `media_type`
-- Titel, datum, uitleg en auteursrechten weergeven
-- Foutafhandeling en laad-indicator voorzien
+- Afbeelding, YouTube/Vimeo-video of direct videobestand tonen afhankelijk van het type
+- Titel, datum, uitleg en auteursrechten weergeven, met titel en uitleg vertaald via de gedeelde vertaalhulp
+- Foutafhandeling, laad-indicator en automatische herhaling bij een tijdelijke storing voorzien
+
+**Status:** Afgerond
 
 ---
 

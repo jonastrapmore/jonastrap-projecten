@@ -13,6 +13,12 @@
             Foto laden...
         </div>
 
+        <!-- Foutmelding -->
+        <div id="nasa-error" class="text-center text-muted py-4 d-none">
+            <i class="bi bi-exclamation-triangle text-warning fs-2 d-block mb-2"></i>
+            <span id="nasa-error-text"></span>
+        </div>
+
         <!-- Inhoud (verborgen tot geladen) -->
         <div id="nasa-content" class="d-none d-flex flex-column gap-3 flex-grow-1">
 
@@ -22,6 +28,7 @@
                 <div id="nasa-video-container" class="ratio ratio-16x9 d-none">
                     <iframe id="nasa-video" src="" title="NASA video" allowfullscreen></iframe>
                 </div>
+                <video id="nasa-video-file" class="w-100 rounded d-none" controls preload="auto"></video>
             </div>
 
             <!-- Titel en uitleg -->
@@ -30,6 +37,9 @@
 
             <!-- Auteursregel -->
             <p class="text-muted" style="font-size: 0.7rem;" id="nasa-copyright"></p>
+
+            <!-- Vertaalbron -->
+            <div class="text-muted text-end" style="font-size: 0.7rem;" id="nasa-credit"></div>
 
         </div>
 

@@ -175,10 +175,8 @@ widget-notes {
 }
 
 .nasa-explanation {
-    display: -webkit-box;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    max-height: 8rem;
+    overflow-y: auto;
 }
 
 /* ---- Weer: 5-daagse voorspelling ---- */
