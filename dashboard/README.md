@@ -13,6 +13,7 @@
 | 17/06/2026 | Projectopzet | Afgewerkt | Vite + TypeScript + Bootstrap opgezet, mapstructuur aangemaakt, router en providers overgezet, gitignore en README toegevoegd |
 | 17/06/2026 | Navbar       | Afgewerkt | Klok (tikt elke seconde), datum in het Nederlands, begroeting op basis van het uur, theme toggle licht/donker                 |
 | 18/06/2026 & 20/06/2026 | Takenwidget | Afgewerkt | Taken toevoegen (Enter of knop), afvinken, verwijderen, voltooide in één keer wissen, filteren (alle/open/klaar), teller van openstaande taken en lege toestand. Werkt via de LocalStorage-provider met observer-patroon |
+| 21/06/2026, 22/06/2026 & 23/06/2026 | Weerwidget | Afgewerkt | Huidig weer ophalen via OpenWeatherMap (plaatsnaam of postcode), opgeslagen locaties als klikbare chips met dubbele-check en actieve markering, weericoon als emoji (dag/nacht), vernieuwknop, leegmaken bij verwijderen en een 5-daagse voorspelling. Locaties bewaard via de LocalStorage-provider met observer-patroon |
 
 ---
 
