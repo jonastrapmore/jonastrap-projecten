@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Petanqueclub Kerkom, gegevens controle</title>
+
+<!-- Extern lettertype "Inter", overgenomen van pckerkom.com voor eenzelfde huisstijl -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!--
+  Alle paden hieronder zijn RELATIEF (geen "/" vooraan).
+  Dat is bewust: deze pagina komt als subpagina in een bestaande
+  mapstructuur op de Combell-server te staan. Met relatieve paden
+  werkt alles vanzelf, in welke submap de site ook terechtkomt.
+  Zou hier "/css/styles.css" staan (met een "/" vooraan), dan zou de
+  browser dat altijd vanaf de domeinroot zoeken, wat fout loopt zodra
+  dit een subpagina is en niet de hoofdsite.
+-->
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/script.js" defer></script>
+</head>
+<body>
+
+<!-- Banner bovenaan: groepsfoto met overlay en de titel "Welkom Lion" -->
+<header class="banner">
+  <img src="images/groepFoto.jpg" alt="Groepsfoto Petanqueclub Kerkom" class="banner__img">
+  <div class="banner__overlay"></div>
+  <div class="banner__content">
+    <span class="eyebrow">Petanqueclub Kerkom</span>
+    <h1>Welkom Lion</h1>
+  </div>
+</header>
+
+<main>
+
+  <!-- Introtekst onder de banner: legt uit waarom en hoe leden hun gegevens moeten controleren -->
+  <section class="intro">
+    <p>
+      Petanqueclub Kerkom houdt de contactgegevens van alle leden graag up-to-date en correct.
+      Daarom vragen we je om ze even na te kijken. Vul hieronder je licentienummer in en zoek je
+      gegevens op. Kloppen naam, adres, telefoon, GSM en e-mailadres nog? Bevestig ze dan met
+      de knop opslaan. Is er iets veranderd of ontbreekt er iets? Vul het veld aan of verbeter
+      het, en klik daarna op opslaan.
+    </p>
+  </section>
+
+  <!-- Lions-foto, gecentreerd tussen de intro en het formulier -->
+  <section class="lions-photo">
+    <img src="images/lions.jpg" alt="Lions Kerkom" class="lions-photo__img">
+  </section>
+
+  <section class="check-form">
+    <div class="check-form__inner">
+
+      <!--
+        STAP 1: opzoeken op lidnummer.
+        js/script.js luistert op de klik van #zoek-btn (en op submit van
+        dit formulier, als vangnet voor de Enter-toets) en vult dan
+        hieronder het gegevensformulier in op basis van data/members.json.
+      -->
+      <span class="eyebrow">01 - Opzoeken</span>
+      <h2>Zoek je gegevens op</h2>
+      <p class="check-form__hint">
+        Geef je licentienummer in en controleer of je gegevens nog kloppen.
+      </p>
+
+      <form id="lookup-form" class="lookup-form">
+        <div class="field">
+          <label for="lidnummer">Licentienummer</label>
+          <input type="text" id="lidnummer" name="lidnummer" inputmode="numeric" placeholder="bv. 28633" required>
+        </div>
+        <button type="button" id="zoek-btn" class="btn btn--primary">Zoeken</button>
+      </form>
+
+      <!-- Melding "lid gevonden" / "geen lid gevonden", wordt getoond door script.js -->
+      <p id="lookup-message" class="lookup-message" hidden></p>
+
+      <!--
+        STAP 2: gegevens controleren/aanpassen en opslaan.
+        Blijft verborgen (hidden) tot script.js een lid gevonden heeft.
+        Bij "Opslaan" stuurt script.js deze velden naar php/save.php,
+        dat member.json bijwerkt en de wijziging logt in data/log.json.
+      -->
+      <div id="member-form-wrapper" class="member-form-wrapper" hidden>
+
+        <span class="eyebrow">02 - Controleren</span>
+        <h2>Controleer je gegevens</h2>
+        <p class="check-form__hint">
+          Klopt alles? Klik dan op opslaan. Klopt iets niet? Pas het aan en klik daarna op opslaan.
+        </p>
+
+        <form id="member-form" class="member-form">
+
+          <div class="field">
+            <label for="naam">Naam</label>
+            <input type="text" id="naam" name="naam">
+          </div>
+
+          <div class="field">
+            <label for="voornaam">Voornaam</label>
+            <input type="text" id="voornaam" name="voornaam">
+          </div>
+
+          <div class="field field--grow">
+            <label for="adres">Straat</label>
+            <input type="text" id="adres" name="adres">
+          </div>
+
+          <div class="field field--small">
+            <label for="nummer">Nummer</label>
+            <input type="text" id="nummer" name="nummer">
+          </div>
+
+          <div class="field field--small">
+            <label for="bus">Bus</label>
+            <input type="text" id="bus" name="bus">
+          </div>
+
+          <div class="field field--small">
+            <label for="postcode">Postcode</label>
+            <input type="text" id="postcode" name="postcode">
+          </div>
+
+          <div class="field field--grow">
+            <label for="gemeente">Gemeente</label>
+            <input type="text" id="gemeente" name="gemeente">
+          </div>
+
+          <div class="field">
+            <label for="geboortedatum">Geboortedatum</label>
+            <input type="text" id="geboortedatum" name="geboortedatum" placeholder="dd-mm-jjjj">
+          </div>
+
+          <div class="field">
+            <label for="telefoon">Telefoon</label>
+            <input type="tel" id="telefoon" name="telefoon">
+          </div>
+
+          <div class="field">
+            <label for="gsm">GSM</label>
+            <input type="tel" id="gsm" name="gsm">
+          </div>
+
+          <div class="field field--grow">
+            <label for="mail">E-mail</label>
+            <input type="email" id="mail" name="mail">
+          </div>
+
+          <p class="save-note">
+            Niets veranderd? Klik toch op opslaan, dat bevestigt dat je gegevens gecontroleerd en in orde zijn.
+          </p>
+
+          <div class="form-footer">
+            <!-- Toont "OK"/"UPDATED"-melding na het opslaan, gevuld door script.js -->
+            <span id="record-status" class="record-status"></span>
+            <button type="submit" class="btn btn--primary">Opslaan</button>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Petanqueclub Kerkom</p>
+</footer>
+
+</body>
+</html>

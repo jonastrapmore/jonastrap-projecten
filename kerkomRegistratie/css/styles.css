@@ -1,0 +1,332 @@
+/*
+  styles.css
+  Zwart/wit thema geïnspireerd op pckerkom.com (zelfde "Inter"-lettertype,
+  minimalistisch, veel witruimte, dunne grijze lijnen i.p.v. schaduwen/kaders).
+  Kleuren en het lettertype staan hier centraal als CSS-variabelen zodat je
+  ze op één plek kan aanpassen als de huisstijl ooit verandert.
+*/
+:root {
+  --black: #0a0a0a;
+  --white: #ffffff;
+  --gray-100: #f5f5f4;
+  --gray-200: #e7e5e4;
+  --gray-400: #a8a29e;
+  --gray-600: #57534e;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--black);
+  background: var(--white);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1, h2, h3 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+  margin-bottom: 0.75rem;
+}
+
+/* Banner: groepsfoto met donkere overlay (voor leesbare witte tekst) en de titel */
+
+.banner {
+  position: relative;
+  height: min(70vh, 560px);
+  min-height: 320px;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.banner__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.85;
+}
+
+.banner__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.75) 100%);
+}
+
+.banner__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.banner__content .eyebrow {
+  color: var(--gray-200);
+}
+
+.banner h1 {
+  color: var(--white);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+/* Main sections */
+
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.intro {
+  padding: 3.5rem 0 2.5rem;
+  text-align: center;
+}
+
+.intro p {
+  font-size: 1.125rem;
+  color: var(--gray-600);
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.lions-photo {
+  padding: 1rem 0 3.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.lions-photo__img {
+  max-height: 420px;
+  width: auto;
+  border-radius: 6px;
+}
+
+/* Form section: stap 1 (opzoeken) en stap 2 (controleren/opslaan) */
+
+.check-form {
+  border-top: 1px solid var(--gray-200);
+  padding: 3.5rem 0 5rem;
+}
+
+.check-form__inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.check-form h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.check-form__hint {
+  color: var(--gray-600);
+  margin-bottom: 2rem;
+}
+
+.lookup-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.lookup-message {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* data-type/data-status attributen worden door script.js gezet, niet hier in HTML */
+.lookup-message[data-type="error"] {
+  background: var(--gray-100);
+  color: var(--black);
+  border: 1px solid var(--black);
+}
+
+.lookup-message[data-type="success"] {
+  background: var(--black);
+  color: var(--white);
+}
+
+.member-form-wrapper {
+  margin-top: 3rem;
+  padding-top: 3rem;
+  border-top: 1px solid var(--gray-200);
+}
+
+.member-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1 1 220px;
+}
+
+.field--small {
+  flex: 1 1 120px;
+}
+
+.field--grow {
+  flex: 2 1 280px;
+}
+
+.field label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+}
+
+.field input {
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--black);
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 4px;
+  padding: 0.65rem 0.75rem;
+  transition: border-color 0.15s ease;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--black);
+}
+
+.field input:disabled {
+  background: var(--gray-100);
+  color: var(--gray-600);
+}
+
+.save-note {
+  width: 100%;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--gray-600);
+  margin-top: 0.5rem;
+}
+
+.form-footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.record-status {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.record-status[data-status="OK"] {
+  color: var(--black);
+}
+
+.record-status[data-status="UPDATED"] {
+  color: var(--gray-600);
+}
+
+.record-status[data-status="ERROR"] {
+  color: #b91c1c;
+}
+
+/* Buttons */
+
+.btn {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: none;
+  border-radius: 4px;
+  padding: 0.8rem 1.75rem;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.05s ease;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--primary {
+  background: var(--black);
+  color: var(--white);
+}
+
+.btn--primary:hover {
+  opacity: 0.85;
+}
+
+/* Footer */
+
+.site-footer {
+  border-top: 1px solid var(--gray-200);
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.site-footer p {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+}
+
+/* Responsive */
+
+@media (max-width: 560px) {
+  .lookup-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-footer .btn {
+    width: 100%;
+  }
+}

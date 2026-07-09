@@ -1,0 +1,5 @@
+# Persoonsgegevens van clubleden - horen niet in een (publieke) git-repository.
+# Zie README.md ("Gegevens en privacy") voor hoe je deze lokaal terugkrijgt.
+data/members.json
+data/log.json
+bron/ledenrapport.xls
