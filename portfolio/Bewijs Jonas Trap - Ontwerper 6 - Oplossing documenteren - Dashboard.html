@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Ontwerper 6: De oplossing documenteren</title>
+    <style>
+        /* ============================================================
+           Portfolio-sjabloon - huisstijl overgenomen van het dashboard
+           Kleuren: donkerblauw #2c3e50 en oranje #e67e22
+           Zet om naar PDF via Ctrl+P -> Opslaan als PDF
+           ============================================================ */
+
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --light: #e6eef5;
+            --dark-bg: #1a1d24;
+            --text: #1f2730;
+            --muted: #5b6b7a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text);
+            line-height: 1.55;
+            margin: 0;
+            font-size: 11pt;
+        }
+
+        @page {
+            size: A4;
+            margin: 18mm 16mm;
+        }
+
+        .page {
+            padding: 0 4mm;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* ---- Titelblad ---- */
+        .cover {
+            min-height: 247mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            page-break-after: always;
+        }
+
+        .cover .banner {
+            background: var(--primary);
+            color: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            border-top: 8px solid var(--accent);
+        }
+
+        .cover .kicker {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cover h1 {
+            font-size: 30pt;
+            margin: 0 0 8px;
+            color: #fff;
+        }
+
+        .cover .subtitle {
+            font-size: 14pt;
+            color: var(--light);
+            margin-top: 6px;
+        }
+
+        .cover .role {
+            display: inline-block;
+            margin-top: 24px;
+            background: var(--accent);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 12.5pt;
+        }
+
+        .cover .meta {
+            margin: 44px auto 0;
+            display: inline-grid;
+            grid-template-columns: auto auto;
+            gap: 10px 16px;
+            text-align: left;
+            font-size: 11.5pt;
+        }
+
+        .cover .meta-label {
+            text-align: right;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .cover .meta-value {
+            color: var(--muted);
+        }
+
+        /* ---- Koppen ---- */
+        h2 {
+            color: var(--accent);
+            font-size: 17pt;
+            margin: 28px 0 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        h3 {
+            color: var(--primary);
+            font-size: 13pt;
+            margin: 18px 0 6px;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 4px 0;
+        }
+
+        /* ---- Tabel ---- */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 12px 0;
+            font-size: 10.5pt;
+        }
+
+        th,
+        td {
+            border: 1px solid #cdd7e0;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        tr:nth-child(even) td {
+            background: var(--light);
+        }
+
+        /* ---- Codeblok ---- */
+        pre {
+            background: var(--dark-bg);
+            color: #e6eef5;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9pt;
+            line-height: 1.45;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        /* ---- Screenshot ---- */
+        .screenshot {
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 6px;
+            text-align: center;
+            background: #fff;
+            margin: 12px 0;
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 6px;
+        }
+
+        .caption {
+            font-size: 9.5pt;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        /* ---- Accentkader voor de zelfreflectie ---- */
+        .reflectie {
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 6px 18px 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================
+         1. TITELBLAD
+         ============================================================ -->
+    <section class="cover">
+        <div class="banner">
+            <div class="kicker">Portfolio - Graduaat Programmeren</div>
+            <h1>Persoonlijk Dashboard</h1>
+            <div class="subtitle">Een webapplicatie met vier API-gedreven widgets</div>
+            <div class="role">De ontwerper &middot; Doel 6: Je documenteert de oplossing</div>
+        </div>
+        <div class="meta">
+            <span class="meta-label">Auteur</span><span class="meta-value">Jonas Trap</span>
+            <span class="meta-label">Opleiding</span><span class="meta-value">Graduaat Programmeren, Thomas More Geel</span>
+            <span class="meta-label">Academiejaar</span><span class="meta-value">2025-2026</span>
+            <span class="meta-label">Type bewijs</span><span class="meta-value">eigen project</span>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         2. PROJECT (DOELSTELLING)
+         ============================================================ -->
+    <section class="page">
+        <h2>Het project</h2>
+        <p>
+            Dit dashboard is een persoonlijk project: een single-page webapplicatie die vier
+            dagelijkse noden samenbrengt op één centrale pagina. De vier widgets tonen het actuele
+            weerbericht voor opgeslagen locaties, een dagelijks avondmaalrecept met filters voor
+            dieet en bereidingstijd, de NASA-foto van de dag met uitleg, en een eenvoudig
+            takenbeheer.
+        </p>
+        <p>
+            Het project dient als demonstratiestuk van mijn vaardigheden in webontwikkeling en
+            API-integratie. De nadruk lag bewust op een nette, professionele uitwerking die de
+            geleerde concepten concreet toepast: een duidelijke architectuur, type-veiligheid,
+            integratie met externe API's en degelijke foutafhandeling.
+        </p>
+
+        <h3>Technische keuzes</h3>
+        <ul>
+            <li><strong>Build tool:</strong> Vite, voor een snelle ontwikkelomgeving met native TypeScript-ondersteuning.</li>
+            <li><strong>Taal:</strong> TypeScript, voor type-veiligheid en betere onderhoudbaarheid.</li>
+            <li><strong>CSS-framework:</strong> Bootstrap 5, voor een degelijke grid en ingebouwde dark mode.</li>
+            <li><strong>API's:</strong> OpenWeatherMap (weer), Spoonacular (recepten), NASA APOD (foto van de dag), en een vertaal-API voor de Nederlandse inhoud.</li>
+        </ul>
+
+        <h3>Broncode</h3>
+        <p>
+            De volledige broncode van dit project staat publiek op GitHub, zodat ze altijd
+            terug te vinden is:
+            <a href="https://github.com/jonastrapmore/jonastrap-projecten/tree/main/dashboard">github.com/jonastrapmore/jonastrap-projecten/tree/main/dashboard</a>
+        </p>
+    </section>
+
+    <!-- ============================================================
+         3. DE OPLOSSING DOCUMENTEREN (waarom dit doel)
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>De oplossing documenteren</h2>
+        <p>
+            Ik koppel dit project aan dit doel omdat ik de oplossing volledig heb gedocumenteerd in
+            een uitgebreide README, aangevuld met commentaar in de code zelf. De README is bewust
+            geschreven zodat een lezer zonder de code te openen begrijpt wat het project wil
+            bereiken en wat het precies doet. Hieronder de twee kernpunten van het doel.
+        </p>
+
+        <h3>1. De doelen van de ontwikkeling documenteren</h3>
+        <p>
+            De README opent met een duidelijke <strong>doelstelling</strong> en een
+            <strong>projectplanning</strong> in fasen, elk met een eigen doel en status. Zo is
+            gedocumenteerd waarom het project bestaat en wat elke ontwikkelstap moest opleveren.
+        </p>
+        <pre>
+## Doelstelling
+
+Het doel van dit project is het bouwen van een persoonlijk dashboard als
+webapplicatie. Dit dashboard brengt vier dagelijkse noden samen op een
+centrale pagina: het actuele weerbericht, een dagelijks avondmaalrecept
+met filters, de NASA-foto van de dag, en een eenvoudig takenbeheer.</pre>
+        <pre>
+### Fase 3: Widget Recept
+
+- Integratie met Spoonacular
+- Willekeurig recept ophalen en weergeven
+- Filterlogica implementeren voor Keto, Low Calorie en Snel klaar
+- Ingredientenlijst, voedingswaarde-badges en de vertaalhulp verwerken
+
+**Status:** Afgerond</pre>
+        <p class="caption">Fragmenten uit de README: de doelstelling en een fase uit de planning.</p>
+
+        <h3>2. De scope en functionaliteiten vastleggen</h3>
+        <p>
+            Voor elke widget legt de README de <strong>scope en functionaliteiten</strong> vast: wat
+            de widget toont, welke API hij gebruikt en wat hij wel en niet doet. Een aparte
+            voortgangstabel en een API-overzicht maken de afbakening compleet.
+        </p>
+        <pre>
+### Widget 2: Menu van de Dag
+
+**Functionaliteit:**
+- Toont een willekeurig recept bij het laden van de pagina
+- Filteropties: Keto, Low Calorie en Snel klaar (binnen 30 minuten)
+- Ingredientenlijst, vertaald naar het Nederlands
+- Badges met calorieen, koolhydraten en de prijs per portie
+- Nette foutmelding bij een bereikt aanvraaglimiet of geen passend recept</pre>
+        <p>Het API-overzicht legt de externe afhankelijkheden en de scope per widget vast:</p>
+        <table>
+            <tr>
+                <th>Widget</th>
+                <th>API</th>
+                <th>Gratis</th>
+                <th>Registratie</th>
+            </tr>
+            <tr>
+                <td>Weer</td>
+                <td>OpenWeatherMap</td>
+                <td>Ja (1.000/dag)</td>
+                <td>API-sleutel via openweathermap.org</td>
+            </tr>
+            <tr>
+                <td>Recept</td>
+                <td>Spoonacular</td>
+                <td>Ja (daglimiet)</td>
+                <td>API-sleutel via spoonacular.com</td>
+            </tr>
+            <tr>
+                <td>NASA</td>
+                <td>NASA APOD</td>
+                <td>Ja</td>
+                <td>DEMO_KEY of gratis sleutel</td>
+            </tr>
+            <tr>
+                <td>Taken</td>
+                <td>localStorage</td>
+                <td>n.v.t.</td>
+                <td>Geen</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- ============================================================
+         4. SCREENSHOTS / BEWIJS
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Het resultaat</h2>
+
+        <div class="screenshot">
+            <img src="dashboard-licht.png" alt="Het dashboard">
+        </div>
+        <p class="caption">Afbeelding 1: het dashboard. De werking ervan is in de README volledig gedocumenteerd.</p>
+
+        <h3>Documentatie in de code</h3>
+        <p>
+            Naast de README is de oplossing ook in de code zelf gedocumenteerd. Niet-vanzelfsprekende
+            keuzes krijgen commentaar dat de reden uitlegt, zodat een lezer de bedoeling meteen
+            begrijpt:
+        </p>
+        <pre>
+// De app draait online in de submap /dashboard/, dus moeten de
+// asset-paden daarnaar verwijzen (anders zoekt de browser ze op
+// de domeinroot).
+base: '/dashboard/',</pre>
+        <p class="caption">Codefragment uit <code>vite.config.ts</code>: commentaar dat een keuze verantwoordt.</p>
+
+        <h3>Waar de documentatie staat</h3>
+        <ul>
+            <li><strong>README.md</strong>: doelstelling, technische keuzes, een beschrijving per widget, het API-overzicht, de projectplanning in fasen, veiligheid en setup-instructies.</li>
+            <li><strong>Commentaar in de code</strong>: Nederlandse uitleg bij niet-vanzelfsprekende keuzes en stappen.</li>
+            <li><strong>GitHub</strong>: de README wordt automatisch getoond op de openbare repository, zodat de documentatie altijd vindbaar is.</li>
+        </ul>
+    </section>
+
+    <!-- ============================================================
+         5. ZELFREFLECTIE
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Zelfreflectie</h2>
+        <div class="reflectie">
+            <h3>Wat ging goed</h3>
+            <p>
+                De README groeide mee met het project: bij elke afgewerkte widget vulde ik de
+                voortgangstabel, de functionaliteiten en de planning aan. Daardoor bleef de
+                documentatie actueel en kon ik op elk moment tonen wat af was en wat het deed.
+            </p>
+
+            <h3>Wat ik geleerd heb</h3>
+            <p>
+                Ik leerde dat documentatie meer is dan een handleiding achteraf. Door de doelen en
+                de scope vooraf vast te leggen, hield ik zelf overzicht over wat er nog moest
+                gebeuren. Goede documentatie stuurt dus ook de ontwikkeling, niet alleen het gebruik.
+            </p>
+
+            <h3>Uitdagingen</h3>
+            <p>
+                De grootste uitdaging was de juiste hoeveelheid detail kiezen: genoeg om de scope en
+                functionaliteiten duidelijk vast te leggen, zonder de README onleesbaar te maken. Ik
+                loste dit op met een vaste structuur per widget (functionaliteit en technische
+                aanpak gescheiden) en samenvattende tabellen.
+            </p>
+
+            <h3>Wat beter kan</h3>
+            <ul>
+                <li>Screenshots opnemen in de README zelf, zodat ook visueel duidelijk is hoe elke widget eruitziet.</li>
+                <li>Documentatie van de code uitbreiden met korte beschrijvingen per functie in een vaste stijl (bijvoorbeeld JSDoc).</li>
+            </ul>
+
+            <h3>Conclusie</h3>
+            <p>
+                Dit project toont de twee kernpunten van het doel aan: ik
+                <strong>documenteer de doelen van de ontwikkeling</strong> via de doelstelling en de
+                gefaseerde planning, en ik <strong>leg de scope en functionaliteiten vast</strong>
+                via een beschrijving per widget, een API-overzicht en een voortgangstabel, aangevuld
+                met commentaar in de code zelf.
+            </p>
+        </div>
+    </section>
+
+</body>
+
+</html>

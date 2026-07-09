@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Ontwerper 4: Methodiek en programmeertaal afstemmen</title>
+    <style>
+        /* ============================================================
+           Portfolio-sjabloon - huisstijl overgenomen van het dashboard
+           Kleuren: donkerblauw #2c3e50 en oranje #e67e22
+           Zet om naar PDF via Ctrl+P -> Opslaan als PDF
+           ============================================================ */
+
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --light: #e6eef5;
+            --dark-bg: #1a1d24;
+            --text: #1f2730;
+            --muted: #5b6b7a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text);
+            line-height: 1.55;
+            margin: 0;
+            font-size: 11pt;
+        }
+
+        @page {
+            size: A4;
+            margin: 18mm 16mm;
+        }
+
+        .page {
+            padding: 0 4mm;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* ---- Titelblad ---- */
+        .cover {
+            min-height: 247mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            page-break-after: always;
+        }
+
+        .cover .banner {
+            background: var(--primary);
+            color: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            border-top: 8px solid var(--accent);
+        }
+
+        .cover .kicker {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cover h1 {
+            font-size: 30pt;
+            margin: 0 0 8px;
+            color: #fff;
+        }
+
+        .cover .subtitle {
+            font-size: 14pt;
+            color: var(--light);
+            margin-top: 6px;
+        }
+
+        .cover .role {
+            display: inline-block;
+            margin-top: 24px;
+            background: var(--accent);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 12.5pt;
+        }
+
+        .cover .meta {
+            margin: 44px auto 0;
+            display: inline-grid;
+            grid-template-columns: auto auto;
+            gap: 10px 16px;
+            text-align: left;
+            font-size: 11.5pt;
+        }
+
+        .cover .meta-label {
+            text-align: right;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .cover .meta-value {
+            color: var(--muted);
+        }
+
+        /* ---- Koppen ---- */
+        h2 {
+            color: var(--accent);
+            font-size: 17pt;
+            margin: 28px 0 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        h3 {
+            color: var(--primary);
+            font-size: 13pt;
+            margin: 18px 0 6px;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 4px 0;
+        }
+
+        /* ---- Tabel ---- */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 12px 0;
+            font-size: 10.5pt;
+        }
+
+        th,
+        td {
+            border: 1px solid #cdd7e0;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        tr:nth-child(even) td {
+            background: var(--light);
+        }
+
+        /* ---- Codeblok ---- */
+        pre {
+            background: var(--dark-bg);
+            color: #e6eef5;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9pt;
+            line-height: 1.45;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        /* ---- Screenshot ---- */
+        .screenshot {
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 6px;
+            text-align: center;
+            background: #fff;
+            margin: 12px 0;
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 6px;
+        }
+
+        .caption {
+            font-size: 9.5pt;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        /* ---- Accentkader voor de zelfreflectie ---- */
+        .reflectie {
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 6px 18px 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================
+         1. TITELBLAD
+         ============================================================ -->
+    <section class="cover">
+        <div class="banner">
+            <div class="kicker">Portfolio - Graduaat Programmeren</div>
+            <h1>Persoonlijk Dashboard</h1>
+            <div class="subtitle">Een webapplicatie met vier API-gedreven widgets</div>
+            <div class="role">De ontwerper &middot; Doel 4: Je stemt de methodiek en programmeertaal af op de toepassing</div>
+        </div>
+        <div class="meta">
+            <span class="meta-label">Auteur</span><span class="meta-value">Jonas Trap</span>
+            <span class="meta-label">Opleiding</span><span class="meta-value">Graduaat Programmeren, Thomas More Geel</span>
+            <span class="meta-label">Academiejaar</span><span class="meta-value">2025-2026</span>
+            <span class="meta-label">Type bewijs</span><span class="meta-value">eigen project</span>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         2. PROJECT (DOELSTELLING)
+         ============================================================ -->
+    <section class="page">
+        <h2>Het project</h2>
+        <p>
+            Dit dashboard is een persoonlijk project: een single-page webapplicatie die vier
+            dagelijkse noden samenbrengt op één centrale pagina. De vier widgets tonen het actuele
+            weerbericht voor opgeslagen locaties, een dagelijks avondmaalrecept met filters voor
+            dieet en bereidingstijd, de NASA-foto van de dag met uitleg, en een eenvoudig
+            takenbeheer.
+        </p>
+        <p>
+            Het project dient als demonstratiestuk van mijn vaardigheden in webontwikkeling en
+            API-integratie. De nadruk lag bewust op een nette, professionele uitwerking die de
+            geleerde concepten concreet toepast: een duidelijke architectuur, type-veiligheid,
+            integratie met externe API's en degelijke foutafhandeling.
+        </p>
+
+        <h3>Technische keuzes</h3>
+        <ul>
+            <li><strong>Build tool:</strong> Vite, voor een snelle ontwikkelomgeving met native TypeScript-ondersteuning.</li>
+            <li><strong>Taal:</strong> TypeScript, voor type-veiligheid en betere onderhoudbaarheid.</li>
+            <li><strong>CSS-framework:</strong> Bootstrap 5, voor een degelijke grid en ingebouwde dark mode.</li>
+            <li><strong>API's:</strong> OpenWeatherMap (weer), Spoonacular (recepten), NASA APOD (foto van de dag), en een vertaal-API voor de Nederlandse inhoud.</li>
+        </ul>
+
+        <h3>Broncode</h3>
+        <p>
+            De volledige broncode van dit project staat publiek op GitHub, zodat ze altijd
+            terug te vinden is:
+            <a href="https://github.com/jonastrapmore/jonastrap-projecten/tree/main/dashboard">github.com/jonastrapmore/jonastrap-projecten/tree/main/dashboard</a>
+        </p>
+    </section>
+
+    <!-- ============================================================
+         3. METHODIEK EN PROGRAMMEERTAAL AFSTEMMEN (waarom dit doel)
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Methodiek en programmeertaal afstemmen</h2>
+        <p>
+            Ik koppel dit project aan dit doel omdat ik de technologie en de werkwijze doelbewust
+            heb afgestemd op wat de toepassing nodig had, en de oplossing onderhoudbaar heb
+            gehouden. Hieronder de twee kernpunten van het doel.
+        </p>
+
+        <h3>1. Een programmeeromgeving die past bij de oplossing</h3>
+        <p>
+            Het dashboard is een frontend-webapplicatie die meerdere API's combineert. Ik koos een
+            stack en omgeving die daar precies bij passen:
+        </p>
+        <table>
+            <tr>
+                <th>Onderdeel</th>
+                <th>Keuze</th>
+                <th>Waarom past dit bij de toepassing</th>
+            </tr>
+            <tr>
+                <td>Build tool</td>
+                <td>Vite</td>
+                <td>Snelle ontwikkelserver, native TypeScript en een eenvoudige statische build voor de hosting.</td>
+            </tr>
+            <tr>
+                <td>Taal</td>
+                <td>TypeScript</td>
+                <td>Type-veiligheid en zelfdocumenterende code voor een project dat met meerdere API's groeit.</td>
+            </tr>
+            <tr>
+                <td>UI-framework</td>
+                <td>Bootstrap 5</td>
+                <td>Kant-en-klare grid en dark mode, zodat een verzorgde, responsieve UI snel klaar is.</td>
+            </tr>
+            <tr>
+                <td>Opslag</td>
+                <td>localStorage</td>
+                <td>Lichte persistentie die past bij een frontend-only app zonder backend.</td>
+            </tr>
+            <tr>
+                <td>Recept-API</td>
+                <td>Spoonacular</td>
+                <td>Bewust gekozen na TheMealDB, omdat enkel Spoonacular voedingswaarde en prijs levert voor de filters.</td>
+            </tr>
+        </table>
+        <ul>
+            <li>De architectuur volgt hetzelfde, herkenbare patroon als een eerder portfolioproject, zodat ze aansluit bij een <strong>bestaande oplossing</strong> en werkwijze.</li>
+            <li><strong>Afstemmen op de toepassing</strong> was een doorlopend proces: toen TheMealDB geen voedingswaarde of prijs bleek te hebben voor de filters, stapte ik over naar Spoonacular.</li>
+            <li>De <strong>omgeving</strong>: VS Code als editor, git voor versiebeheer, en een statische build die ik met een aangepast basis-pad op de hosting (Combell, submap <code>/dashboard/</code>) heb geplaatst.</li>
+        </ul>
+
+        <h3>2. Onderhoudbaar voor collega's</h3>
+        <p>Ik bouwde de oplossing zo op dat iemand anders ze vlot kan begrijpen, aanpassen en uitbreiden:</p>
+        <ul>
+            <li><strong>Eén consistent patroon</strong> over alle widgets (elk een custom element met dezelfde opbouw), zodat een collega na één widget de rest meteen begrijpt.</li>
+            <li><strong>Getypeerde code</strong>: de interfaces en types maken duidelijk welke data verwacht wordt, wat aanpassen veiliger maakt.</li>
+            <li><strong>Documentatie</strong>: Nederlandse comments doorheen de code en een uitgebreide README (architectuur, technische keuzes, planning).</li>
+            <li><strong>Gescheiden lagen en hergebruik</strong>: aparte mappen per verantwoordelijkheid, een abstracte provider en een gedeelde vertaalhulp, zodat er weinig dubbele code is.</li>
+            <li><strong>Versiebeheer</strong>: git met betekenisvolle commits en een <code>.gitignore</code>, zodat het project net en deelbaar blijft.</li>
+        </ul>
+    </section>
+
+    <!-- ============================================================
+         4. SCREENSHOTS / BEWIJS
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Het resultaat</h2>
+
+        <div class="screenshot">
+            <img src="dashboard-licht.png" alt="Het dashboard">
+        </div>
+        <p class="caption">Afbeelding 1: het dashboard, gebouwd met de gekozen stack (Vite, TypeScript, Bootstrap).</p>
+
+        <h3>Een vaste, onderhoudbare structuur per widget</h3>
+        <p>
+            Elke widget volgt dezelfde opbouw met sprekende methodenamen. Een collega die één widget
+            leest, begrijpt meteen de andere:
+        </p>
+        <pre>
+export class RecipeWidget extends CustomElement {
+    constructor() {
+        super(HTML);
+        // luisteraars koppelen en meteen een recept laden
+    }
+
+    async #getRandomRecipe() { /* haalt een recept op, rekening houdend met de filters */ }
+    async #showMeal(recipe: Recipe) { /* vult de kaart met het recept */ }
+    async #renderIngredients(recipe: Recipe) { /* bouwt de ingredientenlijst op */ }
+    #showError(bericht: string) { /* toont een nette foutmelding */ }
+}</pre>
+        <p class="caption">Codefragment uit <code>src/components/recipeWidget/recipeWidget.ts</code>.</p>
+
+        <h3>Mapstructuur</h3>
+        <p>De duidelijke laagopbouw maakt het project overzichtelijk en onderhoudbaar:</p>
+        <pre>
+dashboard/
+  src/
+    components/      widgets en navbar (custom elements)
+    data/            persistence providers
+    effects/         thema-beheer en de gedeelde vertaalhulp
+    models/          datamodellen (Task, SavedLocation)
+    pages/           de dashboardpagina
+    router/          Router, Page en CustomElement basisklassen
+    main.ts          registratie van de widgets en de routes
+    style.css
+  index.html
+  tsconfig.json
+  vite.config.ts</pre>
+    </section>
+
+    <!-- ============================================================
+         5. ZELFREFLECTIE
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Zelfreflectie</h2>
+        <div class="reflectie">
+            <h3>Wat ging goed</h3>
+            <p>
+                De gekozen stack paste goed bij de toepassing: Vite gaf me een snelle
+                ontwikkelomgeving, TypeScript hield de groeiende code beheersbaar, en Bootstrap
+                leverde snel een verzorgde, responsieve interface. Door overal hetzelfde patroon te
+                gebruiken, bleef de oplossing overzichtelijk en uitbreidbaar.
+            </p>
+
+            <h3>Wat ik geleerd heb</h3>
+            <p>
+                Ik leerde dat afstemmen op de toepassing een doorlopende keuze is, geen eenmalige
+                beslissing. Toen TheMealDB niet voldeed (geen voedingswaarde of prijs voor de
+                filters), heb ik bewust een andere API gekozen die wél bij de eisen paste. Ook
+                besefte ik hoe sterk documentatie en een vaste structuur de onderhoudbaarheid
+                bepalen: comments, types en een README maken het verschil voor wie later met de code
+                werkt.
+            </p>
+
+            <h3>Uitdagingen</h3>
+            <p>
+                Een afweging was frontend-only werken zonder backend. Dat past bij de schaal van het
+                project, maar betekent ook dat API-sleutels in de browser belanden. Voor de
+                hosting moest ik de omgeving afstemmen op de submap (<code>/dashboard/</code>) door
+                het basis-pad in de build aan te passen, anders vond de browser de bestanden niet.
+            </p>
+
+            <h3>Wat beter kan</h3>
+            <ul>
+                <li>Een <strong>linter</strong> (ESLint/Prettier) om de conventies automatisch af te dwingen, wat de onderhoudbaarheid voor een team verder verhoogt.</li>
+                <li>Een <strong>backend</strong> voor een productie-omgeving, zodat sleutels veilig blijven.</li>
+            </ul>
+
+            <h3>Conclusie</h3>
+            <p>
+                Dit project toont de twee kernpunten van het doel aan: ik koos een
+                <strong>programmeeromgeving</strong> (Vite, TypeScript, Bootstrap, localStorage,
+                Spoonacular) die past bij een frontend-dashboard dat meerdere API's combineert, en ik
+                maakte de oplossing <strong>onderhoudbaar voor collega's</strong> door een consistent
+                patroon, getypeerde code, gescheiden lagen en degelijke documentatie.
+            </p>
+        </div>
+    </section>
+
+</body>
+
+</html>

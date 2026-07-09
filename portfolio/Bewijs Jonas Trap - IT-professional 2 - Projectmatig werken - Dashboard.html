@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - IT-professional 2: Projectmatig werken</title>
+    <style>
+        /* ============================================================
+           Portfolio-sjabloon - huisstijl overgenomen van het dashboard
+           Kleuren: donkerblauw #2c3e50 en oranje #e67e22
+           Zet om naar PDF via Ctrl+P -> Opslaan als PDF
+           ============================================================ */
+
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --light: #e6eef5;
+            --dark-bg: #1a1d24;
+            --text: #1f2730;
+            --muted: #5b6b7a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text);
+            line-height: 1.55;
+            margin: 0;
+            font-size: 11pt;
+        }
+
+        @page {
+            size: A4;
+            margin: 18mm 16mm;
+        }
+
+        .page {
+            padding: 0 4mm;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* ---- Titelblad ---- */
+        .cover {
+            min-height: 247mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            page-break-after: always;
+        }
+
+        .cover .banner {
+            background: var(--primary);
+            color: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            border-top: 8px solid var(--accent);
+        }
+
+        .cover .kicker {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cover h1 {
+            font-size: 30pt;
+            margin: 0 0 8px;
+            color: #fff;
+        }
+
+        .cover .subtitle {
+            font-size: 14pt;
+            color: var(--light);
+            margin-top: 6px;
+        }
+
+        .cover .role {
+            display: inline-block;
+            margin-top: 24px;
+            background: var(--accent);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 12.5pt;
+        }
+
+        .cover .meta {
+            margin: 44px auto 0;
+            display: inline-grid;
+            grid-template-columns: auto auto;
+            gap: 10px 16px;
+            text-align: left;
+            font-size: 11.5pt;
+        }
+
+        .cover .meta-label {
+            text-align: right;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .cover .meta-value {
+            color: var(--muted);
+        }
+
+        /* ---- Koppen ---- */
+        h2 {
+            color: var(--accent);
+            font-size: 17pt;
+            margin: 28px 0 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        h3 {
+            color: var(--primary);
+            font-size: 13pt;
+            margin: 18px 0 6px;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 4px 0;
+        }
+
+        /* ---- Tabel ---- */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 12px 0;
+            font-size: 10.5pt;
+        }
+
+        th,
+        td {
+            border: 1px solid #cdd7e0;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        tr:nth-child(even) td {
+            background: var(--light);
+        }
+
+        /* ---- Codeblok ---- */
+        pre {
+            background: var(--dark-bg);
+            color: #e6eef5;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9pt;
+            line-height: 1.45;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        /* ---- Screenshot ---- */
+        .screenshot {
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 6px;
+            text-align: center;
+            background: #fff;
+            margin: 12px 0;
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 6px;
+        }
+
+        .caption {
+            font-size: 9.5pt;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        /* ---- Accentkader voor de zelfreflectie ---- */
+        .reflectie {
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 6px 18px 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================
+         1. TITELBLAD
+         ============================================================ -->
+    <section class="cover">
+        <div class="banner">
+            <div class="kicker">Portfolio - Graduaat Programmeren</div>
+            <h1>Persoonlijk Dashboard</h1>
+            <div class="subtitle">Een webapplicatie met vier API-gedreven widgets</div>
+            <div class="role">De IT-professional &middot; Doel 2: Je volgt planningen stipt op</div>
+        </div>
+        <div class="meta">
+            <span class="meta-label">Auteur</span><span class="meta-value">Jonas Trap</span>
+            <span class="meta-label">Opleiding</span><span class="meta-value">Graduaat Programmeren, Thomas More Geel</span>
+            <span class="meta-label">Academiejaar</span><span class="meta-value">2025-2026</span>
+            <span class="meta-label">Type bewijs</span><span class="meta-value">eigen project</span>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         2. PROJECT (DOELSTELLING)
+         ============================================================ -->
+    <section class="page">
+        <h2>Het project</h2>
+        <p>
+            Dit dashboard is een persoonlijk project: een single-page webapplicatie die vier
+            dagelijkse noden samenbrengt op één centrale pagina. De vier widgets tonen het actuele
+            weerbericht voor opgeslagen locaties, een dagelijks avondmaalrecept met filters voor
+            dieet en bereidingstijd, de NASA-foto van de dag met uitleg, en een eenvoudig
+            takenbeheer.
+        </p>
+        <p>
+            Het project dient als demonstratiestuk van mijn vaardigheden in webontwikkeling en
+            API-integratie. De nadruk lag bewust op een nette, professionele uitwerking die de
+            geleerde concepten concreet toepast: een duidelijke architectuur, type-veiligheid,
+            integratie met externe API's en degelijke foutafhandeling.
+        </p>
+
+        <h3>Technische keuzes</h3>
+        <ul>
+            <li><strong>Build tool:</strong> Vite, voor een snelle ontwikkelomgeving met native TypeScript-ondersteuning.</li>
+            <li><strong>Taal:</strong> TypeScript, voor type-veiligheid en betere onderhoudbaarheid.</li>
+            <li><strong>CSS-framework:</strong> Bootstrap 5, voor een degelijke grid en ingebouwde dark mode.</li>
+            <li><strong>API's:</strong> OpenWeatherMap (weer), Spoonacular (recepten), NASA APOD (foto van de dag), en een vertaal-API voor de Nederlandse inhoud.</li>
+        </ul>
+
+        <h3>Broncode</h3>
+        <p>
+            De volledige broncode van dit project staat publiek op GitHub, zodat ze altijd
+            terug te vinden is:
+            <a href="https://github.com/jonastrapmore/jonastrap-projecten/tree/main/dashboard">github.com/jonastrapmore/jonastrap-projecten/tree/main/dashboard</a>
+        </p>
+    </section>
+
+    <!-- ============================================================
+         3. PLANNINGEN STIPT OPVOLGEN (waarom dit doel)
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Planningen stipt opvolgen</h2>
+        <p>
+            Het dashboard is een persoonlijk project, dus de teamgebonden aspecten van projectmatig
+            werken zijn hier niet van toepassing. Daarom focust dit bewijs op één concreet kernpunt
+            van het doel: <strong>het stipt opvolgen van de planning</strong>. Ik stelde vooraf een
+            planning in fasen op, werkte die fase per fase af, en uploadde elke afgewerkte fase
+            meteen naar git. De git-historie maakt zo objectief zichtbaar wanneer elke stap klaar
+            was.
+        </p>
+
+        <h3>Een planning in fasen</h3>
+        <p>
+            De README bevat een projectplanning die het werk opdeelt in zes fasen, elk met een eigen
+            doel en een status. Bij het afwerken van elke fase zette ik de status op
+            <em>Afgerond</em>:
+        </p>
+        <table>
+            <tr>
+                <th>Fase</th>
+                <th>Onderdeel</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>Fase 1</td>
+                <td>Projectopzet (Vite, TypeScript, Bootstrap, router en providers)</td>
+                <td>Afgerond</td>
+            </tr>
+            <tr>
+                <td>Fase 2</td>
+                <td>Widget Weer</td>
+                <td>Afgerond</td>
+            </tr>
+            <tr>
+                <td>Fase 3</td>
+                <td>Widget Recept</td>
+                <td>Afgerond</td>
+            </tr>
+            <tr>
+                <td>Fase 4</td>
+                <td>Widget Taken</td>
+                <td>Afgerond</td>
+            </tr>
+            <tr>
+                <td>Fase 5</td>
+                <td>Widget NASA Foto van de Dag</td>
+                <td>Afgerond</td>
+            </tr>
+            <tr>
+                <td>Fase 6</td>
+                <td>Afwerking en validatie (foutafhandeling, comments, README)</td>
+                <td>Afgerond</td>
+            </tr>
+        </table>
+
+        <h3>Voortgang met datums</h3>
+        <p>
+            Naast de planning hield ik een voortgangstabel bij met de datum waarop elk onderdeel
+            klaar was:
+        </p>
+        <table>
+            <tr>
+                <th>Datum</th>
+                <th>Onderdeel</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>17/06/2026</td>
+                <td>Projectopzet</td>
+                <td>Afgewerkt</td>
+            </tr>
+            <tr>
+                <td>17/06/2026</td>
+                <td>Navbar</td>
+                <td>Afgewerkt</td>
+            </tr>
+            <tr>
+                <td>18/06 &amp; 20/06/2026</td>
+                <td>Takenwidget</td>
+                <td>Afgewerkt</td>
+            </tr>
+            <tr>
+                <td>21/06, 22/06 &amp; 23/06/2026</td>
+                <td>Weerwidget</td>
+                <td>Afgewerkt</td>
+            </tr>
+            <tr>
+                <td>23/06/2026</td>
+                <td>Receptwidget</td>
+                <td>Afgewerkt</td>
+            </tr>
+            <tr>
+                <td>23/06/2026</td>
+                <td>NASA-widget</td>
+                <td>Afgewerkt</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- ============================================================
+         4. BEWIJS: GIT-HISTORIE
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Het resultaat</h2>
+        <p>
+            Dat de planning ook echt stipt werd opgevolgd, blijkt uit de git-historie: elke
+            afgewerkte fase werd op de dag dat ze klaar was in git vastgelegd. De commit-berichten
+            en datums vormen een objectief spoor van de voortgang.
+        </p>
+        <table>
+            <tr>
+                <th>Datum (commit)</th>
+                <th>Commit-bericht</th>
+                <th>Fase</th>
+            </tr>
+            <tr>
+                <td>17/06/2026</td>
+                <td>setup project clean project + html en css is gemaakt</td>
+                <td>Fase 1</td>
+            </tr>
+            <tr>
+                <td>17/06/2026</td>
+                <td>navbar dashboard is klaar: uur - datum - begroeting - theme-toggle</td>
+                <td>Fase 1</td>
+            </tr>
+            <tr>
+                <td>20/06/2026</td>
+                <td>wiget task is klaar: toevoegen, verwijderen, filteren, checken, mass verwijderen</td>
+                <td>Fase 4</td>
+            </tr>
+            <tr>
+                <td>23/06/2026</td>
+                <td>weather widget is klaar: huidig weer, opgeslagen locaties, icoon, refresh en 5-daagse voorspelling</td>
+                <td>Fase 2</td>
+            </tr>
+            <tr>
+                <td>23/06/2026</td>
+                <td>receptwidget klaar: Spoonacular met keto/low calorie/snel klaar filters, vertaling en voedingswaarde-badges</td>
+                <td>Fase 3</td>
+            </tr>
+            <tr>
+                <td>23/06/2026</td>
+                <td>NASA-widget klaar: foto/video van de dag met vertaling, mediatypes en retry; comments en README bijgewerkt</td>
+                <td>Fase 5</td>
+            </tr>
+            <tr>
+                <td>23/06/2026</td>
+                <td>foutafhandeling weerwidget + Fase 6 afgerond; README en comments bijgewerkt</td>
+                <td>Fase 6</td>
+            </tr>
+        </table>
+        <p class="caption">
+            Commit-historie van de map <code>dashboard</code> op
+            github.com/jonastrapmore/jonastrap-projecten. De datums sluiten aan op de planning en de
+            voortgangstabel.
+        </p>
+    </section>
+
+    <!-- ============================================================
+         5. ZELFREFLECTIE
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Zelfreflectie</h2>
+        <div class="reflectie">
+            <h3>Wat ging goed</h3>
+            <p>
+                Door vooraf een planning in fasen op te stellen, had ik op elk moment overzicht over
+                wat er nog moest gebeuren. Elke afgewerkte fase committe ik meteen naar git, zodat de
+                voortgang traceerbaar bleef en niets verloren kon gaan.
+            </p>
+
+            <h3>Wat ik geleerd heb</h3>
+            <p>
+                Ik leerde dat een planning pas waarde heeft als je ze ook opvolgt en zichtbaar maakt.
+                De combinatie van een gefaseerde planning, een voortgangstabel en versiebeheer geeft
+                discipline én een objectief bewijs: aan de git-historie kan iedereen aflezen wanneer
+                welke stap klaar was.
+            </p>
+
+            <h3>Uitdagingen</h3>
+            <p>
+                Een deel van het werk viel samen op één dag (23/06): drie widgets werden toen
+                afgewerkt. Daardoor moest ik bewust prioriteren en de fasen na elkaar afronden in
+                plaats van alles tegelijk te beginnen. De vaste fase-indeling hielp me om gefocust te
+                blijven.
+            </p>
+
+            <h3>Wat beter kan</h3>
+            <ul>
+                <li>De tijdsinschatting per fase verfijnen: sommige fasen waren sneller klaar dan geschat, andere liepen uit.</li>
+                <li>Vaker tussentijds committen in plaats van een hele fase in één keer, zodat de voortgang nog fijnmaziger zichtbaar is.</li>
+            </ul>
+
+            <h3>Conclusie</h3>
+            <p>
+                Voor dit persoonlijke project toon ik het kernpunt
+                <strong>"je volgt planningen stipt op"</strong> aan: ik stelde een planning in fasen
+                op, volgde die op via een voortgangstabel, en leverde elke fase op de geplande dag op
+                via git. De groepsgebonden aspecten van projectmatig werken toon ik aan met een
+                project waarin ik wel in team werkte.
+            </p>
+        </div>
+    </section>
+
+</body>
+
+</html>

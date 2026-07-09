@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Programmeur 2: Volgens de standaarden</title>
+    <style>
+        /* ============================================================
+           Portfolio-sjabloon - huisstijl overgenomen van het dashboard
+           Kleuren: donkerblauw #2c3e50 en oranje #e67e22
+           Zet om naar PDF via Ctrl+P -> Opslaan als PDF
+           ============================================================ */
+
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --light: #e6eef5;
+            --dark-bg: #1a1d24;
+            --text: #1f2730;
+            --muted: #5b6b7a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text);
+            line-height: 1.55;
+            margin: 0;
+            font-size: 11pt;
+        }
+
+        /* ---- A4-pagina en marges bij het printen ---- */
+        @page {
+            size: A4;
+            margin: 18mm 16mm;
+        }
+
+        .page {
+            padding: 0 4mm;
+        }
+
+        /* Elke hoofdsectie op een nieuwe pagina */
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* ---- Titelblad ---- */
+        .cover {
+            min-height: 247mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            page-break-after: always;
+        }
+
+        .cover .banner {
+            background: var(--primary);
+            color: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            border-top: 8px solid var(--accent);
+        }
+
+        .cover .kicker {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cover h1 {
+            font-size: 30pt;
+            margin: 0 0 8px;
+            color: #fff;
+        }
+
+        .cover .subtitle {
+            font-size: 14pt;
+            color: var(--light);
+            margin-top: 6px;
+        }
+
+        .cover .role {
+            display: inline-block;
+            margin-top: 24px;
+            background: var(--accent);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 13pt;
+        }
+
+        .cover .meta {
+            margin: 44px auto 0;
+            display: inline-grid;
+            grid-template-columns: auto auto;
+            gap: 10px 16px;
+            text-align: left;
+            font-size: 11.5pt;
+        }
+
+        .cover .meta-label {
+            text-align: right;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .cover .meta-value {
+            color: var(--muted);
+        }
+
+        /* ---- Koppen ---- */
+        h2 {
+            color: var(--accent);
+            font-size: 17pt;
+            margin: 28px 0 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        h3 {
+            color: var(--primary);
+            font-size: 13pt;
+            margin: 18px 0 6px;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 4px 0;
+        }
+
+        /* ---- Codeblok (donker thema van het dashboard) ---- */
+        pre {
+            background: var(--dark-bg);
+            color: #e6eef5;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9pt;
+            line-height: 1.45;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        /* ---- Screenshot-plaatshouder ---- */
+        .screenshot {
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 6px;
+            text-align: center;
+            background: #fff;
+            margin: 12px 0;
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 6px;
+        }
+
+        .caption {
+            font-size: 9.5pt;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        /* ---- Accentkader voor de zelfreflectie ---- */
+        .reflectie {
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 6px 18px 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================
+         1. TITELBLAD
+         ============================================================ -->
+    <section class="cover">
+        <div class="banner">
+            <div class="kicker">Portfolio - Graduaat Programmeren</div>
+            <h1>Persoonlijk Dashboard</h1>
+            <div class="subtitle">Een webapplicatie met vier API-gedreven widgets</div>
+            <div class="role">De programmeur &middot; Doel 2: Je programmeert volgens de standaarden</div>
+        </div>
+        <div class="meta">
+            <span class="meta-label">Auteur</span><span class="meta-value">Jonas Trap</span>
+            <span class="meta-label">Opleiding</span><span class="meta-value">Graduaat Programmeren, Thomas More Geel</span>
+            <span class="meta-label">Academiejaar</span><span class="meta-value">2025-2026</span>
+            <span class="meta-label">Type bewijs</span><span class="meta-value">eigen project</span>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         2. PROJECT (DOELSTELLING)
+         ============================================================ -->
+    <section class="page">
+        <h2>Het project</h2>
+        <p>
+            Dit dashboard is een persoonlijk project: een single-page webapplicatie die vier
+            dagelijkse noden samenbrengt op één centrale pagina. De vier widgets tonen het actuele
+            weerbericht voor opgeslagen locaties, een dagelijks avondmaalrecept met filters voor
+            dieet en bereidingstijd, de NASA-foto van de dag met uitleg, en een eenvoudig
+            takenbeheer.
+        </p>
+        <p>
+            Het project dient als demonstratiestuk van mijn vaardigheden in webontwikkeling en
+            API-integratie. De nadruk lag bewust op een nette, professionele uitwerking die de
+            geleerde concepten concreet toepast: een duidelijke architectuur, type-veiligheid,
+            integratie met externe API's en degelijke foutafhandeling.
+        </p>
+
+        <h3>Technische keuzes</h3>
+        <ul>
+            <li><strong>Build tool:</strong> Vite, voor een snelle ontwikkelomgeving met native TypeScript-ondersteuning.</li>
+            <li><strong>Taal:</strong> TypeScript, voor type-veiligheid en betere onderhoudbaarheid.</li>
+            <li><strong>CSS-framework:</strong> Bootstrap 5, voor een degelijke grid en ingebouwde dark mode.</li>
+            <li><strong>API's:</strong> OpenWeatherMap (weer), Spoonacular (recepten), NASA APOD (foto van de dag), en een vertaal-API voor de Nederlandse inhoud.</li>
+        </ul>
+
+        <h3>Broncode</h3>
+        <p>
+            De volledige broncode van dit project staat publiek op GitHub, zodat ze altijd
+            terug te vinden is:
+            <a href="https://github.com/jonastrapmore/jonastrap-projecten/tree/main/dashboard">github.com/jonastrapmore/jonastrap-projecten/tree/main/dashboard</a>
+        </p>
+    </section>
+
+    <!-- ============================================================
+         3. WERKEN VOLGENS DE STANDAARDEN (waarom dit doel)
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Werken volgens de standaarden</h2>
+        <p>
+            Ik koppel dit project aan het doel <em>"je programmeert volgens de standaarden"</em>
+            omdat ik doorheen het hele project consequent professionele conventies en gangbare
+            patronen heb toegepast, in elke laag van de applicatie: TypeScript, HTML, CSS,
+            API-integratie en foutafhandeling.
+        </p>
+
+        <h3>TypeScript</h3>
+        <ul>
+            <li>Strikte modus aan (<code>strict: true</code> in <code>tsconfig.json</code>), zodat fouten al tijdens het ontwikkelen opduiken.</li>
+            <li>Voor elk API-antwoord een eigen <strong>interface</strong> (bv. <code>WeatherResponse</code>, <code>Recipe</code>, <code>ApodResponse</code>), zodat de data getypeerd en voorspelbaar is.</li>
+            <li><strong>Private velden</strong> (<code>#</code>) en kleine methodes met één duidelijke verantwoordelijkheid.</li>
+            <li>Modern <code>async/await</code> in plaats van losse callbacks.</li>
+        </ul>
+
+        <h3>Betekenisvolle namen (variabelen, objecten, functies en methoden)</h3>
+        <ul>
+            <li><strong>Klassen en objecten</strong> beschrijven hun rol: <code>WeatherWidget</code>, <code>RecipeWidget</code>, het model <code>SavedLocation</code>, en de provider <code>locationsLocalStorageProvider</code>.</li>
+            <li><strong>Functies en methoden</strong> zeggen wat ze doen: <code>#getRandomRecipe()</code>, <code>#showMeal()</code>, <code>#renderIngredients()</code>, <code>#showError()</code>, <code>#weatherEmoji()</code> en de gedeelde <code>translate()</code>.</li>
+            <li><strong>Variabelen</strong> zijn sprekend: <code>vertaaldeRegels</code>, <code>gekozen</code>, <code>calorieen</code>, <code>perDag</code>, in plaats van nietszeggende namen als x of data1.</li>
+        </ul>
+
+        <h3>HTML</h3>
+        <ul>
+            <li>Semantische opbouw en herbruikbare componenten via <strong>custom elements</strong> (elke widget is een eigen web component).</li>
+            <li>Toegankelijkheid: <code>aria-label</code>'s op knoppen en invoervelden, betekenisvolle alt-teksten op afbeeldingen.</li>
+        </ul>
+
+        <h3>CSS</h3>
+        <ul>
+            <li><strong>CSS-variabelen</strong> voor de huisstijl (accentkleur, achtergrond), zodat het thema centraal beheerd wordt.</li>
+            <li>Een <strong>licht/donker-thema</strong> dat via een toggle wisselt, met Bootstrap's <code>data-bs-theme</code>.</li>
+            <li><strong>Responsive</strong> ontwerp met de Bootstrap-grid en eigen media queries.</li>
+        </ul>
+
+        <h3>API-integratie</h3>
+        <ul>
+            <li>Aanvragen met de browser <code>fetch</code>-API, met <code>URLSearchParams</code> voor nette querystrings.</li>
+            <li>Getypeerde verwerking van de JSON-antwoorden.</li>
+            <li>Een <strong>gedeelde vertaalhulp</strong> die door meerdere widgets hergebruikt wordt (DRY), met een fallback van Google naar MyMemory.</li>
+            <li>API-sleutels in een <code>.env</code>-bestand, nooit hardgecodeerd.</li>
+        </ul>
+
+        <h3>Foutafhandeling</h3>
+        <ul>
+            <li><code>try/catch</code> rond elke API-aanvraag, met <strong>gebruiksvriendelijke meldingen</strong> in plaats van een blanco scherm.</li>
+            <li><strong>Automatische herhaling</strong> bij een tijdelijke serverfout (bv. NASA die af en toe een 503 geeft).</li>
+            <li>Specifieke meldingen per situatie: dagelijkse limiet bereikt, geen resultaat voor de filters, of een netwerkfout.</li>
+        </ul>
+
+        <h3>Overzichtelijke structuur, onderhoud en hergebruik</h3>
+        <p>Ik werk overzichtelijk en gestructureerd, zodat onderhoud en hergebruik vanzelfsprekend zijn:</p>
+        <ul>
+            <li>Een duidelijke laagopbouw (<code>components</code>, <code>data</code>, <code>effects</code>, <code>models</code>, <code>pages</code>, <code>router</code>), zodat je meteen weet waar iets thuishoort.</li>
+            <li>Een abstracte <code>PersistenceProvider</code> met twee implementaties (localStorage en memory) en het <strong>observer-patroon</strong> voor automatisch herrenderen.</li>
+            <li>Versiebeheer met <strong>git</strong> en een <code>.gitignore</code> die <code>node_modules</code>, <code>.env</code> en <code>dist</code> buiten de repository houdt.</li>
+        </ul>
+    </section>
+
+    <!-- ============================================================
+         4. SCREENSHOTS / BEWIJS
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Het resultaat</h2>
+
+        <div class="screenshot">
+            <img src="dashboard-licht.png" alt="Het dashboard in het lichte thema">
+        </div>
+        <p class="caption">Afbeelding 1: het dashboard in het lichte thema, met de vier widgets (weer, recept, NASA, taken).</p>
+
+        <div class="screenshot">
+            <img src="dashboard-donker.png" alt="Het dashboard in het donkere thema">
+        </div>
+        <p class="caption">Afbeelding 2: hetzelfde dashboard in het donkere thema. De theme-toggle in de navbar wisselt centraal tussen licht en donker, wat de CSS-standaard (themabeheer) aantoont.</p>
+
+        <h3 style="page-break-before: always;">Mapstructuur</h3>
+        <p>De duidelijke laagopbouw maakt het project overzichtelijk en uitbreidbaar:</p>
+        <pre>
+dashboard/
+  src/
+    components/      widgets en navbar (custom elements)
+      weatherWidget/
+      recipeWidget/
+      nasaWidget/
+      notesWidget/
+      navbar/
+    data/            persistence providers (abstract, localStorage, memory)
+    effects/         thema-beheer en de gedeelde vertaalhulp
+    models/          datamodellen (Task, SavedLocation)
+    pages/           de dashboardpagina
+    router/          Router, Page en CustomElement basisklassen
+    main.ts          registratie van de widgets en de routes
+    style.css
+  index.html
+  package.json
+  tsconfig.json
+  vite.config.ts</pre>
+
+        <h3>Voorbeeld van code volgens de standaarden</h3>
+        <p>
+            De gedeelde vertaalhulp toont meerdere standaarden tegelijk: een getypeerd resultaat,
+            <code>async/await</code>, foutafhandeling met een fallback, en duidelijke comments.
+        </p>
+        <pre>
+// Resultaat van een vertaling: de tekst plus welke engine ze leverde
+export interface VertaalResultaat {
+    text: string;
+    engine: string;
+}
+
+// Probeert eerst Google, valt terug op MyMemory, dan op de originele tekst
+export async function translate(text: string, from = 'en', to = 'nl'): Promise&lt;VertaalResultaat&gt; {
+    if (!text || text.trim() === '') {
+        return { text, engine: 'Origineel (Engels)' };
+    }
+    try {
+        const res = await fetch(`https://translate.googleapis.com/...&q=${encodeURIComponent(text)}`);
+        if (res.ok) {
+            const data = await res.json();
+            const vertaald = data[0].map((segment) =&gt; segment[0]).join('');
+            return { text: vertaald, engine: 'Google' };
+        }
+    } catch {
+        // val door naar MyMemory
+    }
+    // ... MyMemory-fallback ...
+    return { text, engine: 'Origineel (Engels)' };
+}</pre>
+        <p class="caption">Codefragment uit <code>src/effects/translate.ts</code>: getypeerd, sprekende namen (<code>VertaalResultaat</code>, <code>vertaald</code>, <code>segment</code>) en foutafhandeling met fallback.</p>
+
+        <h3>Betekenisvolle namen en een herbruikbare structuur</h3>
+        <p>
+            Elke widget volgt dezelfde, overzichtelijke opbouw met sprekende methodenamen, wat
+            onderhoud en uitbreiding eenvoudig maakt:
+        </p>
+        <pre>
+export class RecipeWidget extends CustomElement {
+    constructor() {
+        super(HTML);
+        // luisteraars koppelen en meteen een recept laden
+    }
+
+    async #getRandomRecipe() { /* haalt een recept op, rekening houdend met de filters */ }
+    async #showMeal(recipe: Recipe) { /* vult de kaart met het recept */ }
+    async #renderIngredients(recipe: Recipe) { /* bouwt de ingredientenlijst op */ }
+    #showError(bericht: string) { /* toont een nette foutmelding */ }
+}</pre>
+        <p class="caption">Vereenvoudigd fragment uit <code>src/components/recipeWidget/recipeWidget.ts</code>: de methodenamen verraden meteen hun functie, en elke widget volgt dezelfde structuur.</p>
+    </section>
+
+    <!-- ============================================================
+         5. ZELFREFLECTIE
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Zelfreflectie</h2>
+        <div class="reflectie">
+            <h3>Wat ging goed</h3>
+            <p>
+                Door vanaf het begin één vast patroon aan te houden (elke widget als custom element
+                met dezelfde opbouw), kon ik elke nieuwe widget snel en herkenbaar uitwerken. De
+                strikte TypeScript-modus ving regelmatig typfouten op nog voor ik de app draaide,
+                bijvoorbeeld verkeerd gespelde veldnamen in API-antwoorden. Het hergebruik van de
+                provider en de vertaalhulp hield de code DRY.
+            </p>
+
+            <h3>Wat ik geleerd heb</h3>
+            <p>
+                Ik heb gemerkt hoe sterk standaarden en een vaste structuur het werk vergemakkelijken:
+                uitbreiden werd voorspelbaar omdat alles hetzelfde stramien volgde. Bij de
+                API-integraties leerde ik het belang van getypeerde antwoorden en degelijke
+                foutafhandeling: externe diensten zijn niet altijd beschikbaar (NASA gaf soms een
+                503, Spoonacular een limietfout), en een nette melding of een automatische herhaling
+                maakt het verschil tussen een professionele en een kapotte indruk.
+            </p>
+
+            <h3>Uitdagingen</h3>
+            <p>
+                Een aandachtspunt was de beveiliging van API-sleutels. Ze staan keurig in een
+                <code>.env</code>-bestand en buiten versiebeheer, maar in een frontend-applicatie
+                belanden ze bij het builden toch in de browsercode. Ik begrijp nu dat een echte
+                oplossing een backend-proxy vereist die de sleutel verbergt. Voor een lokaal
+                demonstratieproject is de huidige aanpak aanvaardbaar, maar ik weet wat de
+                professionele standaard zou zijn.
+            </p>
+
+            <h3>Wat beter kan</h3>
+            <ul>
+                <li>Een <strong>linter</strong> (ESLint/Prettier) toevoegen om de standaarden automatisch af te dwingen, in plaats van ze handmatig te bewaken.</li>
+                <li><strong>Automatische tests</strong> schrijven; nu heb ik enkel handmatig getest.</li>
+                <li>De sleutels achter een <strong>backend-proxy</strong> plaatsen voor een echte productie-omgeving.</li>
+            </ul>
+
+            <h3>Conclusie</h3>
+            <p>
+                Dit project toont aan dat ik volgens de standaarden programmeer: getypeerde,
+                gestructureerde code met herkenbare patronen, toegankelijke HTML, beheerde CSS,
+                nette API-integratie en degelijke foutafhandeling, allemaal onder versiebeheer. De
+                punten die beter kunnen, ken ik en kan ik benoemen, wat aantoont dat ik de standaard
+                niet alleen toepas maar ook begrijp.
+            </p>
+        </div>
+    </section>
+
+</body>
+
+</html>

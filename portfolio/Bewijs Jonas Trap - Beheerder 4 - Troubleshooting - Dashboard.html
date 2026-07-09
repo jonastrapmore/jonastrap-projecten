@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Beheerder 4: Troubleshooting</title>
+    <style>
+        /* ============================================================
+           Portfolio-sjabloon - huisstijl overgenomen van het dashboard
+           Kleuren: donkerblauw #2c3e50 en oranje #e67e22
+           Zet om naar PDF via Ctrl+P -> Opslaan als PDF
+           ============================================================ */
+
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --light: #e6eef5;
+            --dark-bg: #1a1d24;
+            --text: #1f2730;
+            --muted: #5b6b7a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text);
+            line-height: 1.55;
+            margin: 0;
+            font-size: 11pt;
+        }
+
+        @page {
+            size: A4;
+            margin: 18mm 16mm;
+        }
+
+        .page {
+            padding: 0 4mm;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* ---- Titelblad ---- */
+        .cover {
+            min-height: 247mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            page-break-after: always;
+        }
+
+        .cover .banner {
+            background: var(--primary);
+            color: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            border-top: 8px solid var(--accent);
+        }
+
+        .cover .kicker {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cover h1 {
+            font-size: 30pt;
+            margin: 0 0 8px;
+            color: #fff;
+        }
+
+        .cover .subtitle {
+            font-size: 14pt;
+            color: var(--light);
+            margin-top: 6px;
+        }
+
+        .cover .role {
+            display: inline-block;
+            margin-top: 24px;
+            background: var(--accent);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 12.5pt;
+        }
+
+        .cover .meta {
+            margin: 44px auto 0;
+            display: inline-grid;
+            grid-template-columns: auto auto;
+            gap: 10px 16px;
+            text-align: left;
+            font-size: 11.5pt;
+        }
+
+        .cover .meta-label {
+            text-align: right;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .cover .meta-value {
+            color: var(--muted);
+        }
+
+        /* ---- Koppen ---- */
+        h2 {
+            color: var(--accent);
+            font-size: 17pt;
+            margin: 28px 0 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        h3 {
+            color: var(--primary);
+            font-size: 13pt;
+            margin: 18px 0 6px;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 4px 0;
+        }
+
+        /* ---- Tabel ---- */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 12px 0;
+            font-size: 10.5pt;
+        }
+
+        th,
+        td {
+            border: 1px solid #cdd7e0;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        tr:nth-child(even) td {
+            background: var(--light);
+        }
+
+        /* ---- Codeblok ---- */
+        pre {
+            background: var(--dark-bg);
+            color: #e6eef5;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9pt;
+            line-height: 1.45;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        /* ---- Screenshot ---- */
+        .screenshot {
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 6px;
+            text-align: center;
+            background: #fff;
+            margin: 12px 0;
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 6px;
+        }
+
+        .caption {
+            font-size: 9.5pt;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        /* ---- Accentkader voor de zelfreflectie ---- */
+        .reflectie {
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 6px 18px 14px;
+        }
+
+        /* ---- Debug-case ---- */
+        .case {
+            border: 1px solid #cdd7e0;
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 4px 16px 12px;
+            margin: 14px 0;
+        }
+
+        .stap {
+            color: var(--primary);
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================
+         1. TITELBLAD
+         ============================================================ -->
+    <section class="cover">
+        <div class="banner">
+            <div class="kicker">Portfolio - Graduaat Programmeren</div>
+            <h1>Persoonlijk Dashboard</h1>
+            <div class="subtitle">Een webapplicatie met vier API-gedreven widgets</div>
+            <div class="role">De beheerder &middot; Doel 4: Je lost softwareproblemen op (troubleshooting)</div>
+        </div>
+        <div class="meta">
+            <span class="meta-label">Auteur</span><span class="meta-value">Jonas Trap</span>
+            <span class="meta-label">Opleiding</span><span class="meta-value">Graduaat Programmeren, Thomas More Geel</span>
+            <span class="meta-label">Academiejaar</span><span class="meta-value">2025-2026</span>
+            <span class="meta-label">Type bewijs</span><span class="meta-value">eigen project</span>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         2. PROJECT (DOELSTELLING)
+         ============================================================ -->
+    <section class="page">
+        <h2>Het project</h2>
+        <p>
+            Dit dashboard is een persoonlijk project: een single-page webapplicatie die vier
+            dagelijkse noden samenbrengt op één centrale pagina. De vier widgets tonen het actuele
+            weerbericht voor opgeslagen locaties, een dagelijks avondmaalrecept met filters voor
+            dieet en bereidingstijd, de NASA-foto van de dag met uitleg, en een eenvoudig
+            takenbeheer.
+        </p>
+        <p>
+            Het project dient als demonstratiestuk van mijn vaardigheden in webontwikkeling en
+            API-integratie. De nadruk lag bewust op een nette, professionele uitwerking die de
+            geleerde concepten concreet toepast: een duidelijke architectuur, type-veiligheid,
+            integratie met externe API's en degelijke foutafhandeling.
+        </p>
+
+        <h3>Technische keuzes</h3>
+        <ul>
+            <li><strong>Build tool:</strong> Vite, voor een snelle ontwikkelomgeving met native TypeScript-ondersteuning.</li>
+            <li><strong>Taal:</strong> TypeScript, voor type-veiligheid en betere onderhoudbaarheid.</li>
+            <li><strong>CSS-framework:</strong> Bootstrap 5, voor een degelijke grid en ingebouwde dark mode.</li>
+            <li><strong>API's:</strong> OpenWeatherMap (weer), Spoonacular (recepten), NASA APOD (foto van de dag), en een vertaal-API voor de Nederlandse inhoud.</li>
+        </ul>
+
+        <h3>Broncode</h3>
+        <p>
+            De volledige broncode van dit project staat publiek op GitHub, zodat ze altijd
+            terug te vinden is:
+            <a href="https://github.com/jonastrapmore/jonastrap-projecten/tree/main/dashboard">github.com/jonastrapmore/jonastrap-projecten/tree/main/dashboard</a>
+        </p>
+    </section>
+
+    <!-- ============================================================
+         3. GESTRUCTUREERD DEBUGGEN (waarom dit doel)
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Gestructureerd debuggen</h2>
+        <p>
+            Ik koppel dit project aan dit doel omdat ik tijdens de ontwikkeling meerdere echte
+            problemen ben tegengekomen en die telkens op dezelfde gestructureerde manier heb
+            aangepakt: eerst het <strong>gedrag en de gegevens analyseren</strong>, dan de
+            <strong>oorzaak aantonen</strong>, vervolgens een <strong>oplossing implementeren</strong>
+            en ten slotte de <strong>aanpassing documenteren</strong>. Hieronder werk ik drie
+            concrete cases uit volgens die vier stappen.
+        </p>
+
+        <div class="case">
+            <h3>Case 1: NASA-foto laadt soms niet (503-fouten)</h3>
+            <p><span class="stap">Gedrag en gegevens.</span> De NASA-widget toonde af en toe een
+                foutmelding, terwijl een herlaad even later wel werkte. Bij het testen zag ik in de
+                netwerkrespons wisselende statuscodes: vaak 503, en dan plots weer 200.</p>
+            <p><span class="stap">Oorzaak.</span> Het lag niet aan mijn code maar aan de NASA APOD-API
+                zelf: die is wisselvallig en geeft tijdelijk een serverfout (5xx) terug. Een eenmalige
+                aanvraag faalt dan onterecht.</p>
+            <p><span class="stap">Oplossing.</span> Ik bouwde een automatische herhaling in: bij een
+                5xx-status wacht de widget kort en probeert hij opnieuw, tot maximaal vier pogingen.
+                Pas daarna toont hij een nette foutmelding.</p>
+            <p><span class="stap">Documentatie.</span> De retry kreeg commentaar in de code en de
+                werking werd opgenomen in de README. Het commit-bericht van de NASA-widget vermeldt de
+                retry uitdrukkelijk, zodat de aanpassing terugvindbaar is in de git-historie.</p>
+        </div>
+
+        <div class="case">
+            <h3>Case 2: Witte pagina na het online plaatsen (MIME-fout)</h3>
+            <p><span class="stap">Gedrag en gegevens.</span> Lokaal werkte alles, maar online
+                (jonastrap.be/dashboard) bleef de pagina wit. De browserconsole gaf een MIME-fout: de
+                JavaScript-modules werden geserveerd als <code>text/html</code> in plaats van als
+                script.</p>
+            <p><span class="stap">Oorzaak.</span> De app draait in de submap <code>/dashboard/</code>,
+                maar de build verwees met absolute paden naar de domeinroot. Daardoor vond de browser
+                de bestanden niet en kreeg hij de 404-foutpagina (HTML) terug in plaats van het
+                script.</p>
+            <p><span class="stap">Oplossing.</span> Ik stelde het basis-pad in de Vite-configuratie in
+                op <code>/dashboard/</code>, zodat alle asset-paden naar de juiste submap wijzen.
+                Daarna opnieuw gebouwd en geüpload.</p>
+            <p><span class="stap">Documentatie.</span> De reden staat als commentaar bij de instelling
+                in <code>vite.config.ts</code>, zodat de keuze later meteen duidelijk is.</p>
+        </div>
+
+        <div class="case">
+            <h3>Case 3: Receptwidget verdwijnt bij het laden</h3>
+            <p><span class="stap">Gedrag en gegevens.</span> Na het hernoemen van een filter was de
+                volledige receptwidget weg bij het laden van de pagina, met een foutmelding in de
+                console.</p>
+            <p><span class="stap">Oorzaak.</span> Bij het hernoemen waren er nog verwijzingen naar de
+                oude private field blijven staan. Een onbestaande private field veroorzaakt een
+                runtime-fout die het hele component laat crashen.</p>
+            <p><span class="stap">Oplossing.</span> Ik spoorde alle oude verwijzingen op en verving ze
+                consequent door de nieuwe naam, waarna de widget weer correct laadde.</p>
+            <p><span class="stap">Documentatie.</span> De correctie werd tijdens de ontwikkeling
+                doorgevoerd en zit mee in de commit waarmee de receptwidget werd afgewerkt.</p>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         4. BEWIJS: CODE
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Het resultaat</h2>
+        <p>
+            De oplossingen zijn niet alleen bedacht maar ook geïmplementeerd en gedocumenteerd.
+            Hieronder de code van de twee belangrijkste cases.
+        </p>
+
+        <h3>Case 1: automatische herhaling bij een tijdelijke storing</h3>
+        <pre>
+async #getPicture(poging = 1): Promise&lt;void&gt; {
+    // ...laadscherm tonen...
+    const res = await fetch(
+        `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&thumbs=true`,
+    );
+
+    // Tijdelijke serverfout (5xx) van NASA: even wachten en
+    // opnieuw proberen (max 4 pogingen)
+    if (res.status >= 500 && poging < 4) {
+        await new Promise((r) => setTimeout(r, 1000));
+        return this.#getPicture(poging + 1);
+    }
+
+    if (!res.ok) {
+        this.#showError('Kon de NASA-foto van vandaag niet laden.');
+        return;
+    }
+    // ...data verwerken...
+}</pre>
+        <p class="caption">Fragment uit <code>src/components/nasaWidget/nasaWidget.ts</code>.</p>
+
+        <h3>Case 2: het juiste basis-pad voor de submap</h3>
+        <pre>
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+    // De app draait online in de submap /dashboard/, dus moeten de
+    // asset-paden daarnaar verwijzen (anders zoekt de browser ze op
+    // de domeinroot).
+    base: '/dashboard/',
+});</pre>
+        <p class="caption">Het volledige bestand <code>vite.config.ts</code>, met commentaar dat de oplossing verantwoordt.</p>
+
+        <div class="screenshot">
+            <img src="dashboard-licht.png" alt="Het werkende dashboard">
+        </div>
+        <p class="caption">Afbeelding 1: het dashboard werkt online correct nadat de problemen waren opgelost.</p>
+    </section>
+
+    <!-- ============================================================
+         5. ZELFREFLECTIE
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Zelfreflectie</h2>
+        <div class="reflectie">
+            <h3>Wat ging goed</h3>
+            <p>
+                Ik loste de problemen niet op met gokwerk, maar door eerst het gedrag te observeren en
+                de gegevens (statuscodes, console-meldingen) te bekijken. Daardoor vond ik telkens de
+                echte oorzaak in plaats van enkel het symptoom te bestrijden.
+            </p>
+
+            <h3>Wat ik geleerd heb</h3>
+            <p>
+                Ik leerde het verschil tussen een fout in mijn eigen code (de hernoemde private field)
+                en een fout buiten mijn code (de wisselvallige NASA-API, de hosting-omgeving). De
+                aanpak verschilt: het ene los je op door de code te corrigeren, het andere door
+                veerkracht in te bouwen (een retry) of de configuratie af te stemmen op de omgeving.
+            </p>
+
+            <h3>Uitdagingen</h3>
+            <p>
+                De MIME-fout was lastig omdat alles lokaal perfect werkte: het probleem dook pas op in
+                de online omgeving. Dat dwong me om verder te kijken dan mijn eigen machine en de
+                volledige keten (build, hosting, paden) te onderzoeken.
+            </p>
+
+            <h3>Wat beter kan</h3>
+            <ul>
+                <li>De productie-build vroeger en vaker testen, zodat omgevingsgebonden fouten zoals de MIME-fout eerder aan het licht komen.</li>
+                <li>Een logboek van opgeloste problemen bijhouden, zodat terugkerende fouten sneller herkend worden.</li>
+            </ul>
+
+            <h3>Conclusie</h3>
+            <p>
+                Dit project toont aan dat ik <strong>gestructureerd debug</strong>: ik analyseer
+                gedrag en gegevens, toon de oorzaak aan, implementeer een oplossing en documenteer de
+                aanpassing, met commentaar in de code, de README en duidelijke git-commits.
+            </p>
+        </div>
+    </section>
+
+</body>
+
+</html>

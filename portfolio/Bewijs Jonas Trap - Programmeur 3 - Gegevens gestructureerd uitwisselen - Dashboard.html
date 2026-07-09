@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Programmeur 3: Gegevens gestructureerd uitwisselen</title>
+    <style>
+        /* ============================================================
+           Portfolio-sjabloon - huisstijl overgenomen van het dashboard
+           Kleuren: donkerblauw #2c3e50 en oranje #e67e22
+           Zet om naar PDF via Ctrl+P -> Opslaan als PDF
+           ============================================================ */
+
+        :root {
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --light: #e6eef5;
+            --dark-bg: #1a1d24;
+            --text: #1f2730;
+            --muted: #5b6b7a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: var(--text);
+            line-height: 1.55;
+            margin: 0;
+            font-size: 11pt;
+        }
+
+        @page {
+            size: A4;
+            margin: 18mm 16mm;
+        }
+
+        .page {
+            padding: 0 4mm;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        /* ---- Titelblad ---- */
+        .cover {
+            min-height: 247mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            page-break-after: always;
+        }
+
+        .cover .banner {
+            background: var(--primary);
+            color: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            border-top: 8px solid var(--accent);
+        }
+
+        .cover .kicker {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cover h1 {
+            font-size: 30pt;
+            margin: 0 0 8px;
+            color: #fff;
+        }
+
+        .cover .subtitle {
+            font-size: 14pt;
+            color: var(--light);
+            margin-top: 6px;
+        }
+
+        .cover .role {
+            display: inline-block;
+            margin-top: 24px;
+            background: var(--accent);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 13pt;
+        }
+
+        .cover .meta {
+            margin: 44px auto 0;
+            display: inline-grid;
+            grid-template-columns: auto auto;
+            gap: 10px 16px;
+            text-align: left;
+            font-size: 11.5pt;
+        }
+
+        .cover .meta-label {
+            text-align: right;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .cover .meta-value {
+            color: var(--muted);
+        }
+
+        /* ---- Koppen ---- */
+        h2 {
+            color: var(--accent);
+            font-size: 17pt;
+            margin: 28px 0 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        h3 {
+            color: var(--primary);
+            font-size: 13pt;
+            margin: 18px 0 6px;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        ul {
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        li {
+            margin: 4px 0;
+        }
+
+        /* ---- Codeblok (donker thema van het dashboard) ---- */
+        pre {
+            background: var(--dark-bg);
+            color: #e6eef5;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 9pt;
+            line-height: 1.45;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        /* ---- Screenshot ---- */
+        .screenshot {
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 6px;
+            text-align: center;
+            background: #fff;
+            margin: 12px 0;
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 6px;
+        }
+
+        .caption {
+            font-size: 9.5pt;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 4px;
+        }
+
+        /* ---- Accentkader voor de zelfreflectie ---- */
+        .reflectie {
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 6px 18px 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================
+         1. TITELBLAD
+         ============================================================ -->
+    <section class="cover">
+        <div class="banner">
+            <div class="kicker">Portfolio - Graduaat Programmeren</div>
+            <h1>Persoonlijk Dashboard</h1>
+            <div class="subtitle">Een webapplicatie met vier API-gedreven widgets</div>
+            <div class="role">De programmeur &middot; Doel 3: Je wisselt gegevens gestructureerd uit</div>
+        </div>
+        <div class="meta">
+            <span class="meta-label">Auteur</span><span class="meta-value">Jonas Trap</span>
+            <span class="meta-label">Opleiding</span><span class="meta-value">Graduaat Programmeren, Thomas More Geel</span>
+            <span class="meta-label">Academiejaar</span><span class="meta-value">2025-2026</span>
+            <span class="meta-label">Type bewijs</span><span class="meta-value">eigen project</span>
+        </div>
+    </section>
+
+    <!-- ============================================================
+         2. PROJECT (DOELSTELLING)
+         ============================================================ -->
+    <section class="page">
+        <h2>Het project</h2>
+        <p>
+            Dit dashboard is een persoonlijk project: een single-page webapplicatie die vier
+            dagelijkse noden samenbrengt op één centrale pagina. De vier widgets tonen het actuele
+            weerbericht voor opgeslagen locaties, een dagelijks avondmaalrecept met filters voor
+            dieet en bereidingstijd, de NASA-foto van de dag met uitleg, en een eenvoudig
+            takenbeheer.
+        </p>
+        <p>
+            De kern van het project is communicatie met externe diensten: elke widget haalt zijn
+            gegevens op bij een API en verwerkt die. Daarnaast worden eigen gegevens (taken en
+            opgeslagen locaties) lokaal bewaard. Daardoor leent het project zich uitstekend om aan
+            te tonen dat ik gegevens gestructureerd uitwissel.
+        </p>
+
+        <h3>De API's en gegevensstromen</h3>
+        <ul>
+            <li><strong>OpenWeatherMap</strong>: huidig weer en een 5-daagse voorspelling.</li>
+            <li><strong>Spoonacular</strong>: recepten met voedingswaarde en prijs.</li>
+            <li><strong>NASA APOD</strong>: de astronomische foto of video van de dag.</li>
+            <li><strong>Vertaal-API</strong>: de Engelse inhoud naar het Nederlands vertalen.</li>
+            <li><strong>localStorage</strong>: eigen opslag voor taken en opgeslagen locaties.</li>
+        </ul>
+
+        <h3>Broncode</h3>
+        <p>
+            De volledige broncode van dit project staat publiek op GitHub, zodat ze altijd
+            terug te vinden is:
+            <a href="https://github.com/jonastrapmore/jonastrap-projecten/tree/main/dashboard">github.com/jonastrapmore/jonastrap-projecten/tree/main/dashboard</a>
+        </p>
+    </section>
+
+    <!-- ============================================================
+         3. GEGEVENS GESTRUCTUREERD UITWISSELEN (waarom dit doel)
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Gegevens gestructureerd uitwisselen</h2>
+        <p>
+            Ik koppel dit project aan dit doel omdat het volledig draait rond het uitwisselen van
+            gestructureerde gegevens: met externe diensten en binnen de applicatie zelf. Hieronder
+            werk ik de drie kernpunten van het doel uit.
+        </p>
+
+        <h3>1. App2App-communicatie met JSON</h3>
+        <ul>
+            <li>Alle communicatie met externe diensten (OpenWeatherMap, Spoonacular, NASA, de vertaal-API) verloopt via <strong>JSON</strong>, het gestructureerde formaat voor App2App-communicatie.</li>
+            <li>Aanvragen met de <code>fetch</code>-API en nette parameters: <code>URLSearchParams</code> bij Spoonacular (aantal, keuken, filters), querystrings bij OpenWeatherMap (<code>q</code>, <code>units</code>, <code>lang</code>), telkens met statuscontrole (<code>response.ok</code>).</li>
+            <li>De antwoorden worden ingelezen met <code>response.json()</code> en getypeerd via interfaces (<code>WeatherResponse</code>, <code>ForecastResponse</code>, <code>Recipe</code>, <code>ApodResponse</code>), zodat de structuur expliciet vastligt en geneste data veilig te verwerken is (<code>data.weather[0]</code>, <code>nutrition.nutrients.find(...)</code>, <code>list.filter(...)</code>).</li>
+            <li>Voor de eigen opslag wordt diezelfde JSON-structuur bewaard met <code>JSON.stringify</code> en weer ingelezen met <code>JSON.parse</code>.</li>
+        </ul>
+
+        <h3>2. Design patterns</h3>
+        <ul>
+            <li><strong>Observer-patroon</strong>: de <code>PersistenceProvider</code> laat widgets zich abonneren (<code>addObserver</code>) en verwittigt ze bij elke wijziging (<code>notifyObservers</code>), zodat de weergave automatisch herrendert.</li>
+            <li><strong>Gelaagde structuur in de geest van MVC</strong>: aparte lagen voor <code>models</code> (de data), <code>components</code> (de weergave/widgets) en <code>data</code> (de datalaag met de providers).</li>
+            <li><strong>Abstractie en uitwisselbaarheid</strong>: een abstracte basisklasse <code>PersistenceProvider</code> met twee implementaties (localStorage en memory), en gedeelde basisklassen <code>CustomElement</code> en <code>Page</code>.</li>
+            <li><strong>Factory-achtige methoden</strong>: <code>#createTaskItem()</code>, <code>#createLocationChip()</code> en <code>#createForecastDay()</code> fabriceren telkens een DOM-element op basis van een data-item.</li>
+        </ul>
+
+        <h3>3. CRUD-operaties</h3>
+        <p>De <code>PersistenceProvider</code> voorziet de volledige CRUD-set, gebruikt door de taken- en weerwidget:</p>
+        <ul>
+            <li><strong>Create</strong>: <code>create()</code> voegt een nieuwe taak of opgeslagen locatie toe.</li>
+            <li><strong>Read</strong>: <code>getAll()</code> en <code>get()</code> halen de gegevens op; de observer levert de actuele lijst.</li>
+            <li><strong>Update</strong>: <code>update()</code> wijzigt een taak, bijvoorbeeld afvinken als voltooid.</li>
+            <li><strong>Delete</strong>: <code>delete()</code> verwijdert een taak of locatie, en wist voltooide taken in één keer.</li>
+        </ul>
+
+        <h3>Betrouwbaar uitwisselen</h3>
+        <ul>
+            <li>Foutafhandeling bij elke uitwisseling: controle van de status, nette meldingen, een automatische herhaling bij een tijdelijke serverfout, en een fallback voor de vertaling.</li>
+        </ul>
+    </section>
+
+    <!-- ============================================================
+         4. SCREENSHOTS / BEWIJS
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Het resultaat</h2>
+
+        <div class="screenshot">
+            <img src="dashboard-licht.png" alt="Het dashboard met gegevens uit de API's">
+        </div>
+        <p class="caption">Afbeelding 1: de widgets tonen gegevens die uit verschillende API's worden opgehaald en verwerkt (weer, recept met voedingswaarde, NASA-foto van de dag).</p>
+
+        <h3 style="page-break-before: always;">Een getypeerd datamodel</h3>
+        <p>Voor elk antwoord leg ik de structuur vast in een interface, zodat de uitgewisselde gegevens voorspelbaar zijn:</p>
+        <pre>
+// Vorm van een recept uit de Spoonacular-API (alleen de velden die we gebruiken)
+interface Recipe {
+    title: string;
+    image: string;
+    extendedIngredients: { original: string }[];
+    pricePerServing: number; // in dollarcenten per portie
+    nutrition: {
+        nutrients: { name: string; amount: number; unit: string }[];
+    };
+}</pre>
+        <p class="caption">Codefragment uit <code>src/components/recipeWidget/recipeWidget.ts</code>.</p>
+
+        <h3>App2App-communicatie via JSON</h3>
+        <p>De parameters worden netjes opgebouwd, de status gecontroleerd en het JSON-antwoord getypeerd ingelezen:</p>
+        <pre>
+const params = new URLSearchParams({
+    apiKey,
+    number: '5',
+    cuisine: keuken,
+    sort: 'random',
+    addRecipeNutrition: 'true',
+});
+
+const res = await fetch(`https://api.spoonacular.com/recipes/complexSearch?${params}`);
+if (!res.ok) {
+    throw new Error(`Geen recept gevonden (status ${res.status})`);
+}
+const data: { results: Recipe[] } = await res.json();</pre>
+        <p class="caption">Gestructureerde uitwisseling met een externe API.</p>
+
+        <h3>Design patterns en CRUD in de provider</h3>
+        <p>De abstracte provider bundelt het observer-patroon en de volledige CRUD-set in één klasse:</p>
+        <pre>
+export abstract class PersistenceProvider&lt;T extends Persistable&gt; {
+    // Observer-patroon: widgets abonneren zich en worden bij elke wijziging verwittigd
+    addObserver(observer: ChangeObserver&lt;T&gt;): Unsubscribe { /* ... */ }
+    protected notifyObservers(data: T[]) { /* ... */ }
+
+    // CRUD-operaties
+    abstract create(data: Omit&lt;T, 'id'&gt;): Promise&lt;T&gt;;   // Create
+    abstract get(id: string): Promise&lt;T&gt;;                 // Read (één item)
+    abstract getAll(): Promise&lt;T[]&gt;;                       // Read (alle items)
+    abstract update(id: string, data: T): Promise&lt;T&gt;;     // Update
+    abstract delete(id: string): Promise&lt;void&gt;;           // Delete
+}</pre>
+        <p class="caption">Codefragment uit <code>src/data/persistenceProvider.ts</code>: het observer-patroon en de CRUD-operaties. De concrete <code>localStoragePersistenceProvider</code> bewaart alles als JSON met <code>JSON.stringify</code>.</p>
+    </section>
+
+    <!-- ============================================================
+         5. ZELFREFLECTIE
+         ============================================================ -->
+    <section class="page page-break">
+        <h2>Zelfreflectie</h2>
+        <div class="reflectie">
+            <h3>Wat ging goed</h3>
+            <p>
+                Door voor elk API-antwoord een eigen interface te maken, werd het uitwisselen van
+                gegevens overzichtelijk en veilig. De getypeerde modellen gaven me autoaanvulling en
+                voorkwamen fouten: ik wist precies welke velden beschikbaar waren. Het opslaan en
+                inlezen van eigen gegevens als JSON via een herbruikbare provider werkte voor zowel
+                de taken als de opgeslagen locaties zonder dubbele code.
+            </p>
+
+            <h3>Wat ik geleerd heb</h3>
+            <p>
+                Ik leerde hoe belangrijk het is om de exacte structuur van een API-antwoord te
+                kennen. Kleine verschillen in veldnamen veroorzaakten fouten: bij OpenWeatherMap
+                heette een veld <code>feels_like</code> (niet <code>feels_Like</code>), bij de
+                voorspelling was het <code>dt_txt</code> (niet <code>dt_text</code>), en Spoonacular
+                gebruikt heel andere namen dan TheMealDB. Door de antwoorden te typeren en in de
+                console te inspecteren, vond ik die verschillen snel. Ook leerde ik het onderscheid
+                tussen <strong>tijdelijke uitwisseling</strong> (API-aanvragen) en <strong>persistente
+                opslag</strong> (localStorage).
+            </p>
+
+            <h3>Uitdagingen</h3>
+            <p>
+                Externe diensten zijn niet altijd betrouwbaar of consistent. NASA gaf soms een
+                tijdelijke serverfout, Spoonacular een limietfout, en TheMealDB gaf bij lege
+                resultaten <code>null</code> in plaats van een lege lijst. Ik moest mijn verwerking
+                daarop afstemmen met statuscontroles, een null-check en een automatische herhaling.
+            </p>
+
+            <h3>Wat beter kan</h3>
+            <ul>
+                <li>Een echte <strong>databank</strong> in plaats van <code>localStorage</code> voor robuustere opslag.</li>
+                <li><strong>Schemavalidatie</strong> van de API-antwoorden (bijvoorbeeld met een bibliotheek als Zod), zodat onverwachte structuren netjes opgevangen worden.</li>
+            </ul>
+
+            <h3>Conclusie</h3>
+            <p>
+                Dit project toont de drie kernpunten van het doel aan: <strong>App2App-communicatie
+                via JSON</strong> met meerdere externe API's, het gebruik van <strong>design
+                patterns</strong> (observer, abstractie, factory-achtige methoden en een gelaagde
+                MVC-structuur), en volledige <strong>CRUD-operaties</strong> via een herbruikbare
+                provider, telkens met de nodige controles en foutafhandeling.
+            </p>
+        </div>
+    </section>
+
+</body>
+
+</html>
