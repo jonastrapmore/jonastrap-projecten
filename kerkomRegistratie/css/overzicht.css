@@ -1,0 +1,130 @@
+/*
+  overzicht.css
+  Stijl voor de lokale overzichtspagina (overzicht.html). Bouwt verder op de
+  variabelen uit styles.css (kleuren, lettertype) en voegt enkel toe wat
+  specifiek is voor de tabelweergave: kolomkoppen, statuskleuren en de
+  vetgedrukte "gewijzigd"-markering.
+*/
+
+.overzicht-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.overzicht-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.overzicht-header h1 {
+  font-size: 1.85rem;
+}
+
+.overzicht-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.overzicht-controls .field label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.overzicht-controls select {
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--black);
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 4px;
+  padding: 0.6rem 0.75rem;
+  min-width: 220px;
+}
+
+.overzicht-count {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+  margin-bottom: 0.75rem;
+}
+
+/*
+  max-height houdt de tabel binnen het scherm, zodat de horizontale
+  scrollbalk van deze wrapper altijd onderaan het zichtbare gedeelte blijft
+  staan in plaats van onderaan een lange tabel (waarvoor je eerst helemaal
+  naar beneden zou moeten scrollen om ze te zien).
+*/
+.table-wrapper {
+  overflow: auto;
+  max-height: calc(100vh - 15rem);
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+}
+
+table.overzicht-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+table.overzicht-table th,
+table.overzicht-table td {
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+table.overzicht-table th {
+  background: var(--gray-100);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gray-600);
+  position: sticky;
+  top: 0;
+}
+
+table.overzicht-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+table.overzicht-table tbody tr:not(.row-ok):not(.row-none):hover {
+  background: var(--gray-100);
+}
+
+/* Groen: gegevens gecontroleerd (OK of UPDATED). Rood: nog niets gedaan.
+   Deze klassen worden per lid toegekend door js/overzicht.js (op basis van
+   de echte controleStatus), in elke weergave, ook bij "Volledige lijst". */
+tr.row-ok td {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+tr.row-none td {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+/* Bij een lid met status UPDATED: de velden die effectief gewijzigd zijn. */
+td.field-changed {
+  font-weight: 700;
+}
+
+.overzicht-empty {
+  padding: 2.5rem;
+  text-align: center;
+  color: var(--gray-600);
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Overzicht controlestatus - Petanqueclub Kerkom</title>
+
+<!-- Extern lettertype "Inter", zelfde huisstijl als index.html -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!--
+  Enkel voor lokaal gebruik: deze pagina hoort niet mee naar de live
+  hosting te gaan, ze toont immers de volledige ledenlijst in één tabel.
+  Paden blijven wel relatief, voor consistentie met de rest van de site.
+-->
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/overzicht.css">
+<script src="js/overzicht.js" defer></script>
+</head>
+<body>
+
+<main class="overzicht-main">
+
+  <div class="overzicht-header">
+    <div>
+      <span class="eyebrow">Enkel lokaal gebruik</span>
+      <h1>Overzicht controlestatus</h1>
+    </div>
+
+    <div class="overzicht-controls">
+      <div class="field">
+        <label for="status-filter">Weergave</label>
+        <select id="status-filter">
+          <option value="alle">Volledige lijst</option>
+          <option value="ok">OK</option>
+          <option value="updated">Updated</option>
+          <option value="leeg">Nog niets gedaan</option>
+        </select>
+      </div>
+
+      <!-- Enkel zichtbaar bij de weergave "Nog niets gedaan", zie js/overzicht.js -->
+      <button type="button" id="download-btn" class="btn btn--primary" hidden>Download lijst (CSV)</button>
+    </div>
+  </div>
+
+  <p id="overzicht-count" class="overzicht-count"></p>
+
+  <div class="table-wrapper">
+    <table class="overzicht-table">
+      <thead id="table-head"></thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+
+  <p id="overzicht-empty" class="overzicht-empty" hidden>Geen leden in deze weergave.</p>
+
+</main>
+
+</body>
+</html>

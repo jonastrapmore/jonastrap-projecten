@@ -46,8 +46,11 @@ Alle bestandspaden (CSS, JS, `fetch`-aanroepen) zijn bewust **relatief** opgebou
 ```
 kerkomRegistratie/
   index.html              Het formulier (opzoeken + controleren/opslaan)
+  overzicht.html           Lokaal overzicht van de controlestatus per lid (zie hieronder)
   css/styles.css           Zwart/wit stijl, huisstijl pckerkom.com
+  css/overzicht.css        Stijl specifiek voor overzicht.html
   js/script.js              Opzoeken, formulier invullen en opslaan (fetch naar save.php)
+  js/overzicht.js           Logica achter overzicht.html
   php/save.php              Ontvangt en normaliseert de gegevens, schrijft members.json + log.json weg
   data/members.json         De ledenlijst die de site gebruikt (gegenereerd, zie tools/)
   data/log.json             Audit-log van alle opslagacties
@@ -55,6 +58,14 @@ kerkomRegistratie/
   tools/convert-members.js  Zet bron/ledenrapport.xls om naar data/members.json
   images/                   Groepsfoto en Lions-foto voor de banner
 ```
+
+### overzicht.html
+
+Een extra pagina, enkel voor eigen/lokaal gebruik (niet mee naar de live hosting). Toont de volledige ledenlijst in een tabel, met een dropdown om te filteren op **Volledige lijst**, **OK**, **Updated** of **Nog niets gedaan**:
+
+- Bij **OK** en **Updated** staan de kolommen Controlestatus en Laatst gecontroleerd in het groen.
+- Bij **Updated** staan de effectief gewijzigde velden ook vetgedrukt (afgeleid uit `data/log.json`).
+- Bij **Nog niets gedaan** staan diezelfde twee kolommen in het rood, en verschijnt er een knop om een CSV te downloaden met lidnummer, voornaam en naam van die leden, handig om ze gericht aan te spreken.
 
 ### tools/convert-members.js
 
