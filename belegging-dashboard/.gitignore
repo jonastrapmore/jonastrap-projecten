@@ -1,0 +1,74 @@
+# ---------------------------------------------------------------
+# LET OP: jonastrap-projecten is een PUBLIEKE repo.
+# Alles in dit eerste blok bevat persoonlijke financiele gegevens
+# en mag nooit gecommit worden. Verwijder deze regels niet.
+#
+# Vite overschrijft dit bestand bij het scaffolden. Draai je ooit
+# opnieuw `create vite`, controleer dan of dit blok er nog staat.
+# ---------------------------------------------------------------
+
+# Fiscale stukken
+TOB-*.md
+*aangifte*
+
+# Broker-exports en afgeleide data.
+# De / vooraan verankert dit aan de hoofdmap: zonder die / zou ook
+# src/data/ genegeerd worden, en dat is gewoon broncode.
+/data/
+/exports/
+*.csv
+*.xlsx
+*.ofx
+
+# Lokale database / koersen-cache
+*.db
+*.sqlite
+*.sqlite3
+cache/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Persoonlijke config: begunstigden, inleg, doelen.
+# De .example-variant met dummywaarden mag wel mee.
+*.config.local.ts
+*.config.local.json
+verdeling*
+!*.example.ts
+!*.example.json
+
+# ---------------------------------------------------------------
+# Vanaf hier: standaardregels van Vite.
+# ---------------------------------------------------------------
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies / build
+node_modules
+node_modules/
+dist
+dist/
+dist-ssr
+build/
+.next/
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
