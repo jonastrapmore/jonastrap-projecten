@@ -5,150 +5,150 @@
    hier weggelaten omdat die elementen in dit project niet bestaan. */
 
 :root {
-  --primary-color: #2c3e50;
-  --primary-hover: #e67e22;
-  --background-color: #e6eef5;
+    --primary-color: #2c3e50;
+    --primary-hover: #e67e22;
+    --background-color: #e6eef5;
 }
 
-[data-bs-theme="dark"] {
-  --background-color: #1a1d24;   /* diepe, koele donkergrijs als paginakleur */
-  --primary-color: #34465c;      /* iets lichtere navy: werkt als header-/footerachtergrond op donker */
-  /* --primary-hover (#e67e22) blijft het accent; oranje knalt mooi op donker */
+[data-bs-theme='dark'] {
+    --background-color: #1a1d24; /* diepe, koele donkergrijs als paginakleur */
+    --primary-color: #34465c; /* iets lichtere navy: werkt als header-/footerachtergrond op donker */
+    /* --primary-hover (#e67e22) blijft het accent; oranje knalt mooi op donker */
 }
 
 body {
-  background-color: var(--background-color);
-  margin: 0;
+    background-color: var(--background-color);
+    margin: 0;
 }
 
 /* Sticky footer. Op de website was dit `#app > div`; React rendert
    rechtstreeks in #root, dus die div zit er hier niet tussen. */
 #root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 main {
-  flex: 1;
+    flex: 1;
 }
 
 /* ===== UTILITIES ===== */
 .trap-bg-primary {
-  background-color: var(--primary-color);
+    background-color: var(--primary-color);
 }
 
 .trap-bg-accent {
-  background-color: var(--primary-hover);
+    background-color: var(--primary-hover);
 }
 
 .trap-text-primary {
-  color: var(--primary-color);
+    color: var(--primary-color);
 }
 
 .trap-text-accent {
-  color: var(--primary-hover);
+    color: var(--primary-hover);
 }
 
 .ls-1 {
-  letter-spacing: 0.08em;
+    letter-spacing: 0.08em;
 }
 
 /* De navy is prima als ACHTERGROND, maar te donker als TEKST op een donkere
    pagina. Daarom krijgt de tekstvariant in dark mode een lichte kleur. */
-[data-bs-theme="dark"] .trap-text-primary {
-  color: #e8edf3;
+[data-bs-theme='dark'] .trap-text-primary {
+    color: #e8edf3;
 }
 
 /* ===== BUTTONS ===== */
 .btn-custom {
-  color: white;
-  border: none;
-  transition: all 0.3s ease;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
 }
 
 .btn-custom:hover {
-  background-color: var(--primary-hover);
+    background-color: var(--primary-hover);
 }
 
 .btn-custom-outline {
-  background-color: transparent;
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
-  transition: all 0.3s ease;
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    transition: all 0.3s ease;
 }
 
 .btn-custom-outline:hover {
-  background-color: var(--primary-color);
-  color: white;
+    background-color: var(--primary-color);
+    color: white;
 }
 
 /* In dark mode een leesbare basis: lichte tekst + grijze rand. */
-[data-bs-theme="dark"] .btn-outline-dark {
-  --bs-btn-color: #e8edf3;
-  --bs-btn-border-color: #6c757d;
-  --bs-btn-active-color: #1a1d24;
-  --bs-btn-active-bg: #e8edf3;
-  --bs-btn-active-border-color: #e8edf3;
+[data-bs-theme='dark'] .btn-outline-dark {
+    --bs-btn-color: #e8edf3;
+    --bs-btn-border-color: #6c757d;
+    --bs-btn-active-color: #1a1d24;
+    --bs-btn-active-bg: #e8edf3;
+    --bs-btn-active-border-color: #e8edf3;
 }
 
 /* Bootstrap zet bij toggle-knoppen (btn-check) de hover bewust UIT.
    Alleen op apparaten met een echte muis, anders blijft hover op touch plakken. */
 @media (hover: hover) {
-  .btn-check + .btn-outline-dark:hover {
-    color: #fff;
-    background-color: var(--primary-hover);
-    border-color: var(--primary-hover);
-  }
+    .btn-check + .btn-outline-dark:hover {
+        color: #fff;
+        background-color: var(--primary-hover);
+        border-color: var(--primary-hover);
+    }
 }
 
 /* ===== NAVBAR ===== */
 .navbar-brand,
 .navbar .nav-link {
-  color: var(--primary-color);
-  transition: color 0.3s ease;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
 }
 
 .navbar-brand:hover,
 .navbar .nav-link:hover {
-  color: var(--primary-hover);
+    color: var(--primary-hover);
 }
 
-[data-bs-theme="dark"] .navbar-brand,
-[data-bs-theme="dark"] .navbar .nav-link {
-  color: #e8edf3;
+[data-bs-theme='dark'] .navbar-brand,
+[data-bs-theme='dark'] .navbar .nav-link {
+    color: #e8edf3;
 }
 
 /* ===== CARDS ===== */
 /* Status-badges op card-headers: in dark mode een donkere frosted achtergrond
    met witte tekst. Dat leest op elke headerkleur. */
-[data-bs-theme="dark"] .card-header .badge {
-  background-color: rgba(0, 0, 0, 0.25) !important;
-  color: #fff !important;
+[data-bs-theme='dark'] .card-header .badge {
+    background-color: rgba(0, 0, 0, 0.25) !important;
+    color: #fff !important;
 }
 
 /* ===== FOOTER ===== */
 .footer-icon {
-  transition:
-    color 0.3s ease,
-    transform 0.3s ease;
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
 }
 
 .footer-icon:hover,
 .footer-icon:hover i {
-  color: var(--primary-hover);
-  transform: scale(1.1);
+    color: var(--primary-hover);
+    transform: scale(1.1);
 }
 
 /* ===== VOORTGANGSBALK ===== */
 /* Een zichtbaar donkere baan + rand zodat het duidelijk een meter is.
    Wordt straks gebruikt voor de voortgang richting de twee doelen. */
 .progress {
-  background-color: rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-[data-bs-theme="dark"] .progress {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+[data-bs-theme='dark'] .progress {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
 }

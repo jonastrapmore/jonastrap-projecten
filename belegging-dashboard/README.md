@@ -12,15 +12,15 @@ en een prognose richting twee spaardoelen.
 
 ## Voortgang
 
-| Datum | Onderdeel | Status | Omschrijving |
-| --- | --- | --- | --- |
-| 19/08/2026 | Projectopzet | Afgewerkt | Vite + React + TypeScript opgezet, Bootstrap 5 en de huisstijl van jonastrap.be aangesloten, gitignore ingericht op een publieke repo |
-| | Transactiemodel | Bezig | Brokeronafhankelijk intern formaat voor transacties |
-| | CSV-parser | Gepland | Broker-export inlezen en omzetten naar het interne formaat |
-| | Ledger | Gepland | Posities, kostprijs en rendement herberekenen uit de transacties |
-| | Beurstaksoverzicht | Gepland | Aangifte per periode van twee maanden, met deadlineteller |
-| | Prognose | Gepland | Projectie met een band in plaats van een enkele lijn |
-| | Look-through | Gepland | Gecombineerde topposities over de fondsen heen |
+| Datum      | Onderdeel          | Status    | Omschrijving                                                                                                                          |
+| ---------- | ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| 19/08/2026 | Projectopzet       | Afgewerkt | Vite + React + TypeScript opgezet, Bootstrap 5 en de huisstijl van jonastrap.be aangesloten, gitignore ingericht op een publieke repo |
+|            | Transactiemodel    | Bezig     | Brokeronafhankelijk intern formaat voor transacties                                                                                   |
+|            | CSV-parser         | Gepland   | Broker-export inlezen en omzetten naar het interne formaat                                                                            |
+|            | Ledger             | Gepland   | Posities, kostprijs en rendement herberekenen uit de transacties                                                                      |
+|            | Beurstaksoverzicht | Gepland   | Aangifte per periode van twee maanden, met deadlineteller                                                                             |
+|            | Prognose           | Gepland   | Projectie met een band in plaats van een enkele lijn                                                                                  |
+|            | Look-through       | Gepland   | Gecombineerde topposities over de fondsen heen                                                                                        |
 
 ---
 
@@ -43,15 +43,15 @@ Dit project rekent die drie dingen uit op basis van de ruwe transacties.
 
 ## Technische keuzes
 
-| Onderdeel | Keuze | Reden |
-| --- | --- | --- |
-| Build tool | Vite | Snelle ontwikkelomgeving, native TypeScript |
-| Taal | TypeScript | Bij financiele berekeningen wil je dat het type klopt |
-| Framework | React | Bewust gekozen om vooruit te lopen op de leerstof |
-| CSS | Bootstrap 5 | Zelfde basis als mijn andere projecten |
-| Componenten | react-bootstrap | Bootstrap-gedrag als React-componenten, in plaats van de JS-bundel die rechtstreeks aan de DOM zit |
-| Iconen | Bootstrap Icons | Consistent met Bootstrap |
-| Package manager | pnpm | Strenge node_modules: je kunt alleen importeren wat je zelf hebt toegevoegd |
+| Onderdeel       | Keuze           | Reden                                                                                              |
+| --------------- | --------------- | -------------------------------------------------------------------------------------------------- |
+| Build tool      | Vite            | Snelle ontwikkelomgeving, native TypeScript                                                        |
+| Taal            | TypeScript      | Bij financiele berekeningen wil je dat het type klopt                                              |
+| Framework       | React           | Bewust gekozen om vooruit te lopen op de leerstof                                                  |
+| CSS             | Bootstrap 5     | Zelfde basis als mijn andere projecten                                                             |
+| Componenten     | react-bootstrap | Bootstrap-gedrag als React-componenten, in plaats van de JS-bundel die rechtstreeks aan de DOM zit |
+| Iconen          | Bootstrap Icons | Consistent met Bootstrap                                                                           |
+| Package manager | pnpm            | Strenge node_modules: je kunt alleen importeren wat je zelf hebt toegevoegd                        |
 
 ### Waarom React
 
@@ -94,7 +94,7 @@ belastingoverzicht uit dezelfde gegevens gegenereerd worden.
 
 **4. Eigendomsverdeling als inlegregel met ingangsdatum.**
 Niet als vast percentage, maar als bedragen die gelden vanaf een datum. Een
-aankoop wordt gesplitst in *aandelen*: wie een derde van het bedrag inlegde,
+aankoop wordt gesplitst in _aandelen_: wie een derde van het bedrag inlegde,
 krijgt een derde van de aandelen uit die transactie. Per persoon per fonds
 worden die aandelen opgeteld, en het eigendomspercentage wordt daaruit afgeleid
 in plaats van opgeslagen.

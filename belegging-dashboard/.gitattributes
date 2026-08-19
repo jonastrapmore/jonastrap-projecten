@@ -1,0 +1,9 @@
+# Alle tekstbestanden met LF-regeleindes, op elk besturingssysteem.
+# Zonder dit zet git op Windows CRLF in de werkmap terwijl Prettier LF
+# schrijft, en blijven de twee elkaar tegenspreken.
+* text=auto eol=lf
+
+# Binaire bestanden nooit omzetten.
+*.png binary
+*.jpg binary
+*.svg text eol=lf
