@@ -1,32 +1,54 @@
+import { useState } from 'react';
+import { CsvUpload } from './components/CsvUpload';
+import { PageHeader } from './components/PageHeader';
+import { PositionTable } from './components/PositionTable';
+import { TransactionTable } from './components/TransactionTable';
+import { parseRevolutCsv } from './data/revolutParser';
+import { buildPositions } from './ledger';
+import type { Transaction } from './models/transaction';
+
+/**
+ * Houdt de ingelezen transacties bij en zet de onderdelen samen.
+ * De state staat hier omdat meer dan een component hem nodig heeft.
+ */
 function App() {
+    const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [error, setError] = useState<string | null>(null);
+
+    function handleFileRead(text: string) {
+        try {
+            setTransactions(parseRevolutCsv(text));
+            setError(null);
+        } catch (e) {
+            // De parser faalt hard bij iets onbekends. Dat tonen we,
+            // in plaats van de gebruiker met een leeg scherm achter te laten.
+            setTransactions([]);
+            setError(e instanceof Error ? e.message : String(e));
+        }
+    }
+
+    const positions = buildPositions(transactions);
+
     return (
         <>
-            <header className="trap-bg-primary text-white py-3">
-                <div className="container d-flex align-items-center gap-2">
-                    <i className="bi bi-graph-up-arrow fs-4"></i>
-                    <span className="fs-5 fw-semibold ls-1">Beleggingsdashboard</span>
-                </div>
-            </header>
+            <PageHeader />
 
             <main className="container py-4">
-                <div className="card shadow-sm">
-                    <div className="card-header d-flex align-items-center gap-2">
-                        <i className="bi bi-wallet2 trap-text-accent"></i>
-                        <span className="fw-semibold">Portefeuille</span>
-                        <span className="badge bg-secondary ms-auto">nog geen data</span>
+                <CsvUpload onFileRead={handleFileRead} />
+
+                {error && (
+                    <div className="alert alert-danger" role="alert">
+                        <i className="bi bi-exclamation-triangle me-2"></i>
+                        {error}
                     </div>
-                    <div className="card-body">
-                        <p className="mb-2">
-                            De opzet staat. Hierna lezen we de Revolut-export in en bouwen we het
-                            ledger op.
-                        </p>
-                        <p className="text-muted small mb-0">
-                            Deze kaart is voorlopig enkel een controle: zie je de navy balk, de
-                            lichtblauwe achtergrond en dit kader met een oranje icoontje, dan is de
-                            huisstijl correct aangesloten.
-                        </p>
-                    </div>
-                </div>
+                )}
+
+                {transactions.length > 0 && (
+                    <>
+                        <PositionTable positions={positions} />
+                        <TransactionTable transactions={transactions} />
+                    </>
+                )}
             </main>
         </>
     );

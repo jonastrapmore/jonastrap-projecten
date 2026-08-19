@@ -12,15 +12,18 @@ en een prognose richting twee spaardoelen.
 
 ## Voortgang
 
-| Datum      | Onderdeel          | Status    | Omschrijving                                                                                                                          |
-| ---------- | ------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| 19/08/2026 | Projectopzet       | Afgewerkt | Vite + React + TypeScript opgezet, Bootstrap 5 en de huisstijl van jonastrap.be aangesloten, gitignore ingericht op een publieke repo |
-|            | Transactiemodel    | Bezig     | Brokeronafhankelijk intern formaat voor transacties                                                                                   |
-|            | CSV-parser         | Gepland   | Broker-export inlezen en omzetten naar het interne formaat                                                                            |
-|            | Ledger             | Gepland   | Posities, kostprijs en rendement herberekenen uit de transacties                                                                      |
-|            | Beurstaksoverzicht | Gepland   | Aangifte per periode van twee maanden, met deadlineteller                                                                             |
-|            | Prognose           | Gepland   | Projectie met een band in plaats van een enkele lijn                                                                                  |
-|            | Look-through       | Gepland   | Gecombineerde topposities over de fondsen heen                                                                                        |
+| Datum | Onderdeel | Status | Omschrijving |
+| --- | --- | --- | --- |
+| 19/08/2026 | Projectopzet | Afgewerkt | Vite + React + TypeScript opgezet, Bootstrap 5 en de huisstijl van jonastrap.be aangesloten, gitignore ingericht op een publieke repo |
+| 19/08/2026 | Transactiemodel | Afgewerkt | Brokeronafhankelijk intern formaat. Bedragen als hele centen, aantallen als geheel getal maal 1e8 |
+| 19/08/2026 | CSV-parser | Afgewerkt | Broker-export inlezen. Kopregel, kolomaantal, transactietype, tijdstip en munt worden gecontroleerd; wat niet herkend wordt laat de parser falen met het regelnummer erbij |
+| 19/08/2026 | Ledger: posities | Afgewerkt | Aantal aandelen en kostprijs per fonds, telkens herberekend uit de transacties. Verkopen gooien bewust een fout tot de kostprijsmethode gekozen is |
+| 19/08/2026 | Interface | Afgewerkt | Bestand kiezen, foutmelding, positietabel en transactietabel, elk als eigen component |
+| | Eigendomsverdeling | Gepland | Inlegregels met ingangsdatum, die per aankoop de aandelen over de begunstigden verdelen |
+| | Actuele koersen | Gepland | Achter een provider-interface. Nodig voor waarde en rendement |
+| | Beurstaksoverzicht | Gepland | Aangifte per periode van twee maanden, met deadlineteller |
+| | Prognose | Gepland | Projectie met een band in plaats van een enkele lijn |
+| | Look-through | Gepland | Gecombineerde topposities over de fondsen heen |
 
 ---
 
@@ -226,4 +229,9 @@ inpluggen is dan genoeg.
 
 ## Status
 
-De projectopzet staat. Het transactiemodel en de parser zijn in aanbouw.
+De keten van CSV naar scherm werkt: een export inlezen, omzetten naar transacties,
+daaruit de posities per fonds herberekenen en die tonen. De uitkomst is getoetst
+aan een onafhankelijk opgesteld belastingoverzicht en klopt tot op de cent.
+
+Volgende stap is de eigendomsverdeling, en daarna de actuele koersen die nodig
+zijn om waarde en rendement te kunnen berekenen.
