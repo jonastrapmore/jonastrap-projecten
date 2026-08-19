@@ -20,6 +20,7 @@ en een prognose richting twee spaardoelen.
 | 19/08/2026 | Ledger: posities | Afgewerkt | Aantal aandelen en kostprijs per fonds, telkens herberekend uit de transacties. Verkopen gooien bewust een fout tot de kostprijsmethode gekozen is |
 | 19/08/2026 | Interface | Afgewerkt | Bestand kiezen, foutmelding, positietabel en transactietabel, elk als eigen component |
 | | Eigendomsverdeling | Gepland | Inlegregels met ingangsdatum, die per aankoop de aandelen over de begunstigden verdelen |
+| | Inlegoverzicht per begunstigde | Gepland | Chronologisch overzicht van wie wanneer hoeveel in welk fonds legde, met subtotalen, waarde en rendement per persoon. Wordt berekend uit de transacties en de inlegregels, niet met de hand bijgehouden |
 | | Actuele koersen | Gepland | Achter een provider-interface. Nodig voor waarde en rendement |
 | | Beurstaksoverzicht | Gepland | Aangifte per periode van twee maanden, met deadlineteller |
 | | Prognose | Gepland | Projectie met een band in plaats van een enkele lijn |
@@ -30,17 +31,25 @@ en een prognose richting twee spaardoelen.
 ## Doelstelling
 
 Een broker levert een overzicht van wat er op je rekening staat, en daar houdt
-het op. Drie dingen die ik wilde weten, kon ik nergens aflezen:
+het op. Vier dingen die ik wilde weten, kon ik nergens aflezen:
 
 1. **Wat is van wie.** De portefeuille wordt door meer dan een persoon gevuld,
    met bedragen die per fonds verschillen en in de loop van de tijd wijzigen.
+   Tot nu toe hield ik dat in een tekstbestand bij, naast de export. Twee lijsten
+   die hetzelfde zouden moeten zeggen lopen vroeg of laat uiteen, en dat gebeurde
+   ook: bij het naast elkaar leggen bleken er vijf verschillen in te zitten.
 2. **Wat ben ik aan belastingen verschuldigd.** De broker in kwestie houdt de
    Belgische taks op beursverrichtingen niet in aan de bron. Die moet je zelf
    aangeven, per periode van twee maanden, met een vervaldag die snel passeert.
-3. **Waar kom ik uit.** Niet als een enkel getal, maar als een bandbreedte,
+3. **Hoe elk fonds afzonderlijk presteert.** De broker toont het resultaat van
+   de rekening als geheel, niet per fonds. Dat ene gemiddelde verbergt dat het
+   ene fonds ver voorloopt terwijl het andere onder water staat.
+4. **Waar kom ik uit.** Niet als een enkel getal, maar als een bandbreedte,
    want een geconcentreerde portefeuille kan er ver naast zitten.
 
-Dit project rekent die drie dingen uit op basis van de ruwe transacties.
+Dit project rekent die vier dingen uit op basis van de ruwe transacties. Dat kan,
+omdat het transactieoverzicht de bron is en niet wat de broker toevallig toont:
+uit dezelfde rijen valt elke opsplitsing te herberekenen.
 
 ---
 

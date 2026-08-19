@@ -26,7 +26,7 @@ export function PositionTable({ positions }: PositionTableProps) {
                             <th className="text-center">Aankopen</th>
                             <th className="text-end">Aandelen</th>
                             <th className="text-end">Kostprijs</th>
-                            <th className="text-end">Gem. prijs</th>
+                            <th className="text-end">Gem. aankoopprijs</th>
                         </tr>
                     </thead>
                     <tbody>
