@@ -18,5 +18,11 @@ export default defineConfig([
         languageOptions: {
             globals: globals.browser,
         },
+        rules: {
+            // Toestaan dat je een veld weglaat door het te destructureren:
+            //   const { timestamp, ...rest } = transaction
+            // Die `timestamp` wordt bewust niet gebruikt, dat is het hele punt.
+            '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
+        },
     },
 ]);

@@ -1,4 +1,6 @@
-import type { Position } from './models/position';
+import { allocate } from './allocation';
+import type { OwnershipConfig } from './models/ownership';
+import type { BeneficiaryPosition, Position } from './models/position';
 import type { Transaction } from './models/transaction';
 
 /**
@@ -51,4 +53,61 @@ export function buildPositions(transactions: Transaction[]): Position[] {
 
     // Vaste volgorde, zodat de tabel niet omspringt bij een nieuwe export.
     return [...byTicker.values()].sort((a, b) => a.ticker.localeCompare(b.ticker));
+}
+
+/**
+ * Zelfde idee als buildPositions, maar dan opgesplitst per begunstigde.
+ *
+ * Per aankoop wordt gevraagd wie er hoeveel inlegde, en die deelaandelen
+ * worden opgeteld per persoon per fonds. Ook dit wordt telkens opnieuw
+ * berekend en nooit bewaard: het eigendomspercentage is een uitkomst en
+ * geen invoer.
+ */
+export function buildBeneficiaryPositions(
+    transactions: Transaction[],
+    config: OwnershipConfig,
+): BeneficiaryPosition[] {
+    const byKey = new Map<string, BeneficiaryPosition>();
+
+    for (const t of transactions) {
+        // Stortingen zijn geen bezit en horen niet bij een persoon.
+        if (t.type === 'DEPOSIT') {
+            continue;
+        }
+
+        // allocate gooit hier ook op, maar TypeScript weet dat niet: die kent
+        // alleen de handtekening, niet wat er binnenin gebeurt. Dus een echte
+        // controle in plaats van een uitroepteken.
+        const { ticker } = t;
+        if (ticker === null) {
+            throw new Error(`Aankoop zonder ticker: ${t.id}`);
+        }
+
+        for (const allocation of allocate(t, config)) {
+            // Samengestelde sleutel: een persoon kan in meer dan een fonds
+            // zitten, en een fonds kan van meer dan een persoon zijn.
+            const key = `${allocation.beneficiary}|${ticker}`;
+
+            const position = byKey.get(key) ?? {
+                beneficiary: allocation.beneficiary,
+                ticker,
+                quantityE8: 0,
+                costCents: 0,
+                purchaseCount: 0,
+            };
+
+            position.quantityE8 += allocation.quantityE8;
+            position.costCents += allocation.costCents;
+            position.purchaseCount += 1;
+
+            byKey.set(key, position);
+        }
+    }
+
+    // Vaste volgorde: eerst op persoon, dan op fonds. Zo springt de tabel niet
+    // om bij een nieuwe export.
+    return [...byKey.values()].sort(
+        (a, b) =>
+            a.beneficiary.localeCompare(b.beneficiary) || a.ticker.localeCompare(b.ticker),
+    );
 }

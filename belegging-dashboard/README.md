@@ -19,8 +19,10 @@ en een prognose richting twee spaardoelen.
 | 19/08/2026 | CSV-parser | Afgewerkt | Broker-export inlezen. Kopregel, kolomaantal, transactietype, tijdstip en munt worden gecontroleerd; wat niet herkend wordt laat de parser falen met het regelnummer erbij |
 | 19/08/2026 | Ledger: posities | Afgewerkt | Aantal aandelen en kostprijs per fonds, telkens herberekend uit de transacties. Verkopen gooien bewust een fout tot de kostprijsmethode gekozen is |
 | 19/08/2026 | Interface | Afgewerkt | Bestand kiezen, foutmelding, positietabel en transactietabel, elk als eigen component |
-| | Eigendomsverdeling | Gepland | Inlegregels met ingangsdatum, die per aankoop de aandelen over de begunstigden verdelen |
-| | Inlegoverzicht per begunstigde | Gepland | Chronologisch overzicht van wie wanneer hoeveel in welk fonds legde, met subtotalen, waarde en rendement per persoon. Wordt berekend uit de transacties en de inlegregels, niet met de hand bijgehouden |
+| 21/08/2026 | Eigendomsverdeling | Afgewerkt | Inlegregels met ingangsdatum plus uitzonderingen per aankoop. De aandelen worden verdeeld naar rato van de inleg, waarbij de laatste begunstigde de rest krijgt zodat de delen exact optellen tot wat er gekocht is |
+| 21/08/2026 | Opslag | Afgewerkt | Transacties bewaard achter een provider-interface, met localStorage als eerste implementatie. Een upload voegt toe in plaats van te vervangen: dubbele worden op hun sleutel herkend, dus dezelfde export twee keer inladen of overlappende periodes gebruiken kan geen kwaad |
+| | Inlegoverzicht per begunstigde | Bezig | Chronologisch overzicht van wie wanneer hoeveel in welk fonds legde, met subtotalen, waarde en rendement per persoon. Wordt berekend uit de transacties en de inlegregels, niet met de hand bijgehouden |
+| | Inlegkalender | Gepland | Per maand wat er verwacht werd volgens de inlegregels, wat er werkelijk inging, en het verschil. Alarm op het cumulatieve verschil, niet op de losse maand |
 | | Actuele koersen | Gepland | Achter een provider-interface. Nodig voor waarde en rendement |
 | | Beurstaksoverzicht | Gepland | Aangifte per periode van twee maanden, met deadlineteller |
 | | Prognose | Gepland | Projectie met een band in plaats van een enkele lijn |
@@ -167,6 +169,24 @@ maanden, klaar om over te typen, met een teller tot de vervaldag.
 
 ---
 
+## Een overgeslagen maand
+
+Een maand zonder inleg is rekenkundig geen probleem: wat er niet in de export
+staat, wordt nooit meegeteld. Het ledger kan er niet door misgaan. Maar het is
+wel informatie die anders verloren gaat, en daarom komt er een kalender die per
+maand toont wat er verwacht werd en wat er werkelijk inging.
+
+Die kalender mag **niet per losse maand alarm slaan**. Een aankoop die een dag
+over de maandgrens valt, of een maand die vooruit betaald werd, ziet er dan uit
+als een gemiste betaling. In de eigen historiek van dit project gebeurde dat
+twee keer: twee maanden zonder aankoop, allebei opgevangen door een dubbele
+inleg de maand ervoor.
+
+De kolom die het echte antwoord geeft is het **cumulatieve verschil** tussen
+verwacht en werkelijk. Staat dat op nul, dan loopt alles gelijk, hoe grillig de
+losse maanden er ook uitzien. Pas als het structureel negatief wordt, is er
+werkelijk iets blijven liggen.
+
 ## De broker-export en zijn valkuilen
 
 Er is geen publieke API voor particuliere rekeningen, dus de data komt uit een
@@ -216,6 +236,18 @@ Die scheiding is niet alleen een afspraak maar zit in de opzet:
 
 ## Aan de slag
 
+De persoonlijke configuratie zit niet in deze repo. Maak eerst je eigen versie
+op basis van het voorbeeld en vul je gegevens in:
+
+```bash
+cp src/config/verdeling.example.ts src/config/verdeling.ts
+```
+
+Zonder dat bestand start de applicatie niet. Dat is met opzet: liever een
+duidelijke fout dan stilzwijgend rekenen met verzonnen bedragen.
+
+Daarna:
+
 ```bash
 pnpm install
 pnpm dev
@@ -239,8 +271,13 @@ inpluggen is dan genoeg.
 ## Status
 
 De keten van CSV naar scherm werkt: een export inlezen, omzetten naar transacties,
-daaruit de posities per fonds herberekenen en die tonen. De uitkomst is getoetst
-aan een onafhankelijk opgesteld belastingoverzicht en klopt tot op de cent.
+die bewaren, daaruit de posities per fonds herberekenen en tonen. De uitkomst is
+getoetst aan een onafhankelijk opgesteld belastingoverzicht en klopt tot op de cent.
 
-Volgende stap is de eigendomsverdeling, en daarna de actuele koersen die nodig
-zijn om waarde en rendement te kunnen berekenen.
+De eigendomsverdeling rekent correct: per fonds tellen de delen van de
+begunstigden exact op tot het aantal aandelen dat werkelijk gekocht is, tot op
+de laatste eenheid van een honderdmiljoenste. Die uitkomst staat nog niet op het
+scherm, dat is de eerstvolgende stap.
+
+Daarna de inlegkalender, en de actuele koersen die nodig zijn om waarde en
+rendement te kunnen berekenen.
