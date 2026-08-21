@@ -8,9 +8,13 @@ import {
     XAxis,
     YAxis,
 } from 'recharts';
-import { formatEuro } from '../format';
+import { useState } from 'react';
+import { formatDate, formatEuro } from '../format';
 import type { ValuePoint } from '../models/price';
 import { useTheme } from '../useTheme';
+import type { ChartRange } from '../valuation';
+import { filterByRange, monthsBetween, today } from '../valuation';
+import { RangeTabs } from './RangeTabs';
 
 /**
  * Kleuren voor de twee lijnen, uit een palet dat op contrast en
@@ -23,11 +27,30 @@ const PALETTE = {
     dark: { value: '#3987e5', invested: '#d95926', grid: '#33333a', text: '#adb5bd' },
 };
 
-/** Toont 'mrt 25' onder de as; de volledige datum staat in de tooltip. */
-function formatAxisDate(date: string): string {
+/**
+ * Toont 'mrt 2025' onder de as.
+ *
+ * Het jaartal staat er voluit bij en niet als 'mrt 25': dat laatste leest als
+ * een dagnummer. Een aslabel dat je twee keer moet lezen is fout, ook al is de
+ * korte vorm mooier.
+ */
+function formatAxisMonth(date: string): string {
     const [year, month] = date.split('-');
-    const namen = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
-    return `${namen[Number(month) - 1]} ${year.slice(2)}`;
+    const namen = [
+        'jan',
+        'feb',
+        'mrt',
+        'apr',
+        'mei',
+        'jun',
+        'jul',
+        'aug',
+        'sep',
+        'okt',
+        'nov',
+        'dec',
+    ];
+    return `${namen[Number(month) - 1]} ${year}`;
 }
 
 /** Bedragen op de as afgekort tot duizendtallen: 21497,16 wordt "21k". */
@@ -57,7 +80,9 @@ function ChartTooltip({ active, payload }: ChartTooltipProps) {
     return (
         <div className="card shadow-sm">
             <div className="card-body p-2 small">
-                <div className="fw-semibold mb-1">{formatAxisDate(point.date)}</div>
+                {/* De volledige datum, niet de maand: in een tooltip wil je
+                    weten welke dag je aanwijst. */}
+                <div className="fw-semibold mb-1">{formatDate(new Date(point.date))}</div>
                 <div className="d-flex justify-content-between gap-3">
                     <span className="text-muted">Waarde</span>
                     <span className="font-monospace">{formatEuro(point.valueCents)}</span>
@@ -90,6 +115,16 @@ type ValueChartProps = {
  */
 export function ValueChart({ series }: ValueChartProps) {
     const colors = PALETTE[useTheme()];
+    // Elke grafiek houdt zijn eigen tijdvak bij. Zou dat in App staan, dan
+    // sprongen alle grafieken tegelijk mee.
+    const [range, setRange] = useState<ChartRange>('all');
+
+    const zichtbaar = filterByRange(series, range);
+    const eersteDag = series.at(0)?.date;
+    const beschikbareMaanden = eersteDag ? monthsBetween(eersteDag, today()) : 0;
+
+    // De kop toont altijd de laatst bekende stand, ook als het gekozen tijdvak
+    // leeg is: dat is de vraag "waar sta ik nu", los van wat de grafiek toont.
     const last = series.at(-1);
     const result = last ? last.valueCents - last.investedCents : 0;
 
@@ -100,10 +135,8 @@ export function ValueChart({ series }: ValueChartProps) {
                 <span className="fw-semibold">Waarde in de tijd</span>
                 {last && (
                     <span className="ms-auto small text-muted">
-                        {formatAxisDate(last.date)}:{' '}
-                        <strong className="trap-text-primary">
-                            {formatEuro(last.valueCents)}
-                        </strong>{' '}
+                        {formatDate(new Date(last.date))}:{' '}
+                        <strong className="trap-text-primary">{formatEuro(last.valueCents)}</strong>{' '}
                         <span className={result >= 0 ? 'text-success' : 'text-danger'}>
                             ({result >= 0 ? '+' : ''}
                             {formatEuro(result)})
@@ -112,55 +145,75 @@ export function ValueChart({ series }: ValueChartProps) {
                 )}
             </div>
             <div className="card-body">
+                <div className="d-flex justify-content-end mb-3">
+                    <RangeTabs
+                        value={range}
+                        onChange={setRange}
+                        availableMonths={beschikbareMaanden}
+                    />
+                </div>
+
+                {zichtbaar.length < 2 && (
+                    <p className="text-muted small mb-0">
+                        Te weinig meetpunten in dit tijdvak. Voer een koers in bij "Koersen" om hier
+                        iets te zien, of kies een langer tijdvak.
+                    </p>
+                )}
+
                 {/* Hoogte op de container zodat de asnamen er nog bij passen.
                     Een te krappe hoogte knijpt de as eruit en geeft een
                     minuscule schuifbalk binnen de kaart. */}
-                <ResponsiveContainer width="100%" height={320}>
-                    <LineChart data={series} margin={{ top: 8, right: 16, bottom: 0, left: 8 }}>
-                        {/* Alleen horizontale lijnen, en een hairline: het raster
+                {zichtbaar.length >= 2 && (
+                    <ResponsiveContainer width="100%" height={320}>
+                        <LineChart
+                            data={zichtbaar}
+                            margin={{ top: 8, right: 16, bottom: 0, left: 8 }}
+                        >
+                            {/* Alleen horizontale lijnen, en een hairline: het raster
                             mag helpen lezen, niet meekijken. */}
-                        <CartesianGrid stroke={colors.grid} vertical={false} />
-                        <XAxis
-                            dataKey="date"
-                            tickFormatter={formatAxisDate}
-                            tick={{ fill: colors.text, fontSize: 12 }}
-                            stroke={colors.grid}
-                            minTickGap={32}
-                        />
-                        <YAxis
-                            tickFormatter={formatAxisEuro}
-                            tick={{ fill: colors.text, fontSize: 12 }}
-                            stroke={colors.grid}
-                            width={44}
-                        />
-                        <Tooltip content={<ChartTooltip />} cursor={{ stroke: colors.grid }} />
-                        <Legend
-                            verticalAlign="top"
-                            align="right"
-                            height={28}
-                            wrapperStyle={{ fontSize: 12, color: colors.text }}
-                        />
-                        {/* Waarde eerst, want dat is de reeks waar het om draait. */}
-                        <Line
-                            name="Waarde"
-                            type="monotone"
-                            dataKey="valueCents"
-                            stroke={colors.value}
-                            strokeWidth={2}
-                            dot={false}
-                            activeDot={{ r: 4 }}
-                        />
-                        <Line
-                            name="Ingelegd"
-                            type="monotone"
-                            dataKey="investedCents"
-                            stroke={colors.invested}
-                            strokeWidth={2}
-                            dot={false}
-                            activeDot={{ r: 4 }}
-                        />
-                    </LineChart>
-                </ResponsiveContainer>
+                            <CartesianGrid stroke={colors.grid} vertical={false} />
+                            <XAxis
+                                dataKey="date"
+                                tickFormatter={formatAxisMonth}
+                                tick={{ fill: colors.text, fontSize: 12 }}
+                                stroke={colors.grid}
+                                minTickGap={32}
+                            />
+                            <YAxis
+                                tickFormatter={formatAxisEuro}
+                                tick={{ fill: colors.text, fontSize: 12 }}
+                                stroke={colors.grid}
+                                width={44}
+                            />
+                            <Tooltip content={<ChartTooltip />} cursor={{ stroke: colors.grid }} />
+                            <Legend
+                                verticalAlign="top"
+                                align="right"
+                                height={28}
+                                wrapperStyle={{ fontSize: 12, color: colors.text }}
+                            />
+                            {/* Waarde eerst, want dat is de reeks waar het om draait. */}
+                            <Line
+                                name="Waarde"
+                                type="monotone"
+                                dataKey="valueCents"
+                                stroke={colors.value}
+                                strokeWidth={2}
+                                dot={false}
+                                activeDot={{ r: 4 }}
+                            />
+                            <Line
+                                name="Ingelegd"
+                                type="monotone"
+                                dataKey="investedCents"
+                                stroke={colors.invested}
+                                strokeWidth={2}
+                                dot={false}
+                                activeDot={{ r: 4 }}
+                            />
+                        </LineChart>
+                    </ResponsiveContainer>
+                )}
             </div>
         </div>
     );

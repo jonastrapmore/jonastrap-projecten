@@ -151,6 +151,33 @@ zien dat het om een geschaald getal gaat.
 
 ---
 
+## Grafieken: welke, en waarom
+
+Een grafiek is een antwoord op een vraag. Staat er geen vraag bij, dan is het
+versiering. Onderstaande lijst is de kandidatenlijst; per stuk wordt eerst de
+vorm bepaald voor er iets getekend wordt.
+
+| Vraag | Vorm | Status |
+| --- | --- | --- |
+| Groeit mijn portefeuille, en hoe verhoudt de waarde zich tot wat ik erin stopte? | Twee lijnen op een as: waarde en ingelegd | Klaar |
+| Waaruit bestaat mijn portefeuille, en hoe verschuift dat? | Gestapeld vlak per fonds | Gepland |
+| Welk fonds presteert het best, los van hoe groot het is? | Lijnen, elk geindexeerd op 100 bij zijn eerste dag | Gepland |
+| Hoeveel is het deel van elke begunstigde waard? | Twee lijnen, een per persoon | Gepland |
+| Hoe verschuift het eigendomsaandeel tussen de begunstigden? | Gestapeld vlak op 100 procent | Gepland |
+| Hoe diep stond ik onder mijn hoogste stand? | Vlak onder nul, per meetpunt het verschil met de piek tot dan | Gepland |
+| Heb ik een maand overgeslagen? | Staven per maand, verwacht tegenover werkelijk | Gepland |
+| Waar kom ik uit tegen mijn richtjaar? | Band met een pessimistische, basis- en optimistische lijn | Gepland |
+| Welke bedrijven zitten er werkelijk in, over de fondsen heen? | Staven, grootste eerst | Vereist gegevens over de samenstelling van de fondsen, die de export niet bevat |
+
+Elke grafiek krijgt dezelfde tijdvakken: laatste maand, zes maanden, jaar, vijf
+jaar en altijd. Tijdvakken die verder teruggaan dan de beschikbare historiek
+worden verborgen: een tabblad aanklikken waar niets verandert, leest als een
+defect.
+
+Let wel: de korte tijdvakken zijn pas zinvol als er vaker dan maandelijks een
+koers wordt ingevoerd. Met een meetpunt per maand is "laatste maand" twee punten
+en een lijn.
+
 ## Wat de gebruiker invoert, moet hij kunnen nakijken
 
 Twee soorten gegevens komen dit dashboard binnen, en ze verdienen een andere

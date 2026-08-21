@@ -123,3 +123,50 @@ export function mergeQuotes(derived: PriceQuote[], manual: PriceQuote[]): PriceQ
         (a, b) => a.date.localeCompare(b.date) || a.ticker.localeCompare(b.ticker),
     );
 }
+
+/** De tijdvakken die elke grafiek aanbiedt. */
+export type ChartRange = '1m' | '6m' | '1y' | '5y' | 'all';
+
+export const RANGES: { id: ChartRange; label: string; months: number | null }[] = [
+    { id: '1m', label: 'Maand', months: 1 },
+    { id: '6m', label: '6 maanden', months: 6 },
+    { id: '1y', label: 'Jaar', months: 12 },
+    { id: '5y', label: '5 jaar', months: 60 },
+    { id: 'all', label: 'Altijd', months: null },
+];
+
+/** Hoeveel hele maanden er tussen twee ISO-datums zitten. */
+export function monthsBetween(from: string, to: string): number {
+    const [vj, vm, vd] = from.split('-').map(Number);
+    const [tj, tm, td] = to.split('-').map(Number);
+    return (tj - vj) * 12 + (tm - vm) - (td < vd ? 1 : 0);
+}
+
+/** Vandaag als YYYY-MM-DD, in lokale tijd. */
+export function today(): string {
+    const now = new Date();
+    const maand = String(now.getMonth() + 1).padStart(2, '0');
+    const dag = String(now.getDate()).padStart(2, '0');
+    return `${now.getFullYear()}-${maand}-${dag}`;
+}
+
+/**
+ * Houdt alleen de meetpunten binnen het gekozen tijdvak over.
+ *
+ * Er wordt teruggerekend vanaf vandaag en niet vanaf het laatste meetpunt.
+ * Dat kan een leeg tijdvak opleveren als er al maanden geen koers is ingevoerd,
+ * en dat is precies de bedoeling: "laatste maand" hoort de laatste maand te
+ * betekenen, niet de laatste maand waarin je toevallig iets invulde.
+ */
+export function filterByRange<T extends { date: string }>(points: T[], range: ChartRange): T[] {
+    const spec = RANGES.find((r) => r.id === range);
+    if (!spec || spec.months === null) {
+        return points;
+    }
+
+    const nu = new Date(`${today()}T00:00:00Z`);
+    nu.setUTCMonth(nu.getUTCMonth() - spec.months);
+    const grens = nu.toISOString().slice(0, 10);
+
+    return points.filter((p) => p.date >= grens);
+}
