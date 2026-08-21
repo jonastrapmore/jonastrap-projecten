@@ -21,9 +21,13 @@ en een prognose richting twee spaardoelen.
 | 19/08/2026 | Interface | Afgewerkt | Bestand kiezen, foutmelding, positietabel en transactietabel, elk als eigen component |
 | 21/08/2026 | Eigendomsverdeling | Afgewerkt | Inlegregels met ingangsdatum plus uitzonderingen per aankoop. De aandelen worden verdeeld naar rato van de inleg, waarbij de laatste begunstigde de rest krijgt zodat de delen exact optellen tot wat er gekocht is |
 | 21/08/2026 | Opslag | Afgewerkt | Transacties bewaard achter een provider-interface, met localStorage als eerste implementatie. Een upload voegt toe in plaats van te vervangen: dubbele worden op hun sleutel herkend, dus dezelfde export twee keer inladen of overlappende periodes gebruiken kan geen kwaad |
-| | Inlegoverzicht per begunstigde | Bezig | Chronologisch overzicht van wie wanneer hoeveel in welk fonds legde, met subtotalen, waarde en rendement per persoon. Wordt berekend uit de transacties en de inlegregels, niet met de hand bijgehouden |
+| 21/08/2026 | Inleg per begunstigde | Afgewerkt | Kruistabel met per fonds wie hoeveel inlegde, plus totalen en het aandeel per persoon. Berekend uit de transacties en de inlegregels, niet met de hand bijgehouden |
+| 21/08/2026 | Aankopen toewijzen | Afgewerkt | Aankopen die op geen enkele regel passen blokkeren de rest niet meer, maar komen op een lijst met een invulveld per begunstigde. De knop gaat pas aan als de bedragen optellen tot het aankoopbedrag, en de invoer wordt bewaard |
+| 21/08/2026 | Koersen | Afgewerkt | De koersen van je aankoopdagen komen uit de export zelf; voor de dagen ertussen vul je ze in. Beide bronnen worden samengevoegd, waarbij eigen invoer wint |
+| 21/08/2026 | Waardegrafiek | Afgewerkt | Waarde tegenover ingelegd kapitaal over de tijd, met een gecontroleerd kleurenpaar en een tooltip die het verschil toont |
+| | Grafiek per fonds | Gepland | Gestapeld vlak voor de samenstelling, en een lijngrafiek geindexeerd op 100 om rendement te vergelijken zonder dat het grootste fonds de rest platdrukt |
 | | Inlegkalender | Gepland | Per maand wat er verwacht werd volgens de inlegregels, wat er werkelijk inging, en het verschil. Alarm op het cumulatieve verschil, niet op de losse maand |
-| | Actuele koersen | Gepland | Achter een provider-interface. Nodig voor waarde en rendement |
+| | Koersen automatisch ophalen | Gepland | Nu handmatig. Een API vraagt om CORS en een sleutel, dus dat zit achter een interface zodat het een implementatie erbij wordt |
 | | Beurstaksoverzicht | Gepland | Aangifte per periode van twee maanden, met deadlineteller |
 | | Prognose | Gepland | Projectie met een band in plaats van een enkele lijn |
 | | Look-through | Gepland | Gecombineerde topposities over de fondsen heen |
@@ -146,6 +150,24 @@ De schaal staat in de veldnaam (`quantityE8`). Zo is aan de aanroepende code te
 zien dat het om een geschaald getal gaat.
 
 ---
+
+## Wat de gebruiker invoert, moet hij kunnen nakijken
+
+Twee soorten gegevens komen dit dashboard binnen, en ze verdienen een andere
+behandeling.
+
+Wat uit de **broker-export** komt hoeft niet bewerkbaar te zijn: raakt het zoek
+of klopt het niet, dan laad je het bestand gewoon opnieuw in.
+
+Wat de gebruiker **zelf invult** bestaat nergens anders. De verdeling van een
+aankoop buiten het maandritme, of de koers van een dag waarop niet gekocht is:
+die kennis zit alleen in zijn hoofd. Daarvoor geldt dat het zichtbaar moet zijn
+en per stuk verwijderbaar. Een knop die alles tegelijk wist is geen beheer maar
+een noodgreep, en zonder overzicht ontdek je een typfout pas doordat een grafiek
+er raar uitziet, zonder te weten welke regel het veroorzaakte.
+
+Vandaar dat elke invoerlijst zijn eigen overzicht heeft, met de wisknop bij die
+lijst in plaats van ergens in een balk bovenaan.
 
 ## De beurstaks
 
@@ -274,10 +296,13 @@ De keten van CSV naar scherm werkt: een export inlezen, omzetten naar transactie
 die bewaren, daaruit de posities per fonds herberekenen en tonen. De uitkomst is
 getoetst aan een onafhankelijk opgesteld belastingoverzicht en klopt tot op de cent.
 
-De eigendomsverdeling rekent correct: per fonds tellen de delen van de
-begunstigden exact op tot het aantal aandelen dat werkelijk gekocht is, tot op
-de laatste eenheid van een honderdmiljoenste. Die uitkomst staat nog niet op het
-scherm, dat is de eerstvolgende stap.
+De eigendomsverdeling rekent correct en staat op het scherm: per fonds tellen de
+delen van de begunstigden exact op tot het aantal aandelen dat werkelijk gekocht
+is, tot op de laatste eenheid van een honderdmiljoenste. Aankopen die buiten de
+vaste regels vallen worden apart getoond en kun je in het scherm toewijzen.
 
-Daarna de inlegkalender, en de actuele koersen die nodig zijn om waarde en
-rendement te kunnen berekenen.
+Er is een waardegrafiek over de tijd. De koersen komen uit de aankopen zelf,
+aangevuld met wat je handmatig invoert.
+
+Volgende stappen: grafieken per fonds, en de inlegkalender die laat zien of er
+een maand is overgeslagen.

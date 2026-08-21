@@ -1,3 +1,6 @@
+import type { BeneficiaryPosition } from './position';
+import type { Transaction } from './transaction';
+
 // Types voor de eigendomsverdeling. De werkelijke bedragen staan in
 // src/config/verdeling.ts, dat niet gecommit wordt. Zie verdeling.example.ts.
 
@@ -53,4 +56,32 @@ export type Allocation = {
     costCents: number;
     /** Deel van de aandelen, geschaald met 8 decimalen. */
     quantityE8: number;
+};
+
+/** Een aankoop die op geen enkele regel of uitzondering past. */
+export type UnallocatedPurchase = {
+    transaction: Transaction;
+    /**
+     * Het fonds, altijd gevuld. Staat hier apart omdat `transaction.ticker`
+     * volgens het type null kan zijn: het ledger heeft dat al gecontroleerd en
+     * geeft de gecontroleerde waarde mee, zodat niemand verderop een
+     * uitroepteken nodig heeft.
+     */
+    ticker: string;
+    /** ISO-datum van de aankoop, klaar om als sleutel van een uitzondering te dienen. */
+    date: string;
+    /** De melding uit allocate, zodat het scherm kan tonen wat er ontbreekt. */
+    reason: string;
+};
+
+/**
+ * Wat het ledger teruggeeft: de verdeling die gelukt is, plus de aankopen
+ * waarvoor nog een verdeling ingevuld moet worden.
+ *
+ * Bewust geen fout bij de eerste aankoop die niet past. Zijn er drie, dan wil
+ * je ze alle drie zien en in een keer kunnen toewijzen.
+ */
+export type BeneficiaryLedger = {
+    positions: BeneficiaryPosition[];
+    unallocated: UnallocatedPurchase[];
 };

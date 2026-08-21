@@ -1,5 +1,5 @@
 import { allocate } from './allocation';
-import type { OwnershipConfig } from './models/ownership';
+import type { BeneficiaryLedger, OwnershipConfig, UnallocatedPurchase } from './models/ownership';
 import type { BeneficiaryPosition, Position } from './models/position';
 import type { Transaction } from './models/transaction';
 
@@ -62,12 +62,18 @@ export function buildPositions(transactions: Transaction[]): Position[] {
  * worden opgeteld per persoon per fonds. Ook dit wordt telkens opnieuw
  * berekend en nooit bewaard: het eigendomspercentage is een uitkomst en
  * geen invoer.
+ *
+ * Aankopen die op geen enkele regel passen laten deze functie NIET falen.
+ * Ze worden verzameld in `unallocated`, zodat het scherm ze allemaal tegelijk
+ * kan tonen om alsnog toe te wijzen. Stoppen bij de eerste zou betekenen dat
+ * je ze een voor een moet ontdekken.
  */
-export function buildBeneficiaryPositions(
+export function buildBeneficiaryLedger(
     transactions: Transaction[],
     config: OwnershipConfig,
-): BeneficiaryPosition[] {
+): BeneficiaryLedger {
     const byKey = new Map<string, BeneficiaryPosition>();
+    const unallocated: UnallocatedPurchase[] = [];
 
     for (const t of transactions) {
         // Stortingen zijn geen bezit en horen niet bij een persoon.
@@ -83,7 +89,22 @@ export function buildBeneficiaryPositions(
             throw new Error(`Aankoop zonder ticker: ${t.id}`);
         }
 
-        for (const allocation of allocate(t, config)) {
+        let allocations;
+        try {
+            allocations = allocate(t, config);
+        } catch (e) {
+            // Geen regel en geen uitzondering voor deze aankoop. Niet stoppen:
+            // opzij leggen en verder, zodat de gebruiker ze in een keer ziet.
+            unallocated.push({
+                transaction: t,
+                ticker,
+                date: t.timestampRaw.slice(0, 10),
+                reason: e instanceof Error ? e.message : String(e),
+            });
+            continue;
+        }
+
+        for (const allocation of allocations) {
             // Samengestelde sleutel: een persoon kan in meer dan een fonds
             // zitten, en een fonds kan van meer dan een persoon zijn.
             const key = `${allocation.beneficiary}|${ticker}`;
@@ -106,8 +127,10 @@ export function buildBeneficiaryPositions(
 
     // Vaste volgorde: eerst op persoon, dan op fonds. Zo springt de tabel niet
     // om bij een nieuwe export.
-    return [...byKey.values()].sort(
+    const positions = [...byKey.values()].sort(
         (a, b) =>
             a.beneficiary.localeCompare(b.beneficiary) || a.ticker.localeCompare(b.ticker),
     );
+
+    return { positions, unallocated };
 }

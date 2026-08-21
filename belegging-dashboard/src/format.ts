@@ -1,3 +1,5 @@
+import { parseScaled } from './data/scaledInt';
+
 // Weergavehulpjes. Dit is de enige plek in het project waar door 100
 // of door 1e8 gedeeld wordt: overal elders blijven het hele getallen.
 
@@ -30,4 +32,24 @@ export function formatPricePerShare(cents: number): string {
         minimumFractionDigits: 4,
         maximumFractionDigits: 4,
     });
+}
+
+/**
+ * Zet een ingetypt bedrag om naar hele centen.
+ *
+ * Geeft `null` bij iets wat geen bedrag is, zodat een knop uit kan blijven in
+ * plaats van dat er een fout gegooid wordt terwijl iemand nog aan het typen is.
+ * Een leeg veld telt als nul.
+ *
+ * De komma wordt een punt: op een Belgisch toetsenbord typt niemand "300.50".
+ */
+export function parseEuroInput(text: string): number | null {
+    const cleaned = text.trim().replace(',', '.');
+    if (cleaned === '') {
+        return 0;
+    }
+    if (!/^\d+(\.\d{1,2})?$/.test(cleaned)) {
+        return null;
+    }
+    return parseScaled(cleaned, 2);
 }
