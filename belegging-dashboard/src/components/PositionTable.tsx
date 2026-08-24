@@ -1,3 +1,4 @@
+import { FundName } from './FundName';
 import { formatEuro, formatPricePerShare, formatQuantity } from '../format';
 import type { Position } from '../models/position';
 
@@ -32,7 +33,9 @@ export function PositionTable({ positions }: PositionTableProps) {
                     <tbody>
                         {positions.map((p) => (
                             <tr key={p.ticker}>
-                                <td>{p.ticker}</td>
+                                <td>
+                                    <FundName ticker={p.ticker} />
+                                </td>
                                 <td className="text-center">{p.purchaseCount}</td>
                                 <td className="text-end">{formatQuantity(p.quantityE8)}</td>
                                 <td className="text-end">{formatEuro(p.costCents)}</td>

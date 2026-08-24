@@ -285,14 +285,16 @@ Die scheiding is niet alleen een afspraak maar zit in de opzet:
 
 ## Aan de slag
 
-De persoonlijke configuratie zit niet in deze repo. Maak eerst je eigen versie
-op basis van het voorbeeld en vul je gegevens in:
+De persoonlijke configuratie zit niet in deze repo: dat zijn de begunstigden met
+hun inleg, en welke fondsen je bezit. Maak eerst je eigen versies op basis van de
+voorbeelden en vul je gegevens in:
 
 ```bash
 cp src/config/verdeling.example.ts src/config/verdeling.ts
+cp src/config/fondsen.example.ts src/config/fondsen.ts
 ```
 
-Zonder dat bestand start de applicatie niet. Dat is met opzet: liever een
+Zonder die bestanden start de applicatie niet. Dat is met opzet: liever een
 duidelijke fout dan stilzwijgend rekenen met verzonnen bedragen.
 
 Daarna:

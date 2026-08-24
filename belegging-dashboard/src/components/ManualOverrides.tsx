@@ -1,3 +1,4 @@
+import { fundLabel } from '../funds';
 import { formatDate, formatEuro } from '../format';
 import type { Beneficiary, ContributionOverride } from '../models/ownership';
 
@@ -63,7 +64,9 @@ export function ManualOverrides({
                             <tr key={`${o.date}|${o.ticker}`}>
                                 <td className="small">{formatDate(new Date(o.date))}</td>
                                 <td>
-                                    <span className="badge bg-secondary">{o.ticker}</span>
+                                    <span className="badge bg-secondary" title={o.ticker}>
+                                        {fundLabel(o.ticker)}
+                                    </span>
                                 </td>
                                 {beneficiaries.map((b) => {
                                     const cents = o.contributions[b.id] ?? 0;

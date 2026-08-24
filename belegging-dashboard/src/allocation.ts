@@ -96,9 +96,7 @@ export function allocate(transaction: Transaction, config: OwnershipConfig): All
     // Vaste volgorde uit de configuratie, zodat de uitkomst niet afhangt van de
     // volgorde waarin de sleutels toevallig in het object staan. Wie niets
     // inlegde, krijgt geen regel.
-    const ids = config.beneficiaries
-        .map((b) => b.id)
-        .filter((id) => (contributions[id] ?? 0) > 0);
+    const ids = config.beneficiaries.map((b) => b.id).filter((id) => (contributions[id] ?? 0) > 0);
 
     // Vangt een typfout in de configuratie: staat er een begunstigde in die
     // niet in `beneficiaries` voorkomt, dan valt zijn inleg hierboven weg en

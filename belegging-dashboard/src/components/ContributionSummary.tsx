@@ -1,3 +1,4 @@
+import { FundName } from './FundName';
 import { formatEuro } from '../format';
 import type { Beneficiary } from '../models/ownership';
 import type { BeneficiaryPosition } from '../models/position';
@@ -64,7 +65,9 @@ export function ContributionSummary({ positions, beneficiaries }: ContributionSu
                     <tbody>
                         {tickers.map((ticker) => (
                             <tr key={ticker}>
-                                <td>{ticker}</td>
+                                <td>
+                                    <FundName ticker={ticker} />
+                                </td>
                                 {beneficiaries.map((b) => {
                                     const cents = cost(b.id, ticker);
                                     return (

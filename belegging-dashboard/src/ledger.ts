@@ -128,8 +128,7 @@ export function buildBeneficiaryLedger(
     // Vaste volgorde: eerst op persoon, dan op fonds. Zo springt de tabel niet
     // om bij een nieuwe export.
     const positions = [...byKey.values()].sort(
-        (a, b) =>
-            a.beneficiary.localeCompare(b.beneficiary) || a.ticker.localeCompare(b.ticker),
+        (a, b) => a.beneficiary.localeCompare(b.beneficiary) || a.ticker.localeCompare(b.ticker),
     );
 
     return { positions, unallocated };

@@ -152,3 +152,19 @@ main {
     background-color: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.2);
 }
+
+/* ===== ACCORDEON ===== */
+/* Met ruimte tussen de blokken is elk blok een eigen kaart, dus krijgt elk
+   blok zijn eigen ronde hoeken. Bootstrap rondt standaard alleen het eerste
+   en het laatste af, omdat die er normaal tegen elkaar staan.
+   De overflow knipt de knop erbinnen mee af. */
+.accordion-item {
+    border-radius: var(--bs-border-radius);
+    overflow: hidden;
+}
+
+/* De kop is een knop met de volledige breedte; de inhoud erin mag zich
+   gedragen als een gewone regel in plaats van als knoptekst. */
+.accordion-button {
+    font-size: inherit;
+}

@@ -1,3 +1,4 @@
+import { fundLabel } from '../funds';
 import { useState } from 'react';
 import { formatDate, formatEuro, parseEuroInput } from '../format';
 import type { PriceQuote } from '../models/price';
@@ -98,7 +99,7 @@ export function PriceInput({
                                     className="form-label small mb-1"
                                     htmlFor={`koers-${ticker}`}
                                 >
-                                    {ticker}
+                                    {fundLabel(ticker)}
                                 </label>
                                 <div className="input-group input-group-sm">
                                     <span className="input-group-text">EUR</span>
@@ -176,8 +177,11 @@ export function PriceInput({
                                                 {formatDate(new Date(q.date))}
                                             </td>
                                             <td>
-                                                <span className="badge bg-secondary">
-                                                    {q.ticker}
+                                                <span
+                                                    className="badge bg-secondary"
+                                                    title={q.ticker}
+                                                >
+                                                    {fundLabel(q.ticker)}
                                                 </span>
                                             </td>
                                             <td className="text-end font-monospace small">

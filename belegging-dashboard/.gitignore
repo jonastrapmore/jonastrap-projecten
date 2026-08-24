@@ -36,6 +36,7 @@ cache/
 *.config.local.ts
 *.config.local.json
 verdeling*
+fondsen*
 !*.example.ts
 !*.example.json
 

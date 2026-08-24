@@ -1,8 +1,22 @@
 import { buildBeneficiaryLedger, buildPositions } from './ledger';
-import type { ContributionOverride, OwnershipConfig, UnallocatedPurchase } from './models/ownership';
+import type {
+    ContributionOverride,
+    OwnershipConfig,
+    UnallocatedPurchase,
+} from './models/ownership';
 import type { PriceQuote, ValuePoint } from './models/price';
 import type { BeneficiaryPosition, Position } from './models/position';
 import type { Transaction } from './models/transaction';
+import {
+    buildBeneficiaryFundPerformance,
+    buildBeneficiaryPerformance,
+    buildPositionPerformance,
+} from './performance';
+import type {
+    BeneficiaryFundPerformance,
+    BeneficiaryPerformance,
+    PositionPerformance,
+} from './performance';
 import { buildValueSeries, mergeQuotes, quotesFromTransactions } from './valuation';
 
 /** Alles wat het scherm nodig heeft, afgeleid uit de opgeslagen gegevens. */
@@ -16,6 +30,12 @@ export type Dashboard = {
     /** Koersen uit de aankopen, aangevuld met de handmatig ingevoerde. */
     quotes: PriceQuote[];
     valueSeries: ValuePoint[];
+    /** Waarde en resultaat per fonds, tegen de laatst bekende koers. */
+    positionPerformance: PositionPerformance[];
+    /** Hetzelfde per persoon, met wat er na verkoopkosten overblijft. */
+    beneficiaryPerformance: BeneficiaryPerformance[];
+    /** Waarde en resultaat per persoon per fonds. */
+    beneficiaryFundPerformance: BeneficiaryFundPerformance[];
     firstTransaction: Transaction | undefined;
     lastTransaction: Transaction | undefined;
 };
@@ -58,13 +78,18 @@ export function deriveDashboard(
 
     const quotes = mergeQuotes(quotesFromTransactions(transactions), manualQuotes);
 
+    const positions = buildPositions(transactions);
+
     return {
-        positions: buildPositions(transactions),
+        positions,
         beneficiaryPositions,
         unallocated,
         ownershipError,
         quotes,
         valueSeries: buildValueSeries(transactions, quotes),
+        positionPerformance: buildPositionPerformance(positions, quotes),
+        beneficiaryPerformance: buildBeneficiaryPerformance(beneficiaryPositions, quotes),
+        beneficiaryFundPerformance: buildBeneficiaryFundPerformance(beneficiaryPositions, quotes),
         firstTransaction: transactions.at(0),
         lastTransaction: transactions.at(-1),
     };

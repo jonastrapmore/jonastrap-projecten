@@ -1,3 +1,4 @@
+import { fundLabel } from '../funds';
 import type { Transaction } from '../models/transaction';
 import { formatDate, formatEuro, formatQuantity } from '../format';
 
@@ -50,7 +51,7 @@ export function TransactionTable({ transactions }: TransactionTableProps) {
                                         <span className="badge bg-secondary">Storting</span>
                                     )}
                                 </td>
-                                <td>{t.ticker ?? ''}</td>
+                                <td>{t.ticker === null ? '' : fundLabel(t.ticker)}</td>
                                 <td className="text-end font-monospace small">
                                     {formatQuantity(t.quantityE8)}
                                 </td>

@@ -1,3 +1,4 @@
+import { fundLabel } from '../funds';
 import { useState } from 'react';
 import { formatDate, formatEuro, parseEuroInput } from '../format';
 import type { Beneficiary, ContributionOverride, UnallocatedPurchase } from '../models/ownership';
@@ -41,9 +42,7 @@ function PurchaseRow({ purchase, beneficiaries, onAssign }: PurchaseRowProps) {
         onAssign({
             date: purchase.date,
             ticker: purchase.ticker,
-            contributions: Object.fromEntries(
-                beneficiaries.map((b, i) => [b.id, entered[i] ?? 0]),
-            ),
+            contributions: Object.fromEntries(beneficiaries.map((b, i) => [b.id, entered[i] ?? 0])),
         });
     }
 
@@ -51,7 +50,9 @@ function PurchaseRow({ purchase, beneficiaries, onAssign }: PurchaseRowProps) {
         <div className="border rounded p-3 mb-3">
             <div className="d-flex flex-wrap align-items-center gap-2 mb-3">
                 <span className="fw-semibold">{formatDate(purchase.transaction.timestamp)}</span>
-                <span className="badge bg-secondary">{purchase.ticker}</span>
+                <span className="badge bg-secondary" title={purchase.ticker}>
+                    {fundLabel(purchase.ticker)}
+                </span>
                 <span className="font-monospace">{formatEuro(target)}</span>
                 <span className="text-muted small ms-auto">te verdelen</span>
             </div>
@@ -63,7 +64,10 @@ function PurchaseRow({ purchase, beneficiaries, onAssign }: PurchaseRowProps) {
             <div className="row g-2 align-items-end">
                 {beneficiaries.map((b) => (
                     <div className="col-sm" key={b.id}>
-                        <label className="form-label small mb-1" htmlFor={`${purchase.transaction.id}-${b.id}`}>
+                        <label
+                            className="form-label small mb-1"
+                            htmlFor={`${purchase.transaction.id}-${b.id}`}
+                        >
                             {b.label}
                         </label>
                         <div className="input-group input-group-sm">
@@ -95,10 +99,15 @@ function PurchaseRow({ purchase, beneficiaries, onAssign }: PurchaseRowProps) {
             </div>
 
             <div className="small mt-2">
-                {invalid && <span className="text-danger">Vul enkel bedragen in, bijvoorbeeld 200 of 200,50.</span>}
+                {invalid && (
+                    <span className="text-danger">
+                        Vul enkel bedragen in, bijvoorbeeld 200 of 200,50.
+                    </span>
+                )}
                 {!invalid && difference !== null && difference !== 0 && (
                     <span className="text-warning">
-                        Nog {formatEuro(Math.abs(difference))} {difference > 0 ? 'te verdelen' : 'te veel'}.
+                        Nog {formatEuro(Math.abs(difference))}{' '}
+                        {difference > 0 ? 'te verdelen' : 'te veel'}.
                     </span>
                 )}
                 {canSave && <span className="text-success">Telt op tot het aankoopbedrag.</span>}

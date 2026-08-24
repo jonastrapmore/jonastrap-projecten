@@ -59,10 +59,7 @@ export function priceAt(quotes: PriceQuote[], ticker: string, date: string): num
  * De meetdagen zijn de dagen waarop we een koers kennen. Meer punten hebben we
  * niet, en ertussen iets verzinnen zou een gladdere lijn geven die minder waar is.
  */
-export function buildValueSeries(
-    transactions: Transaction[],
-    quotes: PriceQuote[],
-): ValuePoint[] {
+export function buildValueSeries(transactions: Transaction[], quotes: PriceQuote[]): ValuePoint[] {
     const purchases = transactions
         .filter((t) => t.type === 'BUY')
         .sort((a, b) => a.timestampRaw.localeCompare(b.timestampRaw));
