@@ -25,11 +25,17 @@ en een prognose richting twee spaardoelen.
 | 21/08/2026 | Aankopen toewijzen | Afgewerkt | Aankopen die op geen enkele regel passen blokkeren de rest niet meer, maar komen op een lijst met een invulveld per begunstigde. De knop gaat pas aan als de bedragen optellen tot het aankoopbedrag, en de invoer wordt bewaard |
 | 21/08/2026 | Koersen | Afgewerkt | De koersen van je aankoopdagen komen uit de export zelf; voor de dagen ertussen vul je ze in. Beide bronnen worden samengevoegd, waarbij eigen invoer wint |
 | 21/08/2026 | Waardegrafiek | Afgewerkt | Waarde tegenover ingelegd kapitaal over de tijd, met een gecontroleerd kleurenpaar en een tooltip die het verschil toont |
+| 24/08/2026 | Vier tabbladen | Afgewerkt | Overzicht, Fondsen, Prognose en Update, met een router. Adressen als /#/prognose/jonas, dus een tabblad blijft staan na een herlaadbeurt en de terugknop werkt. De gegevens worden een keer opgehaald in de schil en doorgegeven aan de pagina die open staat |
+| 24/08/2026 | App opgesplitst | Afgewerkt | Drie rollen uit elkaar: een hook beheert wat bewaard wordt, een gewone functie rekent uit wat daaruit volgt, en App bepaalt alleen de weergave. Die berekening is daardoor zonder browser na te rekenen |
+| 24/08/2026 | Overzicht | Afgewerkt | Vier kopgetallen, per begunstigde inleg tegenover waarde met het nettobedrag bij verkoop, per fonds hetzelfde, en onderaan het verloop |
+| 24/08/2026 | Fondsen | Afgewerkt | Een uitklapbaar blok per fonds. Dichtgeklapt staan naam, waarde en rendement al op een regel, zodat de lijst zelf de vergelijking is; uitgeklapt komen de aantallen, de gemiddelde aankoopprijs, de ISIN en de verdeling per persoon erbij |
+| 24/08/2026 | Fondsnamen en kleuren | Afgewerkt | Beurscodes als 84X0 zeggen niets, dus elk fonds heeft een leesbare naam en een vaste kleur. Die kleur volgt de plaats in de configuratie en niet de omvang: anders wisselt een fonds van kleur zodra het stijgt of daalt |
+| 24/08/2026 | Verkoopkosten | Afgewerkt | Als regel met ingangsdatum, in basispunten. De beurstaks bij verkoop is ingevuld; het tarief op de meerwaarde staat bewust op nul tot het nagekeken is, en het scherm zegt dat erbij |
 | | Grafiek per fonds | Gepland | Gestapeld vlak voor de samenstelling, en een lijngrafiek geindexeerd op 100 om rendement te vergelijken zonder dat het grootste fonds de rest platdrukt |
 | | Inlegkalender | Gepland | Per maand wat er verwacht werd volgens de inlegregels, wat er werkelijk inging, en het verschil. Alarm op het cumulatieve verschil, niet op de losse maand |
 | | Koersen automatisch ophalen | Gepland | Nu handmatig. Een API vraagt om CORS en een sleutel, dus dat zit achter een interface zodat het een implementatie erbij wordt |
 | | Beurstaksoverzicht | Gepland | Aangifte per periode van twee maanden, met deadlineteller |
-| | Prognose | Gepland | Projectie met een band in plaats van een enkele lijn |
+| | Prognose | Gepland | Een tabblad per persoon, met schuiven voor inleg en rendement en twee fases: zolang beide begunstigden sparen, en daarna. Doelbedragen op de geldas met het moment waarop ze bereikt worden |
 | | Look-through | Gepland | Gecombineerde topposities over de fondsen heen |
 
 ---
@@ -150,6 +156,21 @@ De schaal staat in de veldnaam (`quantityE8`). Zo is aan de aanroepende code te
 zien dat het om een geschaald getal gaat.
 
 ---
+
+## Indeling
+
+Vier tabbladen, elk met een eigen adres.
+
+| Tabblad | Vraag | Wat erop staat |
+| --- | --- | --- |
+| Overzicht | Waar sta ik nu? | Ingelegd, waarde, winst en rendement als kopgetallen. Daaronder per begunstigde en per fonds hetzelfde, met wat er na verkoopkosten overblijft. Het verloop staat onderaan |
+| Fondsen | Hoe doet elk fonds het? | Een uitklapbaar blok per fonds. Dichtgeklapt al de waarde en het rendement, uitgeklapt de aantallen, de gemiddelde aankoopprijs, de ISIN en wie welk deel bezit |
+| Prognose | Waar kom ik uit? | Een tabblad per begunstigde, met schuiven en doelen. Nog te bouwen |
+| Update | Klopt mijn invoer nog? | Een export inladen, koersen bijwerken, aankopen toewijzen die buiten de regels vallen, en nakijken wat je zelf invulde |
+
+De gegevens worden een keer opgehaald in de schil en doorgegeven aan het
+tabblad dat open staat. Zou elk tabblad dat zelf doen, dan had elk zijn eigen
+kopie en las elk de opslag opnieuw uit.
 
 ## Grafieken: welke, en waarom
 
@@ -331,7 +352,12 @@ is, tot op de laatste eenheid van een honderdmiljoenste. Aankopen die buiten de
 vaste regels vallen worden apart getoond en kun je in het scherm toewijzen.
 
 Er is een waardegrafiek over de tijd. De koersen komen uit de aankopen zelf,
-aangevuld met wat je handmatig invoert.
+aangevuld met wat handmatig ingevoerd wordt.
 
-Volgende stappen: grafieken per fonds, en de inlegkalender die laat zien of er
-een maand is overgeslagen.
+De applicatie is opgesplitst in vier tabbladen, waarvan er drie ingevuld zijn.
+Overzicht en Fondsen tonen de laatste stand en het resultaat per fonds en per
+persoon, inclusief wat er na verkoopkosten overblijft. Update bevat alles wat
+met bijwerken en beheren te maken heeft.
+
+Volgende stappen: de prognose, en de inlegkalender die laat zien of er een maand
+is overgeslagen.
